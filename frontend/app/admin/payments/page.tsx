@@ -15,7 +15,7 @@ const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
   pending:    { label: 'Pendiente',  color: 'text-yellow-400 bg-yellow-400/10 border-yellow-500/20' },
   processing: { label: 'Procesando', color: 'text-blue-400 bg-blue-400/10 border-blue-500/20' },
-  shipped:    { label: 'Enviado',    color: 'text-indigo-400 bg-indigo-400/10 border-indigo-500/20' },
+  shipped:    { label: 'Enviado',    color: 'text-teal-400 bg-teal-400/10 border-teal-500/20' },
   delivered:  { label: 'Entregado',  color: 'text-green-400 bg-green-400/10 border-green-500/20' },
   cancelled:  { label: 'Cancelado',  color: 'text-red-400 bg-red-400/10 border-red-500/20' },
 };
@@ -101,7 +101,7 @@ export default function AdminPayments() {
           {[
             {
               label: 'Ingresos Totales', value: `$${totalRevenue.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
-              icon: DollarSign, color: 'text-indigo-400', bg: 'bg-indigo-500/10 border-indigo-500/20',
+              icon: DollarSign, color: 'text-teal-400', bg: 'bg-teal-500/10 border-teal-500/20',
             },
             {
               label: 'Via Stripe', value: `$${stripeRevenue.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
@@ -134,7 +134,7 @@ export default function AdminPayments() {
           <div className="lg:col-span-3 card p-5 space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="font-semibold text-white flex items-center gap-2">
-                <BarChart2 className="w-4 h-4 text-indigo-400" /> Ingresos últimos 7 días
+                <BarChart2 className="w-4 h-4 text-teal-400" /> Ingresos últimos 7 días
               </h3>
               <div className="flex items-center gap-3 text-xs text-gray-500">
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#635bff]" /> Stripe</span>
@@ -172,7 +172,7 @@ export default function AdminPayments() {
           {/* ── Status summary ── */}
           <div className="lg:col-span-2 card p-5 space-y-3">
             <h3 className="font-semibold text-white flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-indigo-400" /> Resumen de Estado
+              <TrendingUp className="w-4 h-4 text-teal-400" /> Resumen de Estado
             </h3>
             {[
               { label: 'Pagadas / procesando', count: paid.length, color: 'text-green-400', icon: <CheckCircle className="w-4 h-4" /> },
@@ -199,7 +199,7 @@ export default function AdminPayments() {
         <div className="card p-5 space-y-4">
           <div className="flex items-center justify-between flex-wrap gap-3">
             <h3 className="font-semibold text-white flex items-center gap-2">
-              <CreditCard className="w-4 h-4 text-indigo-400" /> Transacciones
+              <CreditCard className="w-4 h-4 text-teal-400" /> Transacciones
             </h3>
             <div className="flex items-center gap-2">
               <button onClick={fetchOrders} className="p-2 rounded-lg bg-white/5 border border-white/10 text-gray-400 hover:text-white transition-colors" title="Actualizar">
@@ -210,7 +210,7 @@ export default function AdminPayments() {
                   <button
                     key={f}
                     onClick={() => setFilter(f)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${filter === f ? 'bg-indigo-600 text-white' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${filter === f ? 'bg-teal-600 text-white' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
                   >
                     {f === 'all' ? 'Todos' : getMethodMeta(f).label}
                   </button>
@@ -221,7 +221,7 @@ export default function AdminPayments() {
 
           {loading ? (
             <div className="flex justify-center py-10">
-              <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+              <div className="w-8 h-8 border-2 border-teal-500 border-t-transparent rounded-full animate-spin" />
             </div>
           ) : fetchError ? (
             <div className="text-center py-10 text-red-400 text-sm">⚠️ {fetchError}</div>

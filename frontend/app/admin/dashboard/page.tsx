@@ -12,7 +12,7 @@ const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 const STATUS_CONFIG = {
   pending:    { label: 'Pendiente',   color: 'text-yellow-400 bg-yellow-400/10 border-yellow-500/20', icon: <Clock className="w-3 h-3" /> },
   processing: { label: 'Procesando',  color: 'text-blue-400 bg-blue-400/10 border-blue-500/20',       icon: <AlertCircle className="w-3 h-3" /> },
-  shipped:    { label: 'Enviado',     color: 'text-indigo-400 bg-indigo-400/10 border-indigo-500/20',  icon: <ArrowUpRight className="w-3 h-3" /> },
+  shipped:    { label: 'Enviado',     color: 'text-teal-400 bg-teal-400/10 border-teal-500/20',  icon: <ArrowUpRight className="w-3 h-3" /> },
   delivered:  { label: 'Entregado',   color: 'text-green-400 bg-green-400/10 border-green-500/20',    icon: <CheckCircle className="w-3 h-3" /> },
   cancelled:  { label: 'Cancelado',   color: 'text-red-400 bg-red-400/10 border-red-500/20',          icon: <XCircle className="w-3 h-3" /> },
 };
@@ -68,14 +68,14 @@ export default function Dashboard() {
     <AdminLayout title="Dashboard">
       {loading ? (
         <div className="flex items-center justify-center h-48">
-          <div className="animate-spin w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full" />
+          <div className="animate-spin w-8 h-8 border-2 border-teal-500 border-t-transparent rounded-full" />
         </div>
       ) : (
         <div className="space-y-6">
           {/* Stat cards */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { label: 'Revenue Total', value: `$${revenue.toLocaleString()}`, icon: DollarSign, color: 'text-indigo-400', bg: 'bg-indigo-500/10 border-indigo-500/20', href: '/admin/orders' },
+              { label: 'Revenue Total', value: `$${revenue.toLocaleString()}`, icon: DollarSign, color: 'text-teal-400', bg: 'bg-teal-500/10 border-teal-500/20', href: '/admin/orders' },
               { label: 'Órdenes', value: orders.length, icon: ShoppingCart, color: 'text-green-400', bg: 'bg-green-500/10 border-green-500/20', href: '/admin/orders' },
               { label: 'Pendientes', value: pending, icon: Clock, color: 'text-yellow-400', bg: 'bg-yellow-500/10 border-yellow-500/20', href: '/admin/orders' },
               { label: 'Productos', value: `${products.published}/${products.total}`, icon: Package, color: 'text-purple-400', bg: 'bg-purple-500/10 border-purple-500/20', href: '/admin/products' },
@@ -126,7 +126,7 @@ export default function Dashboard() {
             <div className="lg:col-span-3 card overflow-hidden">
               <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.05]">
                 <div className="section-label">Órdenes Recientes</div>
-                <Link href="/admin/orders" className="text-xs text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
+                <Link href="/admin/orders" className="text-xs text-teal-400 hover:text-teal-300 flex items-center gap-1">
                   Ver todas <ArrowUpRight className="w-3 h-3" />
                 </Link>
               </div>

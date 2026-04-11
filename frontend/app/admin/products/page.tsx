@@ -119,7 +119,7 @@ export default function AdminProducts() {
             { label: 'Borradores', value: drafts, color: 'text-yellow-400', filter: 'draft' as const },
           ].map(s => (
             <button key={s.label} onClick={() => setFilter(s.filter)}
-              className={`card p-4 text-left transition-all ${filter === s.filter ? 'border-indigo-500/40 bg-indigo-500/5' : 'hover:border-white/10'}`}>
+              className={`card p-4 text-left transition-all ${filter === s.filter ? 'border-teal-500/40 bg-teal-500/5' : 'hover:border-white/10'}`}>
               <div className="text-xs text-gray-500 mb-1">{s.label}</div>
               <div className={`text-2xl font-bold ${s.color}`}>{s.value}</div>
             </button>
@@ -195,9 +195,9 @@ export default function AdminProducts() {
                   <span className="text-sm text-gray-300">{form.published ? 'Publicado en la tienda' : 'Guardar como borrador'}</span>
                 </label>
                 {insights && (
-                  <div className="bg-indigo-500/5 border border-indigo-500/20 rounded-xl p-4 space-y-4">
-                    <div className="flex items-center justify-between border-b border-indigo-500/10 pb-2">
-                      <div className="text-[10px] font-bold text-indigo-400 uppercase tracking-wider">Product Pro Insights</div>
+                  <div className="bg-teal-500/5 border border-teal-500/20 rounded-xl p-4 space-y-4">
+                    <div className="flex items-center justify-between border-b border-teal-500/10 pb-2">
+                      <div className="text-[10px] font-bold text-teal-400 uppercase tracking-wider">Product Pro Insights</div>
                       <div className="text-[10px] text-gray-500">Score: <span className="text-white font-bold">{insights.analysis.opportunityScore}/100</span></div>
                     </div>
                     
@@ -219,9 +219,9 @@ export default function AdminProducts() {
                       <div className="space-y-1.5">
                         {insights.suppliers.slice(0, 3).map((s: any, idx: number) => (
                           <a key={idx} href={s.alibabaUrl} target="_blank" rel="noopener noreferrer" 
-                            className="flex items-center justify-between text-[11px] p-2 bg-white/[0.03] border border-white/[0.05] rounded-lg hover:border-indigo-500/30 transition-colors">
+                            className="flex items-center justify-between text-[11px] p-2 bg-white/[0.03] border border-white/[0.05] rounded-lg hover:border-teal-500/30 transition-colors">
                             <span className="text-gray-300 truncate max-w-[120px]">{s.name}</span>
-                            <span className="text-indigo-400 font-mono">${s.unitPrice}/ud</span>
+                            <span className="text-teal-400 font-mono">${s.unitPrice}/ud</span>
                           </a>
                         ))}
                       </div>
@@ -232,7 +232,7 @@ export default function AdminProducts() {
                 <div className="flex gap-3 pt-2">
                   {!insights && (
                     <button type="button" onClick={fetchInsights} disabled={loadingInsights}
-                      className="flex-1 bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs py-3 rounded-xl hover:bg-indigo-500/20 transition-all font-bold">
+                      className="flex-1 bg-teal-500/10 border border-teal-500/30 text-teal-400 text-xs py-3 rounded-xl hover:bg-teal-500/20 transition-all font-bold">
                       {loadingInsights ? 'Analizando...' : <><TrendingUp className="w-4 h-4 inline mr-1.5" /> Analizar con Product Pro</>}
                     </button>
                   )}
@@ -248,7 +248,7 @@ export default function AdminProducts() {
 
         {/* Table */}
         {loading ? (
-          <div className="flex justify-center py-24"><div className="animate-spin w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full" /></div>
+          <div className="flex justify-center py-24"><div className="animate-spin w-8 h-8 border-2 border-teal-500 border-t-transparent rounded-full" /></div>
         ) : (
           <div className="card overflow-hidden">
             <table className="w-full text-sm">
@@ -280,7 +280,7 @@ export default function AdminProducts() {
                             )}
                             {p.sourceUrl && (
                               <a href={p.sourceUrl} target="_blank" rel="noopener noreferrer"
-                                className="text-gray-600 hover:text-indigo-400 transition-colors">
+                                className="text-gray-600 hover:text-teal-400 transition-colors">
                                 <ExternalLink className="w-3 h-3" />
                               </a>
                             )}
@@ -289,7 +289,7 @@ export default function AdminProducts() {
                       </div>
                     </td>
                     <td className="p-4">
-                      <span className="px-2 py-1 bg-indigo-500/10 text-indigo-400 text-xs rounded-lg border border-indigo-500/20">{p.category}</span>
+                      <span className="px-2 py-1 bg-teal-500/10 text-teal-400 text-xs rounded-lg border border-teal-500/20">{p.category}</span>
                     </td>
                     <td className="p-4 text-right font-mono text-white">${p.price.toLocaleString()}</td>
                     <td className="p-4 text-center">
@@ -305,7 +305,7 @@ export default function AdminProducts() {
                     </td>
                     <td className="p-4 text-right">
                       <div className="flex items-center justify-end gap-1">
-                        <button onClick={() => openEdit(p)} className="p-2 text-gray-600 hover:text-indigo-400 hover:bg-indigo-500/10 rounded-lg transition-colors">
+                        <button onClick={() => openEdit(p)} className="p-2 text-gray-600 hover:text-teal-400 hover:bg-teal-500/10 rounded-lg transition-colors">
                           <Pencil className="w-4 h-4" />
                         </button>
                         <button onClick={() => handleDelete(p._id)} disabled={deleting === p._id}
@@ -319,7 +319,7 @@ export default function AdminProducts() {
                 {products.length === 0 && (
                   <tr><td colSpan={6} className="p-16 text-center text-gray-600">
                     {filter === 'draft' ? 'No hay borradores. Importa productos desde' : 'No hay productos.'}{' '}
-                    {filter === 'draft' && <Link href="/admin/import" className="text-indigo-400 hover:underline">Importar</Link>}
+                    {filter === 'draft' && <Link href="/admin/import" className="text-teal-400 hover:underline">Importar</Link>}
                   </td></tr>
                 )}
               </tbody>

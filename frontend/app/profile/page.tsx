@@ -52,7 +52,7 @@ export default function ProfilePage() {
   if (loading) {
     return (
       <div className="flex-1 flex items-center justify-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-400"></div>
       </div>
     );
   }
@@ -60,7 +60,7 @@ export default function ProfilePage() {
   return (
     <div className="max-w-4xl w-full mx-auto p-4 sm:p-6 lg:p-8 mt-16">
       <h1 className="text-3xl font-bold text-white mb-2">Mi Perfil</h1>
-      <p className="text-zinc-400 mb-8">Administra tu información personal y dirección de envío por defecto.</p>
+      <p className="text-slate-400 mb-8">Administra tu información personal y dirección de envío por defecto.</p>
 
       {message.text && (
         <div className={`p-4 rounded-xl mb-6 ${message.type === 'success' ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-400' : 'bg-red-500/10 border border-red-500/30 text-red-400'}`}>
@@ -68,27 +68,27 @@ export default function ProfilePage() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-zinc-900/50 outline outline-1 outline-white/10 p-6 md:p-8 rounded-3xl backdrop-blur-md">
+      <form onSubmit={handleSubmit} className="bg-slate-900/50 outline outline-1 outline-white/10 p-6 md:p-8 rounded-3xl backdrop-blur-md">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-6">
             <h2 className="text-xl font-semibold text-white border-b border-white/10 pb-2">Datos Personales</h2>
-            <div><label className="block text-sm font-medium mb-1">Nombre Completo</label><div className="relative"><User className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 w-5 h-5" /><input type="text" name="name" value={form.name} onChange={handleChange} className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"/></div></div>
-            <div><label className="block text-sm font-medium mb-1">Correo Electrónico <span className="text-zinc-500 text-xs">(No modificable)</span></label><div className="relative"><Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-600 w-5 h-5" /><input type="email" value={form.email} disabled className="w-full bg-black/30 border border-white/5 rounded-xl py-3 pl-10 pr-4 text-zinc-500 cursor-not-allowed"/></div></div>
-            <div><label className="block text-sm font-medium mb-1">Teléfono</label><div className="relative"><Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 w-5 h-5" /><input type="text" name="phone" value={form.phone} onChange={handleChange} placeholder="+56 9 1234 5678" className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"/></div></div>
-            <div><label className="block text-sm font-medium mb-1">Cambiar Contraseña <span className="text-zinc-500 text-xs">(Opcional)</span></label><div className="relative"><Shield className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 w-5 h-5" /><input type="password" name="password" value={form.password} onChange={handleChange} placeholder="Dejar en blanco para conservar actual" className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"/></div></div>
+            <div><label className="block text-sm font-medium mb-1">Nombre Completo</label><div className="relative"><User className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5" /><input type="text" name="name" value={form.name} onChange={handleChange} className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-teal-400 transition-all"/></div></div>
+            <div><label className="block text-sm font-medium mb-1">Correo Electrónico <span className="text-slate-500 text-xs">(No modificable)</span></label><div className="relative"><Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 w-5 h-5" /><input type="email" value={form.email} disabled className="w-full bg-black/30 border border-white/5 rounded-xl py-3 pl-10 pr-4 text-slate-500 cursor-not-allowed"/></div></div>
+            <div><label className="block text-sm font-medium mb-1">Teléfono</label><div className="relative"><Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5" /><input type="text" name="phone" value={form.phone} onChange={handleChange} placeholder="+56 9 1234 5678" className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-teal-400 transition-all"/></div></div>
+            <div><label className="block text-sm font-medium mb-1">Cambiar Contraseña <span className="text-slate-500 text-xs">(Opcional)</span></label><div className="relative"><Shield className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5" /><input type="password" name="password" value={form.password} onChange={handleChange} placeholder="Dejar en blanco para conservar actual" className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-teal-400 transition-all"/></div></div>
           </div>
           <div className="space-y-6">
             <h2 className="text-xl font-semibold text-white border-b border-white/10 pb-2">Dirección de Envío</h2>
-            <div><label className="block text-sm font-medium mb-1">Dirección</label><div className="relative"><MapPin className="absolute left-3 top-3 text-zinc-500 w-5 h-5" /><input type="text" name="address" value={form.address} onChange={handleChange} placeholder="Calle, número, depto." className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"/></div></div>
-            <div><label className="block text-sm font-medium mb-1">Ciudad</label><div className="relative"><Building className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 w-5 h-5" /><input type="text" name="city" value={form.city} onChange={handleChange} className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"/></div></div>
+            <div><label className="block text-sm font-medium mb-1">Dirección</label><div className="relative"><MapPin className="absolute left-3 top-3 text-slate-500 w-5 h-5" /><input type="text" name="address" value={form.address} onChange={handleChange} placeholder="Calle, número, depto." className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-teal-400 transition-all"/></div></div>
+            <div><label className="block text-sm font-medium mb-1">Ciudad</label><div className="relative"><Building className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5" /><input type="text" name="city" value={form.city} onChange={handleChange} className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-teal-400 transition-all"/></div></div>
             <div className="grid grid-cols-2 gap-4">
-              <div><label className="block text-sm font-medium mb-1">Cód. Postal</label><input type="text" name="postalCode" value={form.postalCode} onChange={handleChange} className="w-full bg-black/50 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"/></div>
-              <div><label className="block text-sm font-medium mb-1">País</label><div className="relative"><Globe className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 w-4 h-4" /><input type="text" name="country" value={form.country} onChange={handleChange} className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-9 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"/></div></div>
+              <div><label className="block text-sm font-medium mb-1">Cód. Postal</label><input type="text" name="postalCode" value={form.postalCode} onChange={handleChange} className="w-full bg-black/50 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-teal-400 transition-all"/></div>
+              <div><label className="block text-sm font-medium mb-1">País</label><div className="relative"><Globe className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 w-4 h-4" /><input type="text" name="country" value={form.country} onChange={handleChange} className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-9 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-teal-400 transition-all"/></div></div>
             </div>
           </div>
         </div>
         <div className="mt-8 pt-6 border-t border-white/10 flex justify-end">
-          <button type="submit" disabled={saving} className="flex items-center gap-2 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-8 rounded-xl transition-all shadow-lg shadow-indigo-500/20 disabled:opacity-50">
+          <button type="submit" disabled={saving} className="flex items-center gap-2 bg-teal-500 hover:bg-teal-400 text-white font-semibold py-3 px-8 rounded-xl transition-all shadow-lg shadow-teal-500/20 disabled:opacity-50">
             {saving ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save className="w-5 h-5" />} {saving ? 'Guardando...' : 'Guardar Cambios'}
           </button>
         </div>

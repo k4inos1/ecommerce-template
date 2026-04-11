@@ -10,7 +10,7 @@ const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 const STATUS_CONFIG: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
   pending:    { label: 'Pendiente',   color: 'text-yellow-400 bg-yellow-400/10 border-yellow-500/20', icon: <Clock className="w-3.5 h-3.5" /> },
   processing: { label: 'Procesando',  color: 'text-blue-400 bg-blue-400/10 border-blue-500/20',       icon: <AlertCircle className="w-3.5 h-3.5" /> },
-  shipped:    { label: 'En camino',   color: 'text-indigo-400 bg-indigo-400/10 border-indigo-500/20',  icon: <Truck className="w-3.5 h-3.5" /> },
+  shipped:    { label: 'En camino',   color: 'text-teal-400 bg-teal-400/10 border-teal-500/20',  icon: <Truck className="w-3.5 h-3.5" /> },
   delivered:  { label: 'Entregado',   color: 'text-green-400 bg-green-400/10 border-green-500/20',    icon: <CheckCircle className="w-3.5 h-3.5" /> },
   cancelled:  { label: 'Cancelado',   color: 'text-red-400 bg-red-400/10 border-red-500/20',          icon: <XCircle className="w-3.5 h-3.5" /> },
 };
@@ -41,7 +41,7 @@ export default function MyOrdersPage() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-display font-bold text-white flex items-center gap-3">
-            <Package className="w-7 h-7 text-indigo-400" /> Mis Órdenes
+            <Package className="w-7 h-7 text-teal-400" /> Mis Órdenes
           </h1>
           {userName && <p className="text-sm text-gray-500 mt-1">Hola, {userName}</p>}
         </div>
@@ -49,7 +49,7 @@ export default function MyOrdersPage() {
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-20"><div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" /></div>
+        <div className="flex justify-center py-20"><div className="w-8 h-8 border-2 border-teal-500 border-t-transparent rounded-full animate-spin" /></div>
       ) : orders.length === 0 ? (
         <div className="text-center py-20">
           <div className="w-20 h-20 rounded-2xl bg-white/[0.03] border border-white/[0.07] flex items-center justify-center mx-auto mb-5">
@@ -79,12 +79,12 @@ export default function MyOrdersPage() {
                     </div>
                     <div className="text-sm text-white">{order.items?.length || 0} producto{(order.items?.length || 0) !== 1 ? 's' : ''}</div>
                   </div>
-                  <div className="text-indigo-400 font-bold font-mono">${(order.totalAmount || 0).toFixed(2)}</div>
+                  <div className="text-teal-400 font-bold font-mono">${(order.totalAmount || 0).toFixed(2)}</div>
                   <span className={`flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border font-medium ${cfg.color}`}>
                     {cfg.icon} {cfg.label}
                   </span>
                   <Link href={`/orders/${order._id}`} onClick={(e: React.MouseEvent) => e.stopPropagation()}
-                    className="text-xs text-indigo-400 hover:text-indigo-300 transition-colors font-medium whitespace-nowrap">
+                    className="text-xs text-teal-400 hover:text-teal-300 transition-colors font-medium whitespace-nowrap">
                     Ver detalle →
                   </Link>
                 </button>
@@ -101,15 +101,15 @@ export default function MyOrdersPage() {
                             const active = i === statusIdx;
                             return (
                               <div key={s} className="flex items-center flex-1 last:flex-none">
-                                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 transition-all ${done ? 'bg-indigo-500 border-indigo-500' : 'bg-transparent border-gray-700'}`}>
+                                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 transition-all ${done ? 'bg-teal-500 border-teal-500' : 'bg-transparent border-gray-700'}`}>
                                   {done && <CheckCircle className="w-3.5 h-3.5 text-white" />}
                                 </div>
-                                <div className={`text-[10px] mt-5 absolute translate-y-3 -translate-x-3 whitespace-nowrap ${active ? 'text-indigo-400 font-semibold' : done ? 'text-gray-400' : 'text-gray-600'}`}
+                                <div className={`text-[10px] mt-5 absolute translate-y-3 -translate-x-3 whitespace-nowrap ${active ? 'text-teal-400 font-semibold' : done ? 'text-gray-400' : 'text-gray-600'}`}
                                   style={{ position: 'relative', marginLeft: '-8px' }}>
                                   {STATUS_CONFIG[s]?.label}
                                 </div>
                                 {i < STATUS_ORDER.length - 1 && (
-                                  <div className={`flex-1 h-0.5 mx-1 ${i < statusIdx ? 'bg-indigo-500' : 'bg-gray-800'}`} />
+                                  <div className={`flex-1 h-0.5 mx-1 ${i < statusIdx ? 'bg-teal-500' : 'bg-gray-800'}`} />
                                 )}
                               </div>
                             );
@@ -144,7 +144,7 @@ export default function MyOrdersPage() {
                       </div>
                       <div className="flex justify-between font-bold text-sm mt-4 pt-3 border-t border-white/[0.04]">
                         <span className="text-gray-400">Total</span>
-                        <span className="text-indigo-400">${(order.totalAmount || 0).toFixed(2)}</span>
+                        <span className="text-teal-400">${(order.totalAmount || 0).toFixed(2)}</span>
                       </div>
                     </div>
                   </div>

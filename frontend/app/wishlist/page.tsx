@@ -11,7 +11,7 @@ export default function WishlistPage() {
   if (loading) {
     return (
       <div className="max-w-6xl mx-auto px-4 py-24 text-center">
-        <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+        <div className="w-12 h-12 border-4 border-teal-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
         <p className="text-gray-400 font-medium">Cargando tus favoritos...</p>
       </div>
     );
@@ -58,8 +58,8 @@ export default function WishlistPage() {
 
       {/* ── Suggested Section ────────────────────────────────── */}
       {wishlistItems.length > 0 && wishlistItems.length < 4 && (
-        <div className="mt-24 p-8 rounded-3xl bg-indigo-600/5 border border-indigo-500/10 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/10 rounded-full blur-[60px] pointer-events-none" />
+        <div className="mt-24 p-8 rounded-3xl bg-teal-600/5 border border-teal-500/10 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-teal-600/10 rounded-full blur-[60px] pointer-events-none" />
           <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="text-center md:text-left">
               <h3 className="text-xl font-bold text-white mb-2">¿Buscas algo más?</h3>

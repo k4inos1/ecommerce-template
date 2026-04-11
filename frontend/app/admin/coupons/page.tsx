@@ -84,15 +84,15 @@ export default function AdminCoupons() {
         </div>
         <button 
           onClick={() => setShowAdd(!showAdd)}
-          className="btn-primary flex items-center gap-2 px-6 py-2.5 shadow-lg shadow-indigo-900/20">
+          className="btn-primary flex items-center gap-2 px-6 py-2.5 shadow-lg shadow-teal-900/20">
           <Plus className="w-4 h-4" /> Nuevo Cupón
         </button>
       </div>
 
       {showAdd && (
-        <div className="card p-8 mb-8 border-indigo-500/20 bg-indigo-500/[0.02]">
+        <div className="card p-8 mb-8 border-teal-500/20 bg-teal-500/[0.02]">
           <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-            <Settings2 className="w-5 h-5 text-indigo-400" /> Configurar Nuevo Cupón
+            <Settings2 className="w-5 h-5 text-teal-400" /> Configurar Nuevo Cupón
           </h3>
           <form onSubmit={handleCreate} className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="space-y-2">
@@ -100,7 +100,7 @@ export default function AdminCoupons() {
               <input 
                 type="text" 
                 required
-                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-indigo-500/50 outline-none transition-all"
+                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-teal-500/50 outline-none transition-all"
                 placeholder="PROMO2025"
                 value={formData.code}
                 onChange={e => setFormData({ ...formData, code: e.target.value.toUpperCase() })}
@@ -109,7 +109,7 @@ export default function AdminCoupons() {
             <div className="space-y-2">
               <label className="text-xs font-bold text-gray-500 uppercase tracking-widest pl-1">Tipo</label>
               <select 
-                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-indigo-500/50 outline-none transition-all"
+                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-teal-500/50 outline-none transition-all"
                 value={formData.type}
                 onChange={e => setFormData({ ...formData, type: e.target.value as any })}
               >
@@ -122,7 +122,7 @@ export default function AdminCoupons() {
               <input 
                 type="number" 
                 required
-                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-indigo-500/50 outline-none transition-all"
+                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-teal-500/50 outline-none transition-all"
                 value={formData.discount}
                 onChange={e => setFormData({ ...formData, discount: Number(e.target.value) })}
               />
@@ -131,7 +131,7 @@ export default function AdminCoupons() {
               <label className="text-xs font-bold text-gray-500 uppercase tracking-widest pl-1">Min. Compra ($)</label>
               <input 
                 type="number" 
-                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-indigo-500/50 outline-none transition-all"
+                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-teal-500/50 outline-none transition-all"
                 value={formData.minOrderAmount}
                 onChange={e => setFormData({ ...formData, minOrderAmount: Number(e.target.value) })}
               />
@@ -140,7 +140,7 @@ export default function AdminCoupons() {
               <label className="text-xs font-bold text-gray-500 uppercase tracking-widest pl-1">Usos Máximos (0 = ∞)</label>
               <input 
                 type="number" 
-                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-indigo-500/50 outline-none transition-all"
+                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-teal-500/50 outline-none transition-all"
                 value={formData.maxUses}
                 onChange={e => setFormData({ ...formData, maxUses: Number(e.target.value) })}
               />
@@ -149,7 +149,7 @@ export default function AdminCoupons() {
               <label className="text-xs font-bold text-gray-500 uppercase tracking-widest pl-1">Vencimiento</label>
               <input 
                 type="date" 
-                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-indigo-500/50 outline-none transition-all"
+                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-teal-500/50 outline-none transition-all"
                 value={formData.expiresAt}
                 onChange={e => setFormData({ ...formData, expiresAt: e.target.value })}
               />
@@ -159,7 +159,7 @@ export default function AdminCoupons() {
               <button type="button" onClick={() => setShowAdd(false)} className="px-6 py-2.5 rounded-xl text-sm font-bold border border-white/10 text-gray-400 hover:text-white hover:bg-white/5 transition-all">
                 Cancelar
               </button>
-              <button type="submit" className="px-8 py-2.5 rounded-xl text-sm font-bold bg-indigo-600 text-white hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-900/20">
+              <button type="submit" className="px-8 py-2.5 rounded-xl text-sm font-bold bg-teal-600 text-white hover:bg-teal-500 transition-all shadow-lg shadow-teal-900/20">
                 Guardar Cupón
               </button>
             </div>
@@ -169,7 +169,7 @@ export default function AdminCoupons() {
 
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20">
-          <Loader2 className="w-10 h-10 text-indigo-500 animate-spin mb-4" />
+          <Loader2 className="w-10 h-10 text-teal-500 animate-spin mb-4" />
           <p className="text-gray-500 font-medium">Obteniendo cupones...</p>
         </div>
       ) : coupons.length === 0 ? (
@@ -183,9 +183,9 @@ export default function AdminCoupons() {
       ) : (
         <div className="grid gap-4">
           {coupons.map((c) => (
-            <div key={c._id} className="card p-5 group flex items-center justify-between border-white/[0.05] hover:border-indigo-500/20 transition-all">
+            <div key={c._id} className="card p-5 group flex items-center justify-between border-white/[0.05] hover:border-teal-500/20 transition-all">
               <div className="flex items-center gap-6">
-                <div className="w-12 h-12 bg-indigo-500/10 border border-indigo-500/20 rounded-xl flex items-center justify-center text-indigo-400">
+                <div className="w-12 h-12 bg-teal-500/10 border border-teal-500/20 rounded-xl flex items-center justify-center text-teal-400">
                   <Ticket className="w-6 h-6" />
                 </div>
                 <div>

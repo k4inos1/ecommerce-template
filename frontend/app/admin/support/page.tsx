@@ -82,7 +82,7 @@ export default function AdminSupport() {
           <div className="p-4 border-b border-white/5 bg-white/[0.02]">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-              <input placeholder="Buscar tickets..." className="w-full bg-white/5 border border-white/5 rounded-xl pl-9 pr-4 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 transition-colors" />
+              <input placeholder="Buscar tickets..." className="w-full bg-white/5 border border-white/5 rounded-xl pl-9 pr-4 py-2 text-xs text-white focus:outline-none focus:border-teal-500 transition-colors" />
             </div>
           </div>
           <div className="flex-1 overflow-y-auto divide-y divide-white/[0.03]">
@@ -90,7 +90,7 @@ export default function AdminSupport() {
               <div className="p-10 text-center text-xs text-gray-600">No hay chats activos</div>
             ) : rooms.map(r => (
               <button key={r._id} onClick={() => setActiveRoom(r._id)}
-                className={`w-full p-4 text-left transition-colors hover:bg-white/[0.03] ${activeRoom === r._id ? 'bg-indigo-600/10 border-l-2 border-indigo-500' : ''}`}>
+                className={`w-full p-4 text-left transition-colors hover:bg-white/[0.03] ${activeRoom === r._id ? 'bg-teal-600/10 border-l-2 border-teal-500' : ''}`}>
                 <div className="flex items-center justify-between mb-1">
                   <span className="font-bold text-sm text-white truncate max-w-[140px]">{r.user?.name || 'Invitado'}</span>
                   <span className="text-[10px] text-gray-500">{new Date(r.lastTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
@@ -107,7 +107,7 @@ export default function AdminSupport() {
             <>
               <div className="p-5 border-b border-white/5 bg-white/[0.02] flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-indigo-600/20 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+                  <div className="w-10 h-10 rounded-2xl bg-teal-600/20 border border-teal-500/20 flex items-center justify-center text-teal-400">
                     <User className="w-5 h-5" />
                   </div>
                   <div>
@@ -125,7 +125,7 @@ export default function AdminSupport() {
                 {messages.map((m, i) => (
                   <div key={i} className={`flex ${m.sender === 'admin' ? 'justify-end' : 'justify-start'}`}>
                     <div className="max-w-[70%]">
-                      <div className={`p-4 rounded-3xl text-sm ${m.sender === 'admin' ? 'bg-indigo-600 text-white rounded-tr-none' : 'bg-gray-800 text-gray-200 rounded-tl-none'}`}>
+                      <div className={`p-4 rounded-3xl text-sm ${m.sender === 'admin' ? 'bg-teal-600 text-white rounded-tr-none' : 'bg-gray-800 text-gray-200 rounded-tl-none'}`}>
                         {m.content}
                       </div>
                       <div className={`text-[9px] text-gray-600 mt-1 uppercase font-bold tracking-widest ${m.sender === 'admin' ? 'text-right' : 'text-left'}`}>
@@ -138,9 +138,9 @@ export default function AdminSupport() {
 
               <form onSubmit={handleSend} className="p-5 border-t border-white/5 bg-white/[0.02] flex gap-3">
                 <input value={input} onChange={e => setInput(e.target.value)} placeholder="Escribe una respuesta oficial..."
-                  className="flex-1 bg-white/5 border border-white/10 rounded-2xl px-5 py-3 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors shadow-inner" />
+                  className="flex-1 bg-white/5 border border-white/10 rounded-2xl px-5 py-3 text-sm text-white focus:outline-none focus:border-teal-500 transition-colors shadow-inner" />
                 <button type="submit" disabled={loading || !input.trim()}
-                  className="w-14 bg-indigo-600 text-white rounded-2xl flex items-center justify-center hover:bg-indigo-500 shadow-lg shadow-indigo-900/40 disabled:opacity-50 transition-all active:scale-95">
+                  className="w-14 bg-teal-600 text-white rounded-2xl flex items-center justify-center hover:bg-teal-500 shadow-lg shadow-teal-900/40 disabled:opacity-50 transition-all active:scale-95">
                   {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : <Send className="w-5 h-5" />}
                 </button>
               </form>

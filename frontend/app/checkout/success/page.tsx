@@ -33,7 +33,7 @@ function SuccessContent() {
           Pago procesado por Stripe
         </div>
         <div className="flex items-center gap-3 text-sm text-gray-300">
-          <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center"><Mail className="w-4 h-4 text-indigo-400" /></div>
+          <div className="w-8 h-8 rounded-lg bg-teal-500/10 border border-teal-500/20 flex items-center justify-center"><Mail className="w-4 h-4 text-teal-400" /></div>
           Email de confirmación enviado
         </div>
         <div className="flex items-center gap-3 text-sm text-gray-300">
@@ -54,7 +54,7 @@ function SuccessContent() {
 
 export default function CheckoutSuccessPage() {
   return (
-    <Suspense fallback={<div className="flex justify-center py-24"><div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" /></div>}>
+    <Suspense fallback={<div className="flex justify-center py-24"><div className="w-8 h-8 border-2 border-teal-500 border-t-transparent rounded-full animate-spin" /></div>}>
       <SuccessContent />
     </Suspense>
   );

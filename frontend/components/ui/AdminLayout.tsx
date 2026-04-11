@@ -28,28 +28,28 @@ export function AdminLayout({ children, title }: { children: React.ReactNode; ti
   ];
 
   return (
-    <div className="flex min-h-screen bg-gray-950">
+    <div className="flex min-h-screen bg-[#0c1216]">
       {/* Sidebar */}
-      <aside className="w-60 bg-gray-900 border-r border-gray-800 flex flex-col">
-        <div className="p-6 border-b border-gray-800">
-          <div className="text-lg font-black text-white">🛍️ <span className="text-brand">Tech</span>Store</div>
-          <div className="text-xs text-gray-500 mt-0.5">Panel de Administración</div>
+      <aside className="w-60 bg-slate-900 border-r border-white/10 flex flex-col">
+        <div className="p-6 border-b border-white/10">
+          <div className="text-lg font-black text-white">🛍️ <span className="text-teal-300">Tech</span>Store</div>
+          <div className="text-xs text-slate-500 mt-0.5">Panel de Administración</div>
         </div>
         <nav className="flex-1 p-4 space-y-1">
           {navItems.map(item => (
             <Link key={item.href} href={item.href}
-              className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition-colors">
+              className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/5 transition-colors">
               <div className="flex items-center gap-3">
                 {item.icon} {item.label}
               </div>
               {item.label === 'Soporte' && (
-                <div className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse" />
+                <div className="w-2 h-2 bg-teal-400 rounded-full animate-pulse" />
               )}
             </Link>
           ))}
         </nav>
-        <div className="p-4 border-t border-gray-800">
-          <button onClick={logout} className="flex items-center gap-3 px-3 py-2.5 w-full rounded-xl text-sm text-gray-500 hover:text-red-400 hover:bg-red-400/10 transition-colors">
+        <div className="p-4 border-t border-white/10">
+          <button onClick={logout} className="flex items-center gap-3 px-3 py-2.5 w-full rounded-xl text-sm text-slate-400 hover:text-red-400 hover:bg-red-400/10 transition-colors">
             <LogOut className="w-4 h-4" /> Cerrar Sesión
           </button>
         </div>
@@ -57,7 +57,7 @@ export function AdminLayout({ children, title }: { children: React.ReactNode; ti
 
       {/* Main content */}
       <main className="flex-1 overflow-auto">
-        <div className="border-b border-gray-800 bg-gray-900/50 px-8 py-4">
+        <div className="border-b border-white/10 bg-slate-900/40 px-8 py-4">
           <h1 className="text-xl font-bold text-white">{title}</h1>
         </div>
         <div className="p-8">{children}</div>

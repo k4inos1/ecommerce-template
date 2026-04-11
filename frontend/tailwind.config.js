@@ -7,14 +7,14 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        display: ['Space Grotesk', 'sans-serif'],
+        sans: ['Manrope', 'sans-serif'],
+        display: ['Outfit', 'sans-serif'],
       },
       colors: {
         brand: {
-          DEFAULT: '#6366f1',
-          dark: '#4f46e5',
-          light: '#818cf8',
+          DEFAULT: '#14b8a6',
+          dark: '#0f766e',
+          light: '#5eead4',
         },
       },
       animation: {

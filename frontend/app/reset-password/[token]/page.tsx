@@ -64,7 +64,7 @@ export default function ResetPasswordPage({ params }: { params: Promise<{ token:
       {/* Dynamic Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-[40%] -right-[10%] w-[70%] h-[70%] rounded-full bg-emerald-900/20 blur-[120px]" />
-        <div className="absolute -bottom-[40%] -left-[10%] w-[70%] h-[70%] rounded-full bg-indigo-900/20 blur-[120px]" />
+        <div className="absolute -bottom-[40%] -left-[10%] w-[70%] h-[70%] rounded-full bg-teal-900/20 blur-[120px]" />
       </div>
 
       <div className="relative w-full max-w-md">

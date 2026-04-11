@@ -50,7 +50,7 @@ export function ProductClient({ product }: { product: Product }) {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
-      <Link href="/products" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-colors mb-8 group">
+      <Link href="/products" className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-white transition-colors mb-8 group">
         <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Volver al catálogo
       </Link>
 
@@ -58,7 +58,7 @@ export function ProductClient({ product }: { product: Product }) {
         {/* Left — Visuals */}
         <div className="space-y-6">
           {/* Flash Offer Banner */}
-          <div className="bg-gradient-to-r from-red-600 to-orange-500 rounded-2xl p-4 flex items-center justify-between text-white shadow-lg shadow-red-900/20">
+          <div className="bg-gradient-to-r from-rose-500 to-amber-500 rounded-2xl p-4 flex items-center justify-between text-white shadow-lg shadow-rose-900/20">
             <div className="flex items-center gap-3">
               <Zap className="w-5 h-5 fill-white animate-pulse" />
               <div>
@@ -82,7 +82,7 @@ export function ProductClient({ product }: { product: Product }) {
           
           <div className="grid grid-cols-3 gap-4">
             {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="card aspect-square bg-white/[0.02] border border-white/[0.05] rounded-xl flex items-center justify-center text-2xl text-gray-700 grayscale hover:grayscale-0 transition-all cursor-not-allowed">
+              <div key={i} className="card aspect-square bg-white/[0.02] border border-white/[0.05] rounded-xl flex items-center justify-center text-2xl text-slate-700 grayscale hover:grayscale-0 transition-all cursor-not-allowed">
                 {EMOJI[product.category] || '📦'}
               </div>
             ))}
@@ -93,20 +93,20 @@ export function ProductClient({ product }: { product: Product }) {
         <div className="flex flex-col">
           <div className="mb-8">
             <div className="flex items-center gap-3 mb-4">
-              <span className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-indigo-400 bg-indigo-500/10 px-3 py-1.5 rounded-full border border-indigo-500/20">
+              <span className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-teal-200 bg-teal-500/10 px-3 py-1.5 rounded-full border border-teal-500/20">
                 {product.category}
               </span>
               <div className="flex items-center gap-1">
                 {[...Array(5)].map((_, i) => <Star key={i} className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />)}
-                <span className="text-xs text-gray-500 font-bold ml-1">4.9 (12Reseñas)</span>
+                <span className="text-xs text-slate-500 font-bold ml-1">4.9 (12Reseñas)</span>
               </div>
             </div>
             <h1 className="text-4xl lg:text-5xl font-display font-black text-white leading-[1.1] mb-6">{product.name}</h1>
             <div className="text-5xl font-display font-black text-white mb-6">
               {formatPrice(product.price)}
-              <span className="text-sm text-gray-500 font-medium ml-3 font-sans">IVA Incluido</span>
+              <span className="text-sm text-slate-500 font-medium ml-3 font-sans">IVA Incluido</span>
             </div>
-            <p className="text-gray-400 text-lg leading-relaxed">{product.description}</p>
+            <p className="text-slate-400 text-lg leading-relaxed">{product.description}</p>
           </div>
 
           <div className="space-y-8 mt-auto">
@@ -120,23 +120,23 @@ export function ProductClient({ product }: { product: Product }) {
 
             {product.stock > 0 && (
               <div className="flex flex-col sm:flex-row gap-4">
-                <div className="flex items-center justify-between bg-white/[0.03] border border-white/[0.07] rounded-2xl px-6 py-4 min-w-[140px]">
-                  <button onClick={() => setQty(q => Math.max(1, q - 1))} className="text-gray-500 hover:text-white transition-colors">
-                    <Minus className="w-5 h-5" />
-                  </button>
-                  <span className="text-xl font-display font-black text-white">{qty}</span>
-                  <button onClick={() => setQty(q => Math.min(product.stock, q + 1))} className="text-gray-500 hover:text-white transition-colors">
-                    <Plus className="w-5 h-5" />
-                  </button>
-                </div>
-                <button onClick={handleAdd} className={`flex-1 flex items-center justify-center gap-3 py-4 rounded-2xl font-black uppercase tracking-widest transition-all ${added ? 'bg-green-600 text-white translate-y-0.5' : 'bg-indigo-600 text-white hover:bg-indigo-500 hover:shadow-2xl hover:shadow-indigo-900/40 active:translate-y-1'}`}>
-                  {added ? <Check className="w-5 h-5" /> : <ShoppingCart className="w-5 h-5" />}
-                  {added ? 'Agregado ✓' : 'Comprar Ahora'}
+              <div className="flex items-center justify-between bg-white/[0.03] border border-white/[0.07] rounded-2xl px-6 py-4 min-w-[140px]">
+                <button onClick={() => setQty(q => Math.max(1, q - 1))} className="text-slate-500 hover:text-white transition-colors">
+                  <Minus className="w-5 h-5" />
                 </button>
+                <span className="text-xl font-display font-black text-white">{qty}</span>
+                <button onClick={() => setQty(q => Math.min(product.stock, q + 1))} className="text-slate-500 hover:text-white transition-colors">
+                  <Plus className="w-5 h-5" />
+                </button>
+              </div>
+              <button onClick={handleAdd} className={`flex-1 flex items-center justify-center gap-3 py-4 rounded-2xl font-black uppercase tracking-widest transition-all ${added ? 'bg-green-600 text-white translate-y-0.5' : 'bg-teal-500 text-white hover:bg-teal-400 hover:shadow-2xl hover:shadow-teal-900/40 active:translate-y-1'}`}>
+                {added ? <Check className="w-5 h-5" /> : <ShoppingCart className="w-5 h-5" />}
+                {added ? 'Agregado ✓' : 'Comprar Ahora'}
+              </button>
                 {/* Wishlist Toggle Button */}
                 <button 
                   onClick={() => toggle(product._id)}
-                  className={`w-[60px] flex items-center justify-center rounded-2xl border transition-all ${inWishlist ? 'bg-pink-600/10 border-pink-500/30 text-pink-500' : 'bg-white/5 border-white/10 text-gray-500 hover:text-pink-500 hover:bg-pink-500/5'}`}>
+                  className={`w-[60px] flex items-center justify-center rounded-2xl border transition-all ${inWishlist ? 'bg-pink-600/10 border-pink-500/30 text-pink-400' : 'bg-white/5 border-white/10 text-slate-500 hover:text-pink-400 hover:bg-pink-500/5'}`}>
                   <Heart className={`w-6 h-6 ${inWishlist ? 'fill-current animate-pulse' : ''}`} />
                 </button>
               </div>
@@ -150,8 +150,8 @@ export function ProductClient({ product }: { product: Product }) {
                 { icon: RotateCcw, label: 'Devolución', sub: '30 Días' },
               ].map((f, i) => (
                 <div key={i} className="text-center">
-                  <f.icon className="w-5 h-5 text-gray-600 mx-auto mb-2" />
-                  <div className="text-[10px] text-gray-500 uppercase font-bold tracking-tighter">{f.label}</div>
+                  <f.icon className="w-5 h-5 text-slate-600 mx-auto mb-2" />
+                  <div className="text-[10px] text-slate-500 uppercase font-bold tracking-tighter">{f.label}</div>
                   <div className="text-[11px] text-white font-medium">{f.sub}</div>
                 </div>
               ))}
@@ -164,7 +164,7 @@ export function ProductClient({ product }: { product: Product }) {
         <div className="mt-32">
           <div className="flex items-center justify-between mb-10">
             <div>
-              <p className="section-label mb-2 text-indigo-400">Te puede interesar</p>
+              <p className="section-label mb-2 text-teal-300">Te puede interesar</p>
               <h2 className="text-3xl font-display font-bold text-white">Productos Relacionados</h2>
             </div>
             <Link href="/products" className="btn-ghost hidden sm:inline-flex text-xs">

@@ -46,11 +46,11 @@ export default function RegisterPage() {
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mx-auto mb-5">
-            <User className="w-7 h-7 text-indigo-400" />
+          <div className="w-14 h-14 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center mx-auto mb-5">
+            <User className="w-7 h-7 text-teal-300" />
           </div>
           <h1 className="text-2xl font-display font-bold text-white">Crear cuenta</h1>
-          <p className="text-gray-400 text-sm mt-1">Regístrate para comprar en TechStore</p>
+          <p className="text-slate-400 text-sm mt-1">Regístrate para comprar en TechStore</p>
         </div>
 
         {/* Social Login */}
@@ -77,40 +77,40 @@ export default function RegisterPage() {
 
         <div className="relative flex items-center mb-6">
           <div className="flex-grow border-t border-white/10"></div>
-          <span className="flex-shrink-0 mx-4 text-gray-500 text-xs uppercase font-medium">O usar el email</span>
+          <span className="flex-shrink-0 mx-4 text-slate-500 text-xs uppercase font-medium">O usar el email</span>
           <div className="flex-grow border-t border-white/10"></div>
         </div>
 
         <form onSubmit={handleSubmit} className="card p-6 space-y-4">
           <div>
-            <label className="text-xs text-gray-400 mb-1.5 block">Nombre completo</label>
+            <label className="text-xs text-slate-400 mb-1.5 block">Nombre completo</label>
             <div className="relative">
-              <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+              <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
               <input required value={form.name} onChange={e => f('name', e.target.value)}
                 placeholder="Ricardo Sanhueza" type="text"
-                className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-gray-600 focus:border-indigo-500 focus:outline-none" />
+                className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:border-teal-400 focus:outline-none" />
             </div>
           </div>
 
           <div>
-            <label className="text-xs text-gray-400 mb-1.5 block">Email</label>
+            <label className="text-xs text-slate-400 mb-1.5 block">Email</label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
               <input required value={form.email} onChange={e => f('email', e.target.value)}
                 placeholder="correo@email.com" type="email"
-                className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-gray-600 focus:border-indigo-500 focus:outline-none" />
+                className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:border-teal-400 focus:outline-none" />
             </div>
           </div>
 
           <div>
-            <label className="text-xs text-gray-400 mb-1.5 block">Contraseña</label>
+            <label className="text-xs text-slate-400 mb-1.5 block">Contraseña</label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
               <input required value={form.password} onChange={e => f('password', e.target.value)}
                 placeholder="Mínimo 6 caracteres"
                 type={showPass ? 'text' : 'password'} minLength={6}
-                className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-10 py-3 text-sm text-white placeholder-gray-600 focus:border-indigo-500 focus:outline-none" />
-              <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300">
+                className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-10 py-3 text-sm text-white placeholder-slate-500 focus:border-teal-400 focus:outline-none" />
+              <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300">
                 {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
             </div>
@@ -125,9 +125,9 @@ export default function RegisterPage() {
           </button>
         </form>
 
-        <p className="text-center text-sm text-gray-500 mt-4">
+        <p className="text-center text-sm text-slate-500 mt-4">
           ¿Ya tienes cuenta?{' '}
-          <Link href="/login" className="text-indigo-400 hover:underline font-medium">Iniciar sesión</Link>
+          <Link href="/login" className="text-teal-300 hover:underline font-medium">Iniciar sesión</Link>
         </p>
       </div>
     </div>

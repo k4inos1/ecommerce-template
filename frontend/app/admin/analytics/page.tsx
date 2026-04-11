@@ -130,13 +130,13 @@ export default function AnalyticsPage() {
   return (
     <AdminLayout title="Analytics">
       {loading ? (
-        <div className="flex justify-center py-20"><div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" /></div>
+        <div className="flex justify-center py-20"><div className="w-8 h-8 border-2 border-teal-500 border-t-transparent rounded-full animate-spin" /></div>
       ) : (
         <div className="space-y-5">
           {/* KPI row */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { label: 'Revenue Total', value: `$${totalRevenue.toLocaleString('es', { maximumFractionDigits: 0 })}`, sub: 'acumulado', icon: DollarSign, color: 'text-indigo-400', bg: 'bg-indigo-500/10 border-indigo-500/20' },
+              { label: 'Revenue Total', value: `$${totalRevenue.toLocaleString('es', { maximumFractionDigits: 0 })}`, sub: 'acumulado', icon: DollarSign, color: 'text-teal-400', bg: 'bg-teal-500/10 border-teal-500/20' },
               { label: 'Órdenes', value: orders.length, sub: `${byStatus[0].value} pendientes`, icon: ShoppingBag, color: 'text-green-400', bg: 'bg-green-500/10 border-green-500/20' },
               { label: 'Ticket Promedio', value: `$${avgOrder.toFixed(2)}`, sub: 'por orden', icon: TrendingUp, color: 'text-yellow-400', bg: 'bg-yellow-500/10 border-yellow-500/20' },
               { label: 'Productos', value: `${publishedProducts} / ${products.length}`, sub: 'publicados', icon: Package, color: 'text-purple-400', bg: 'bg-purple-500/10 border-purple-500/20' },

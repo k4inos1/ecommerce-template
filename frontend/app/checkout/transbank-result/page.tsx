@@ -55,7 +55,7 @@ function TransbankResultContent() {
   if (status === 'loading') {
     return (
       <div className="max-w-md mx-auto px-4 py-24 text-center">
-        <div className="w-16 h-16 border-2 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin mx-auto mb-8" />
+        <div className="w-16 h-16 border-2 border-teal-500/30 border-t-teal-500 rounded-full animate-spin mx-auto mb-8" />
         <h1 className="text-2xl font-bold text-white mb-3">Confirmando pago...</h1>
         <p className="text-gray-400">Por favor no cierres esta ventana.</p>
       </div>
@@ -106,7 +106,7 @@ function TransbankResultContent() {
 
 export default function TransbankResultPage() {
   return (
-    <Suspense fallback={<div className="flex justify-center py-24"><div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" /></div>}>
+    <Suspense fallback={<div className="flex justify-center py-24"><div className="w-8 h-8 border-2 border-teal-500 border-t-transparent rounded-full animate-spin" /></div>}>
       <TransbankResultContent />
     </Suspense>
   );

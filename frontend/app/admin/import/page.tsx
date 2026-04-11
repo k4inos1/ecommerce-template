@@ -169,10 +169,10 @@ export default function AdminImport() {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
           <input value={query} onChange={e => setQuery(e.target.value)} placeholder={placeholder}
-            className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-gray-600 focus:border-indigo-500 focus:outline-none" />
+            className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-gray-600 focus:border-teal-500 focus:outline-none" />
         </div>
         <select value={category} onChange={e => setCategory(e.target.value)}
-          className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm text-gray-300 focus:border-indigo-500 focus:outline-none">
+          className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm text-gray-300 focus:border-teal-500 focus:outline-none">
           {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
         </select>
         <button type="submit" disabled={loading} className="btn-primary px-5 disabled:opacity-50">
@@ -217,7 +217,7 @@ export default function AdminImport() {
       </div>
       <div className="flex gap-1.5 flex-wrap">
         <span className={`text-[10px] px-2 py-0.5 rounded-full border ${COMP_COLOR[p.competitionLevel]}`}>{p.competitionLevel === 'low' ? '↓ Baja' : p.competitionLevel === 'medium' ? '→ Media' : '↑ Alta'} competencia</span>
-        <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">{p.category}</span>
+        <span className="text-[10px] px-2 py-0.5 rounded-full bg-teal-500/10 text-teal-400 border border-teal-500/20">{p.category}</span>
         {p.trend === 'rising' && <span className="text-[10px] px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">📈 En alza</span>}
       </div>
       <div className="flex gap-2 mt-auto">
@@ -241,11 +241,11 @@ export default function AdminImport() {
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-[#0f0f1a] border border-white/10 rounded-2xl w-full max-w-md p-6 space-y-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-white font-semibold"><Calculator className="w-5 h-5 text-indigo-400" /> Calculadora de Margen</div>
+              <div className="flex items-center gap-2 text-white font-semibold"><Calculator className="w-5 h-5 text-teal-400" /> Calculadora de Margen</div>
               <button onClick={() => { setCalcOpen(false); setCalcResult(null); }} className="text-gray-500 hover:text-white text-2xl leading-none">×</button>
             </div>
             {calcProduct && <div className="text-sm text-gray-400 truncate">{calcProduct.name} — Venta: ${calcProduct.price} / Proveedor: ${calcProduct.supplierPrice}</div>}
-            {loading ? <div className="flex justify-center py-4"><div className="w-6 h-6 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" /></div> : null}
+            {loading ? <div className="flex justify-center py-4"><div className="w-6 h-6 border-2 border-teal-500 border-t-transparent rounded-full animate-spin" /></div> : null}
             {calcResult && (
               <div className="space-y-3">
                 <div className={`text-sm px-3 py-2.5 rounded-xl border ${calcResult.isViable ? 'bg-green-500/10 text-green-400 border-green-500/20' : 'bg-red-500/10 text-red-400 border-red-500/20'}`}>
@@ -260,9 +260,9 @@ export default function AdminImport() {
                     { label: 'ROI', value: `${calcResult.roi}%` },
                     { label: 'Fee Stripe', value: `$${calcResult.costs.paymentFee}` },
                   ].map(r => (
-                    <div key={r.label} className={`rounded-xl p-3 ${r.h ? 'bg-indigo-500/10 border border-indigo-500/20' : 'bg-white/[0.03] border border-white/5'}`}>
+                    <div key={r.label} className={`rounded-xl p-3 ${r.h ? 'bg-teal-500/10 border border-teal-500/20' : 'bg-white/[0.03] border border-white/5'}`}>
                       <div className="text-[10px] text-gray-500">{r.label}</div>
-                      <div className={`font-bold text-sm ${r.h ? 'text-indigo-400' : 'text-white'}`}>{r.value}</div>
+                      <div className={`font-bold text-sm ${r.h ? 'text-teal-400' : 'text-white'}`}>{r.value}</div>
                     </div>
                   ))}
                 </div>
@@ -279,12 +279,12 @@ export default function AdminImport() {
 
       <div className="space-y-6">
         {/* Tabs */}
-        <div className="flex gap-1 bg-white/[0.03] border border-white/[0.07] rounded-xl p-1">
+        <div className="flex gap-1 bg-white/[0.04] border border-white/[0.08] rounded-xl p-1">
           {TABS.map(t => {
             const Icon = t.icon;
             return (
               <button key={t.id} onClick={() => handleTabClick(t.id)}
-                className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium transition-all ${tab === t.id ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-900/30' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}>
+                className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium transition-all ${tab === t.id ? 'bg-teal-500 text-white shadow-lg shadow-teal-900/30' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
                 <Icon className="w-3.5 h-3.5" /> {t.label}
               </button>
             );
@@ -297,8 +297,8 @@ export default function AdminImport() {
         {tab === 'search' && (
           <div className="space-y-6">
             <div className="card p-4 flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-indigo-400 mt-0.5 shrink-0" />
-              <div className="text-xs text-gray-400">Busca productos en los motores seleccionados. Solo puedes importar los que tengan <span className="text-green-400 font-medium">margen ≥ 30%</span> según el análisis.</div>
+              <TrendingUp className="w-5 h-5 text-teal-300 mt-0.5 shrink-0" />
+              <div className="text-xs text-slate-400">Busca productos en los motores seleccionados. Solo puedes importar los que tengan <span className="text-green-400 font-medium">margen ≥ 30%</span> según el análisis.</div>
             </div>
             <SearchBar onSubmit={handleSearch} showEngines placeholder="Ej: wireless headphones, gaming chair..." />
             {searchResults.length > 0 && (
@@ -316,8 +316,8 @@ export default function AdminImport() {
         {tab === 'compare' && (
           <div className="space-y-6">
             <div className="card p-4 flex items-start gap-3">
-              <GitCompare className="w-5 h-5 text-indigo-400 mt-0.5 shrink-0" />
-              <div className="text-xs text-gray-400">
+              <GitCompare className="w-5 h-5 text-teal-300 mt-0.5 shrink-0" />
+              <div className="text-xs text-slate-400">
                 Compara resultados de <span className="text-orange-400 font-medium">AliExpress</span> y <span className="text-blue-400 font-medium">eBay</span> en paralelo para el mismo producto. Ambos motores se consultan simultáneamente.
               </div>
             </div>
@@ -371,7 +371,7 @@ export default function AdminImport() {
                 {/* Summary cards */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   {[
-                    { label: 'Tamaño de Mercado', value: market.marketSize.value, sub: market.marketSize.unit, color: 'text-indigo-400' },
+                    { label: 'Tamaño de Mercado', value: market.marketSize.value, sub: market.marketSize.unit, color: 'text-teal-400' },
                     { label: 'Crecimiento Anual', value: `${market.growthRate.annual}%`, sub: market.growthRate.label, color: market.growthRate.trend === 'rising' ? 'text-green-400' : market.growthRate.trend === 'stable' ? 'text-yellow-400' : 'text-red-400' },
                     { label: 'Puntuación Oportunidad', value: `${market.opportunityScore}/100`, sub: market.opportunityScore >= 80 ? 'Excelente' : market.opportunityScore >= 60 ? 'Buena' : 'Regular', color: market.opportunityScore >= 70 ? 'text-green-400' : 'text-yellow-400' },
                     { label: 'Categoría', value: market.category, sub: 'Nicho seleccionado', color: 'text-purple-400' },
@@ -393,7 +393,7 @@ export default function AdminImport() {
                       <div className="text-[10px] text-gray-600 mb-1.5">Fuentes web consultadas:</div>
                       <div className="flex flex-wrap gap-2">
                         {market.sources.map((src: string, i: number) => (
-                          <span key={i} className="text-[10px] text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-full truncate max-w-[200px]">{src}</span>
+                          <span key={i} className="text-[10px] text-teal-400 bg-teal-500/10 border border-teal-500/20 px-2 py-0.5 rounded-full truncate max-w-[200px]">{src}</span>
                         ))}
                       </div>
                     </div>
@@ -421,10 +421,10 @@ export default function AdminImport() {
                       <div key={d.segment}>
                         <div className="flex items-center justify-between text-sm mb-1">
                           <span className="text-white">{d.segment}</span>
-                          <span className="text-indigo-400 font-bold">{d.percentage}%</span>
+                          <span className="text-teal-400 font-bold">{d.percentage}%</span>
                         </div>
                         <div className="w-full bg-white/5 rounded-full h-1.5">
-                          <div className="h-1.5 bg-indigo-500 rounded-full" style={{ width: `${d.percentage}%` }} />
+                          <div className="h-1.5 bg-teal-500 rounded-full" style={{ width: `${d.percentage}%` }} />
                         </div>
                         <div className="text-[11px] text-gray-500 mt-0.5">{d.description}</div>
                       </div>
@@ -440,7 +440,7 @@ export default function AdminImport() {
                       <div key={p.range} className="flex items-center gap-3">
                         <div className="w-24 text-xs font-mono text-gray-400">{p.range}</div>
                         <div className="flex-1 bg-white/5 rounded-full h-2">
-                          <div className="h-2 rounded-full bg-indigo-500" style={{ width: p.volume === 'high' ? '85%' : p.volume === 'medium' ? '50%' : '20%' }} />
+                          <div className="h-2 rounded-full bg-teal-500" style={{ width: p.volume === 'high' ? '85%' : p.volume === 'medium' ? '50%' : '20%' }} />
                         </div>
                         <div className="text-xs text-gray-500 w-32">{p.label}</div>
                       </div>
@@ -488,7 +488,7 @@ export default function AdminImport() {
                       </div>
                     )}
                     {s.sampleAvailable && (
-                      <div className="text-xs text-indigo-400">✓ Muestra disponible — ${s.samplePrice} USD</div>
+                      <div className="text-xs text-teal-400">✓ Muestra disponible — ${s.samplePrice} USD</div>
                     )}
                     <a href={s.alibabaUrl} target="_blank" rel="noopener noreferrer"
                       className="w-full btn-ghost text-xs py-2 justify-center flex items-center gap-1.5">
@@ -511,10 +511,10 @@ export default function AdminImport() {
               <div className="relative flex-1">
                 <FileText className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                 <input value={optimizeName} onChange={e => setOptimizeName(e.target.value)} placeholder="Nombre del producto a optimizar..."
-                  className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-gray-600 focus:border-indigo-500 focus:outline-none" />
+                  className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-gray-600 focus:border-teal-500 focus:outline-none" />
               </div>
               <select value={category} onChange={e => setCategory(e.target.value)}
-                className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm text-gray-300 focus:border-indigo-500 focus:outline-none">
+                className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm text-gray-300 focus:border-teal-500 focus:outline-none">
                 {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
               <button type="submit" disabled={loading} className="btn-primary px-5 disabled:opacity-50">
@@ -528,7 +528,7 @@ export default function AdminImport() {
                 <div className="grid grid-cols-2 gap-3">
                   <div className="card p-4 text-center">
                     <div className="text-xs text-gray-500 mb-1">SEO Score</div>
-                    <div className="text-3xl font-bold text-indigo-400">{optimized.seoScore}</div>
+                    <div className="text-3xl font-bold text-teal-400">{optimized.seoScore}</div>
                     <div className="text-xs text-gray-500">/100</div>
                   </div>
                   <div className="card p-4 text-center">
@@ -549,7 +549,7 @@ export default function AdminImport() {
                   <div className="section-label mb-3">Bullet Points</div>
                   <ul className="space-y-2">
                     {optimized.bullets.map((b: string, i: number) => (
-                      <li key={i} className="text-sm text-gray-300 leading-relaxed pl-3 border-l-2 border-indigo-500/30">{b}</li>
+                      <li key={i} className="text-sm text-gray-300 leading-relaxed pl-3 border-l-2 border-teal-500/30">{b}</li>
                     ))}
                   </ul>
                 </div>
@@ -559,7 +559,7 @@ export default function AdminImport() {
                   <div className="section-label mb-3">Palabras Clave ({optimized.keywords.length})</div>
                   <div className="flex flex-wrap gap-2">
                     {optimized.keywords.map((k: string) => (
-                      <span key={k} className="text-xs px-3 py-1.5 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">{k}</span>
+                      <span key={k} className="text-xs px-3 py-1.5 rounded-lg bg-teal-500/10 text-teal-400 border border-teal-500/20">{k}</span>
                     ))}
                   </div>
                 </div>
@@ -576,7 +576,7 @@ export default function AdminImport() {
                   <ul className="space-y-2">
                     {optimized.aPlusIdeas.map((idea: string, i: number) => (
                       <li key={i} className="text-sm text-gray-300 flex items-start gap-2">
-                        <span className="text-indigo-400 mt-0.5">{'✦'}</span>{idea}
+                        <span className="text-teal-400 mt-0.5">{'✦'}</span>{idea}
                       </li>
                     ))}
                   </ul>
@@ -606,7 +606,7 @@ export default function AdminImport() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div className="card p-4 flex items-start gap-3 flex-1">
-                <History className="w-5 h-5 text-indigo-400 mt-0.5 shrink-0" />
+                <History className="w-5 h-5 text-teal-400 mt-0.5 shrink-0" />
                 <div className="text-xs text-gray-400">Registro de las últimas <span className="text-white font-medium">50 sesiones</span> de scraping guardadas en la base de datos.</div>
               </div>
               <button onClick={handleHistory} disabled={loading}
@@ -617,7 +617,7 @@ export default function AdminImport() {
 
             {loading && (
               <div className="flex justify-center py-10">
-                <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+                <div className="w-8 h-8 border-2 border-teal-500 border-t-transparent rounded-full animate-spin" />
               </div>
             )}
 
@@ -651,7 +651,7 @@ export default function AdminImport() {
                               {h.source || '—'}
                             </span>
                           </td>
-                          <td className="px-5 py-3 text-right text-indigo-400 font-mono font-medium">{h.count}</td>
+                          <td className="px-5 py-3 text-right text-teal-400 font-mono font-medium">{h.count}</td>
                           <td className="px-5 py-3 text-right text-gray-500 text-xs">
                             {new Date(h.createdAt).toLocaleDateString('es-CL', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                           </td>

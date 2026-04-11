@@ -42,7 +42,7 @@ export default function ForgotPasswordPage() {
     <main className="min-h-screen bg-[#0a0a0a] flex items-center justify-center p-4">
       {/* Dynamic Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-[40%] -right-[10%] w-[70%] h-[70%] rounded-full bg-indigo-900/20 blur-[120px]" />
+        <div className="absolute -top-[40%] -right-[10%] w-[70%] h-[70%] rounded-full bg-teal-900/20 blur-[120px]" />
         <div className="absolute -bottom-[40%] -left-[10%] w-[70%] h-[70%] rounded-full bg-blue-900/20 blur-[120px]" />
       </div>
 
@@ -50,7 +50,7 @@ export default function ForgotPasswordPage() {
         <div className="bg-[#0f0f1a]/80 backdrop-blur-xl outline outline-1 outline-white/10 p-8 rounded-[2rem] shadow-2xl">
           
           <div className="flex flex-col items-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/20 mb-6">
+            <div className="w-16 h-16 bg-gradient-to-br from-teal-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg shadow-teal-500/20 mb-6">
               <ShieldAlert className="w-8 h-8 text-white" />
             </div>
             <h1 className="text-2xl font-bold text-white mb-2 text-center">Recuperar Contraseña</h1>
@@ -76,7 +76,7 @@ export default function ForgotPasswordPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="tu@correo.com"
-                  className="w-full bg-[#161622] border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all hover:border-white/20"
+                  className="w-full bg-[#161622] border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all hover:border-white/20"
                 />
               </div>
             </div>
@@ -84,7 +84,7 @@ export default function ForgotPasswordPage() {
             <button
               type="submit"
               disabled={loading || !email}
-              className="w-full bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-400 hover:to-indigo-500 text-white font-semibold py-3.5 px-4 rounded-xl transition-all shadow-lg shadow-indigo-500/25 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center h-[52px]"
+              className="w-full bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-400 hover:to-teal-500 text-white font-semibold py-3.5 px-4 rounded-xl transition-all shadow-lg shadow-teal-500/25 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center h-[52px]"
             >
               {loading ? (
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

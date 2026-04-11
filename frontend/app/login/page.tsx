@@ -68,13 +68,13 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mx-auto mb-5">
-            <User className="w-7 h-7 text-indigo-400" />
+          <div className="w-14 h-14 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center mx-auto mb-5">
+            <User className="w-7 h-7 text-teal-300" />
           </div>
           <h1 className="text-2xl font-display font-bold text-white">
             {mode === 'login' ? 'Bienvenido de vuelta' : 'Crear cuenta'}
           </h1>
-          <p className="text-gray-400 text-sm mt-1">
+          <p className="text-slate-400 text-sm mt-1">
             {mode === 'login' ? 'Inicia sesión para ver tus órdenes' : 'Regístrate para comprar'}
           </p>
         </div>
@@ -83,7 +83,7 @@ export default function LoginPage() {
         <div className="flex bg-white/[0.03] border border-white/[0.07] rounded-xl p-1 mb-6">
           {(['login', 'register'] as const).map(m => (
             <button key={m} onClick={() => { setMode(m); setError(''); }}
-              className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${mode === m ? 'bg-indigo-600 text-white shadow' : 'text-gray-400 hover:text-white'}`}>
+              className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${mode === m ? 'bg-teal-500 text-white shadow' : 'text-slate-400 hover:text-white'}`}>
               {m === 'login' ? 'Iniciar Sesión' : 'Registrarse'}
             </button>
           ))}
@@ -113,53 +113,53 @@ export default function LoginPage() {
 
         <div className="relative flex items-center mb-6">
           <div className="flex-grow border-t border-white/10"></div>
-          <span className="flex-shrink-0 mx-4 text-gray-500 text-xs uppercase font-medium">O usar el email</span>
+          <span className="flex-shrink-0 mx-4 text-slate-500 text-xs uppercase font-medium">O usar el email</span>
           <div className="flex-grow border-t border-white/10"></div>
         </div>
 
         <form onSubmit={handleSubmit} className="card p-6 space-y-4">
           {mode === 'register' && (
             <div>
-              <label className="text-xs text-gray-400 mb-1.5 block">Nombre completo</label>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-                <input required value={form.name} onChange={e => f('name', e.target.value)}
-                  placeholder="Ricardo Sanhueza" type="text"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-gray-600 focus:border-indigo-500 focus:outline-none" />
-              </div>
-            </div>
-          )}
-
-          <div>
-            <label className="text-xs text-gray-400 mb-1.5 block">Email</label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-              <input required value={form.email} onChange={e => f('email', e.target.value)}
-                placeholder="correo@email.com" type="email"
-                className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-gray-600 focus:border-indigo-500 focus:outline-none" />
-            </div>
-          </div>
-
-          <div>
-            <label className="text-xs text-gray-400 mb-1.5 block">Contraseña</label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-              <input required value={form.password} onChange={e => f('password', e.target.value)}
-                placeholder={mode === 'register' ? 'Mínimo 6 caracteres' : '••••••••'}
-                type={showPass ? 'text' : 'password'} minLength={6}
-                className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-10 py-3 text-sm text-white placeholder-gray-600 focus:border-indigo-500 focus:outline-none" />
-              <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300">
-                {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-              </button>
-            </div>
-            {mode === 'login' && (
-              <div className="flex justify-end mt-2">
-                <Link href="/forgot-password" className="text-xs text-indigo-400 hover:text-indigo-300 transition-colors font-medium">
-                  ¿Olvidaste tu contraseña?
-                </Link>
+                <label className="text-xs text-slate-400 mb-1.5 block">Nombre completo</label>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <input required value={form.name} onChange={e => f('name', e.target.value)}
+                    placeholder="Ricardo Sanhueza" type="text"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:border-teal-400 focus:outline-none" />
+                </div>
               </div>
             )}
-          </div>
+
+            <div>
+              <label className="text-xs text-slate-400 mb-1.5 block">Email</label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <input required value={form.email} onChange={e => f('email', e.target.value)}
+                  placeholder="correo@email.com" type="email"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:border-teal-400 focus:outline-none" />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-xs text-slate-400 mb-1.5 block">Contraseña</label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <input required value={form.password} onChange={e => f('password', e.target.value)}
+                  placeholder={mode === 'register' ? 'Mínimo 6 caracteres' : '••••••••'}
+                  type={showPass ? 'text' : 'password'} minLength={6}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-10 py-3 text-sm text-white placeholder-slate-500 focus:border-teal-400 focus:outline-none" />
+                <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300">
+                  {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+              {mode === 'login' && (
+                <div className="flex justify-end mt-2">
+                  <Link href="/forgot-password" className="text-xs text-teal-300 hover:text-teal-200 transition-colors font-medium">
+                    ¿Olvidaste tu contraseña?
+                  </Link>
+                </div>
+              )}
+            </div>
 
           {error && <div className="text-red-400 text-sm bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-2.5">{error}</div>}
 
@@ -170,8 +170,8 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <p className="text-center text-xs text-gray-500 mt-4">
-          ¿Problema para acceder? <Link href="/" className="text-indigo-400 hover:underline">Volver al inicio</Link>
+        <p className="text-center text-xs text-slate-500 mt-4">
+          ¿Problema para acceder? <Link href="/" className="text-teal-300 hover:underline">Volver al inicio</Link>
         </p>
       </div>
     </div>
