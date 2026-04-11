@@ -83,15 +83,15 @@ function ProductsContent() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 border-b border-white/5 pb-8">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-[10px] font-bold text-indigo-400 uppercase tracking-widest mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-[10px] font-bold text-teal-200 uppercase tracking-widest mb-4">
             Catálogo Completo
           </div>
           <h1 className="text-4xl lg:text-5xl font-display font-black text-white">Explora la Tecnología</h1>
-          <p className="text-gray-400 mt-2 text-lg">Encuentra los gadgets más innovadores con envío express.</p>
+          <p className="text-slate-400 mt-2 text-lg">Encuentra los gadgets más innovadores con envío express.</p>
         </div>
         {!loading && (
-          <div className="text-sm font-mono text-gray-500 bg-white/5 border border-white/10 px-4 py-2 rounded-2xl flex items-center gap-2">
-            <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-pulse" />
+          <div className="text-sm font-mono text-slate-500 bg-white/5 border border-white/10 px-4 py-2 rounded-2xl flex items-center gap-2">
+            <span className="w-1.5 h-1.5 bg-teal-400 rounded-full animate-pulse" />
             {total} resultados
           </div>
         )}
@@ -102,12 +102,12 @@ function ProductsContent() {
         <div className="flex flex-col md:flex-row gap-4">
           {/* Search */}
           <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
             <input 
               value={search} 
               onChange={e => setSearch(e.target.value)} 
               placeholder="¿Qué estás buscando hoy?"
-              className="w-full bg-white/[0.03] border border-white/[0.07] rounded-2xl pl-11 pr-4 py-4 text-sm text-white placeholder-gray-600 focus:border-indigo-500 focus:outline-none transition-all shadow-inner" 
+              className="w-full bg-white/[0.03] border border-white/[0.07] rounded-2xl pl-11 pr-4 py-4 text-sm text-white placeholder-slate-500 focus:border-teal-400 focus:outline-none transition-all shadow-inner" 
             />
           </div>
           
@@ -115,7 +115,7 @@ function ProductsContent() {
             {/* Filters toggle */}
             <button 
               onClick={() => setShowFilters(p => !p)}
-              className={`flex items-center justify-center gap-2 px-6 py-4 rounded-2xl border text-sm font-bold transition-all ${showFilters || (minPrice || maxPrice) ? 'bg-indigo-600 border-indigo-500 text-white' : 'bg-white/[0.03] border-white/[0.07] text-gray-400 hover:text-white hover:border-white/20'}`}>
+              className={`flex items-center justify-center gap-2 px-6 py-4 rounded-2xl border text-sm font-bold transition-all ${showFilters || (minPrice || maxPrice) ? 'bg-teal-500 border-teal-500 text-white' : 'bg-white/[0.03] border-white/[0.07] text-slate-400 hover:text-white hover:border-white/20'}`}>
               <SlidersHorizontal className="w-4 h-4" />
               <span>Filtros</span>
             </button>
@@ -124,7 +124,7 @@ function ProductsContent() {
             <select 
               value={sort} 
               onChange={e => setSort(e.target.value)}
-              className="bg-white/[0.03] border border-white/[0.07] rounded-2xl px-5 py-4 text-sm font-bold text-gray-300 focus:border-indigo-500 focus:outline-none cursor-pointer hover:border-white/20 transition-all appearance-none pr-10 relative">
+              className="bg-white/[0.03] border border-white/[0.07] rounded-2xl px-5 py-4 text-sm font-bold text-slate-300 focus:border-teal-400 focus:outline-none cursor-pointer hover:border-white/20 transition-all appearance-none pr-10 relative">
               <option value="newest">Más recientes</option>
               <option value="price-asc">Precio ↑</option>
               <option value="price-desc">Precio ↓</option>
@@ -138,7 +138,7 @@ function ProductsContent() {
             <button 
               key={c} 
               onClick={() => setCategory(c)}
-              className={`px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border ${category === c ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-900/40' : 'bg-white/[0.03] border-white/[0.07] text-gray-400 hover:text-white hover:border-white/20'}`}>
+              className={`px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border ${category === c ? 'bg-teal-500 border-teal-500 text-white shadow-lg shadow-teal-900/40' : 'bg-white/[0.03] border-white/[0.07] text-slate-400 hover:text-white hover:border-white/20'}`}>
               {c}
             </button>
           ))}
@@ -153,32 +153,32 @@ function ProductsContent() {
 
         {/* Expanded Filters Panel */}
         {showFilters && (
-          <div className="card p-6 border-indigo-500/20 bg-indigo-500/[0.02] animate-in fade-in slide-in-from-top-4 duration-300">
+          <div className="card p-6 border-teal-500/20 bg-teal-500/[0.02] animate-in fade-in slide-in-from-top-4 duration-300">
             <div className="flex flex-col md:flex-row items-center md:items-end gap-6">
               <div className="flex-1 w-full">
-                <p className="text-xs text-gray-500 uppercase font-black tracking-[0.2em] mb-4">Rango de precio</p>
+                <p className="text-xs text-slate-500 uppercase font-black tracking-[0.2em] mb-4">Rango de precio</p>
                 <div className="flex items-center gap-4">
                   <div className="relative flex-1">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm">$</span>
                     <input
                       type="number" 
                       min="0" 
                       placeholder="Mínimo"
                       value={minPrice}
                       onChange={e => setMinPrice(e.target.value)}
-                      className="w-full bg-black/40 border border-white/10 rounded-xl pl-8 pr-4 py-3 text-sm text-white placeholder-gray-700 focus:border-indigo-500/50 outline-none transition-all"
+                      className="w-full bg-black/40 border border-white/10 rounded-xl pl-8 pr-4 py-3 text-sm text-white placeholder-slate-600 focus:border-teal-400/50 outline-none transition-all"
                     />
                   </div>
-                  <span className="text-gray-700 shrink-0 font-bold">—</span>
+                  <span className="text-slate-600 shrink-0 font-bold">—</span>
                   <div className="relative flex-1">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm">$</span>
                     <input
                       type="number" 
                       min="0" 
                       placeholder="Máximo"
                       value={maxPrice}
                       onChange={e => setMaxPrice(e.target.value)}
-                      className="w-full bg-black/40 border border-white/10 rounded-xl pl-8 pr-4 py-3 text-sm text-white placeholder-gray-700 focus:border-indigo-500/50 outline-none transition-all"
+                      className="w-full bg-black/40 border border-white/10 rounded-xl pl-8 pr-4 py-3 text-sm text-white placeholder-slate-600 focus:border-teal-400/50 outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -188,7 +188,7 @@ function ProductsContent() {
                   <button 
                     key={r.label} 
                     onClick={() => { setMinPrice(r.min); setMaxPrice(r.max); }}
-                    className={`whitespace-nowrap px-5 py-3 rounded-xl text-xs font-bold border transition-all ${minPrice === r.min && maxPrice === r.max ? 'bg-indigo-600 border-indigo-500 text-white' : 'bg-white/5 border-white/10 text-gray-500 hover:text-white hover:border-white/20'}`}>
+                    className={`whitespace-nowrap px-5 py-3 rounded-xl text-xs font-bold border transition-all ${minPrice === r.min && maxPrice === r.max ? 'bg-teal-500 border-teal-500 text-white' : 'bg-white/5 border-white/10 text-slate-500 hover:text-white hover:border-white/20'}`}>
                     {r.label}
                   </button>
                 ))}
@@ -219,21 +219,21 @@ function ProductsContent() {
           ))}
         </div>
       ) : sorted.length === 0 ? (
-        <div className="card py-32 text-center bg-white/[0.01] border-white/[0.05]">
+          <div className="card py-32 text-center bg-white/[0.01] border-white/[0.05]">
           <div className="text-6xl mb-6 grayscale opacity-20">🔍</div>
           <h2 className="text-2xl font-bold text-white mb-2">Sin resultados exactos</h2>
-          <p className="text-gray-500 max-w-sm mx-auto px-6">
+          <p className="text-slate-500 max-w-sm mx-auto px-6">
             Intenta ajustando los filtros o buscando un término más general.
           </p>
-          <button onClick={clearAllFilters} className="mt-8 text-indigo-400 font-bold hover:text-indigo-300 transition-colors uppercase tracking-widest text-xs">
+          <button onClick={clearAllFilters} className="mt-8 text-teal-300 font-bold hover:text-teal-200 transition-colors uppercase tracking-widest text-xs">
             Ver todo el catálogo
           </button>
         </div>
       ) : (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {sorted.map(p => (
-            <div key={p._id} className="card group hover:border-indigo-500/30 hover:-translate-y-1 transition-all duration-200 flex flex-col">
-              <Link href={`/products/${p._id}`} className="flex flex-col flex-1 p-4">
+              <div key={p._id} className="card group hover:border-teal-400/30 hover:-translate-y-1 transition-all duration-200 flex flex-col">
+                <Link href={`/products/${p._id}`} className="flex flex-col flex-1 p-4">
                 {/* Image */}
                 <div className="aspect-square rounded-xl bg-white/[0.03] overflow-hidden flex items-center justify-center mb-4">
                   {p.image?.startsWith('http') ? (
@@ -242,15 +242,15 @@ function ProductsContent() {
                     <span className="text-4xl">{EMOJI[p.category] || '📦'}</span>
                   )}
                 </div>
-                <div className="text-[11px] text-gray-500 mb-1 flex items-center justify-between">
+                <div className="text-[11px] text-slate-500 mb-1 flex items-center justify-between">
                   <span>{p.category}</span>
                   <div className="flex">
                     {[...Array(5)].map((_, i) => <Star key={i} className="w-2.5 h-2.5 fill-yellow-400 text-yellow-400" />)}
                   </div>
                 </div>
-                <div className="font-medium text-white text-sm leading-snug mb-2 line-clamp-2 group-hover:text-indigo-300 transition-colors">{p.name}</div>
+                <div className="font-medium text-white text-sm leading-snug mb-2 line-clamp-2 group-hover:text-teal-200 transition-colors">{p.name}</div>
                 <div className="mt-auto flex items-center justify-between">
-                  <span className="text-indigo-400 font-bold text-lg">{formatPrice(p.price)}</span>
+                  <span className="text-teal-300 font-bold text-lg">{formatPrice(p.price)}</span>
                   <span className={`text-[10px] px-2 py-0.5 rounded-full ${p.stock > 0 ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'}`}>
                     {p.stock > 0 ? `${p.stock} disp.` : 'Agotado'}
                   </span>
@@ -258,12 +258,12 @@ function ProductsContent() {
               </Link>
               <div className="p-3 pt-0 flex gap-2">
                 <button onClick={() => handleAdd(p)} disabled={p.stock === 0}
-                  className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center justify-center gap-2 ${added === p._id ? 'bg-green-600 text-white' : p.stock === 0 ? 'bg-white/5 text-gray-600 cursor-not-allowed' : 'bg-indigo-600 text-white hover:bg-indigo-500 shadow-lg shadow-indigo-900/30'}`}>
+                  className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center justify-center gap-2 ${added === p._id ? 'bg-green-600 text-white' : p.stock === 0 ? 'bg-white/5 text-slate-600 cursor-not-allowed' : 'bg-teal-500 text-white hover:bg-teal-400 shadow-lg shadow-teal-900/30'}`}>
                   {added === p._id ? <><Check className="w-4 h-4" /> Agregado</> : <><ShoppingCart className="w-4 h-4" /> Agregar</>}
                 </button>
                 <button
                   onClick={(e) => { e.preventDefault(); toggleWishlist(p._id); }}
-                  className={`p-2.5 rounded-xl border transition-all ${isInWishlist(p._id) ? 'bg-pink-500/20 border-pink-500/40 text-pink-400' : 'border-white/10 text-gray-500 hover:text-pink-400 hover:border-pink-500/30'}`}
+                  className={`p-2.5 rounded-xl border transition-all ${isInWishlist(p._id) ? 'bg-pink-500/20 border-pink-500/40 text-pink-400' : 'border-white/10 text-slate-500 hover:text-pink-400 hover:border-pink-500/30'}`}
                   title={isInWishlist(p._id) ? 'Quitar de favoritos' : 'Agregar a favoritos'}
                 >
                   <Heart className={`w-4 h-4 ${isInWishlist(p._id) ? 'fill-pink-400' : ''}`} />
@@ -280,7 +280,7 @@ function ProductsContent() {
 export default function ProductsPage() {
   return (
     <Suspense fallback={<div className="flex flex-col items-center justify-center py-48 gap-4">
-      <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+      <div className="w-12 h-12 border-4 border-teal-600 border-t-transparent rounded-full animate-spin" />
       <p className="text-gray-500 font-medium animate-pulse">Sincronizando catálogo...</p>
     </div>}>
       <ProductsContent />

@@ -62,7 +62,7 @@ export default function AdminUsers() {
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
         {[
-          { label: 'Total Usuarios', value: users.length, icon: <Users className="w-5 h-5" />, color: 'text-indigo-400 bg-indigo-500/10 border-indigo-500/20' },
+          { label: 'Total Usuarios', value: users.length, icon: <Users className="w-5 h-5" />, color: 'text-teal-400 bg-teal-500/10 border-teal-500/20' },
           { label: 'Clientes', value: userCount, icon: <UserIcon className="w-5 h-5" />, color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20' },
           { label: 'Admins', value: adminCount, icon: <ShieldCheck className="w-5 h-5" />, color: 'text-amber-400 bg-amber-500/10 border-amber-500/20' },
         ].map(stat => (
@@ -84,7 +84,7 @@ export default function AdminUsers() {
         <input
           type="text"
           placeholder="Buscar por nombre o email..."
-          className="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder:text-gray-600 outline-none focus:border-indigo-500/50 transition-all"
+          className="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder:text-gray-600 outline-none focus:border-teal-500/50 transition-all"
           value={search}
           onChange={e => setSearch(e.target.value)}
         />
@@ -92,7 +92,7 @@ export default function AdminUsers() {
 
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20">
-          <Loader2 className="w-10 h-10 text-indigo-500 animate-spin mb-4" />
+          <Loader2 className="w-10 h-10 text-teal-500 animate-spin mb-4" />
           <p className="text-gray-500 font-medium">Cargando usuarios...</p>
         </div>
       ) : filtered.length === 0 ? (
@@ -124,7 +124,7 @@ export default function AdminUsers() {
                 <tr key={user._id} className={`border-b border-white/[0.04] hover:bg-white/[0.02] transition-colors ${i % 2 === 0 ? '' : 'bg-white/[0.01]'}`}>
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-3">
-                      <div className={`w-9 h-9 rounded-full border flex items-center justify-center text-sm font-black shrink-0 ${user.role === 'admin' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' : 'bg-indigo-500/10 border-indigo-500/20 text-indigo-400'}`}>
+                      <div className={`w-9 h-9 rounded-full border flex items-center justify-center text-sm font-black shrink-0 ${user.role === 'admin' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' : 'bg-teal-500/10 border-teal-500/20 text-teal-400'}`}>
                         {user.name.charAt(0).toUpperCase()}
                       </div>
                       <div>
@@ -141,7 +141,7 @@ export default function AdminUsers() {
                     {new Date(user.createdAt).toLocaleDateString('es-CL', { day: '2-digit', month: 'short', year: 'numeric' })}
                   </td>
                   <td className="px-5 py-4 text-center">
-                    <span className={`inline-flex items-center gap-1.5 text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border ${user.role === 'admin' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' : 'bg-indigo-500/10 border-indigo-500/20 text-indigo-400'}`}>
+                    <span className={`inline-flex items-center gap-1.5 text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border ${user.role === 'admin' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' : 'bg-teal-500/10 border-teal-500/20 text-teal-400'}`}>
                       {user.role === 'admin' ? <ShieldCheck className="w-2.5 h-2.5" /> : <UserIcon className="w-2.5 h-2.5" />}
                       {user.role === 'admin' ? 'Admin' : 'Cliente'}
                     </span>
@@ -150,7 +150,7 @@ export default function AdminUsers() {
                     <button
                       onClick={() => handleRoleToggle(user)}
                       disabled={updating === user._id}
-                      className={`text-xs font-bold px-3 py-1.5 rounded-lg border transition-all disabled:opacity-50 ${user.role === 'admin' ? 'text-red-400 border-red-500/20 hover:bg-red-500/10' : 'text-indigo-400 border-indigo-500/20 hover:bg-indigo-500/10'}`}
+                      className={`text-xs font-bold px-3 py-1.5 rounded-lg border transition-all disabled:opacity-50 ${user.role === 'admin' ? 'text-red-400 border-red-500/20 hover:bg-red-500/10' : 'text-teal-400 border-teal-500/20 hover:bg-teal-500/10'}`}
                     >
                       {updating === user._id ? '...' : user.role === 'admin' ? 'Quitar Admin' : 'Hacer Admin'}
                     </button>

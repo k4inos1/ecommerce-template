@@ -13,7 +13,7 @@ const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 const STATUS_CONFIG: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
   pending:    { label: 'Pendiente',  color: 'text-yellow-400 bg-yellow-400/10 border-yellow-500/20', icon: <Clock className="w-3.5 h-3.5" /> },
   processing: { label: 'Procesando', color: 'text-blue-400 bg-blue-400/10 border-blue-500/20',       icon: <AlertCircle className="w-3.5 h-3.5" /> },
-  shipped:    { label: 'En camino',  color: 'text-indigo-400 bg-indigo-400/10 border-indigo-500/20',  icon: <Truck className="w-3.5 h-3.5" /> },
+  shipped:    { label: 'En camino',  color: 'text-teal-400 bg-teal-400/10 border-teal-500/20',  icon: <Truck className="w-3.5 h-3.5" /> },
   delivered:  { label: 'Entregado',  color: 'text-green-400 bg-green-400/10 border-green-500/20',    icon: <CheckCircle className="w-3.5 h-3.5" /> },
   cancelled:  { label: 'Cancelado',  color: 'text-red-400 bg-red-400/10 border-red-500/20',          icon: <XCircle className="w-3.5 h-3.5" /> },
 };
@@ -55,7 +55,7 @@ export default function OrderDetailPage() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[60vh]">
-        <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-teal-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -91,7 +91,7 @@ export default function OrderDetailPage() {
       <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
         <div>
           <h1 className="text-2xl font-display font-bold text-white flex items-center gap-3">
-            <Package className="w-6 h-6 text-indigo-400" />
+            <Package className="w-6 h-6 text-teal-400" />
             Orden #{shortId}
           </h1>
           <p className="text-sm text-gray-500 mt-1">
@@ -114,15 +114,15 @@ export default function OrderDetailPage() {
               return (
                 <div key={s} className="flex items-center flex-1 last:flex-none">
                   <div className="flex flex-col items-center gap-1">
-                    <div className={`w-7 h-7 rounded-full border-2 flex items-center justify-center shrink-0 transition-all ${done ? 'bg-indigo-500 border-indigo-500' : 'bg-transparent border-gray-700'}`}>
+                    <div className={`w-7 h-7 rounded-full border-2 flex items-center justify-center shrink-0 transition-all ${done ? 'bg-teal-500 border-teal-500' : 'bg-transparent border-gray-700'}`}>
                       {done && <CheckCircle className="w-4 h-4 text-white" />}
                     </div>
-                    <span className={`text-[10px] whitespace-nowrap ${active ? 'text-indigo-400 font-semibold' : done ? 'text-gray-400' : 'text-gray-600'}`}>
+                    <span className={`text-[10px] whitespace-nowrap ${active ? 'text-teal-400 font-semibold' : done ? 'text-gray-400' : 'text-gray-600'}`}>
                       {STATUS_CONFIG[s]?.label}
                     </span>
                   </div>
                   {i < STATUS_ORDER.length - 1 && (
-                    <div className={`flex-1 h-0.5 mx-2 mb-4 ${i < statusIdx ? 'bg-indigo-500' : 'bg-gray-800'}`} />
+                    <div className={`flex-1 h-0.5 mx-2 mb-4 ${i < statusIdx ? 'bg-teal-500' : 'bg-gray-800'}`} />
                   )}
                 </div>
               );
@@ -168,7 +168,7 @@ export default function OrderDetailPage() {
           )}
           <div className="flex justify-between font-bold text-base pt-1">
             <span className="text-gray-300">Total</span>
-            <span className="text-indigo-400 font-mono">${(order.totalAmount || 0).toFixed(2)}</span>
+            <span className="text-teal-400 font-mono">${(order.totalAmount || 0).toFixed(2)}</span>
           </div>
         </div>
       </div>

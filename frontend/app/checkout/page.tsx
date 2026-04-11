@@ -155,7 +155,7 @@ export default function CheckoutPage() {
         required type={opts.type || 'text'} placeholder={opts.placeholder || ''} maxLength={opts.maxLength}
         value={form[key]}
         onChange={e => setForm(p => ({ ...p, [key]: e.target.value }))}
-        className={`w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:border-indigo-500 focus:outline-none transition-colors ${opts.mono ? 'font-mono' : ''}`}
+        className={`w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:border-teal-500 focus:outline-none transition-colors ${opts.mono ? 'font-mono' : ''}`}
       />
     </div>
   );
@@ -249,7 +249,7 @@ export default function CheckoutPage() {
   if (step === 'processing') {
     return (
       <div className="max-w-lg mx-auto px-4 py-24 text-center">
-        <div className="w-16 h-16 border-2 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin mx-auto mb-8" />
+        <div className="w-16 h-16 border-2 border-teal-500/30 border-t-teal-500 rounded-full animate-spin mx-auto mb-8" />
         <h1 className="text-2xl font-bold text-white mb-3">Procesando pago...</h1>
         <p className="text-gray-400">Guardando tu orden en la base de datos.</p>
       </div>
@@ -276,7 +276,7 @@ export default function CheckoutPage() {
         <form onSubmit={handleSubmit} className="lg:col-span-2 space-y-5">
           {/* Shipping */}
           <div className="card p-6 space-y-4">
-            <h2 className="font-semibold text-white flex items-center gap-2"><Truck className="w-4 h-4 text-indigo-400" /> Información de Envío</h2>
+            <h2 className="font-semibold text-white flex items-center gap-2"><Truck className="w-4 h-4 text-teal-400" /> Información de Envío</h2>
             <div className="grid grid-cols-2 gap-4">
               {field('Nombre completo', 'name', { placeholder: 'Ricardo Sanhueza' })}
               {field('Email', 'email', { type: 'email', placeholder: 'correo@email.com' })}
@@ -292,7 +292,7 @@ export default function CheckoutPage() {
               <div>
                 <label className="text-xs text-gray-400 mb-1.5 block">País</label>
                 <select value={form.country} onChange={e => setForm(p => ({ ...p, country: e.target.value }))}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-indigo-500 focus:outline-none">
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-teal-500 focus:outline-none">
                   {['Chile', 'Argentina', 'Colombia', 'México', 'Perú', 'España'].map(c => <option key={c} value={c}>{c}</option>)}
                 </select>
               </div>
@@ -301,7 +301,7 @@ export default function CheckoutPage() {
 
           {/* Payment */}
           <div className="card p-6 space-y-4">
-            <h2 className="font-semibold text-white flex items-center gap-2"><CreditCard className="w-4 h-4 text-indigo-400" /> Datos de Pago</h2>
+            <h2 className="font-semibold text-white flex items-center gap-2"><CreditCard className="w-4 h-4 text-teal-400" /> Datos de Pago</h2>
             {field('Número de tarjeta', 'card', { placeholder: '4242 4242 4242 4242', maxLength: 19, mono: true })}
             <div className="grid grid-cols-2 gap-4">
               {field('Expiración', 'expiry', { placeholder: 'MM/AA', maxLength: 5, mono: true })}
@@ -314,7 +314,7 @@ export default function CheckoutPage() {
 
           {error && <div className="card p-4 text-red-400 text-sm border-red-500/20 bg-red-500/5">{error}</div>}
 
-          <button type="submit" className="btn-primary w-full py-4 text-base shadow-2xl shadow-indigo-900/40">
+          <button type="submit" className="btn-primary w-full py-4 text-base shadow-2xl shadow-teal-900/40">
             <Lock className="w-4 h-4" /> Confirmar Orden — ${finalTotal.toFixed(2)}
           </button>
         </form>
@@ -361,13 +361,13 @@ export default function CheckoutPage() {
                     onChange={e => { setCouponInput(e.target.value.toUpperCase()); setCouponError(''); }}
                     onKeyDown={e => e.key === 'Enter' && handleApplyCoupon()}
                     placeholder="CÓDIGO DE DESCUENTO"
-                    className="w-full bg-white/[0.03] border border-white/[0.07] rounded-xl pl-8 pr-3 py-2.5 text-xs text-white placeholder-gray-600 font-mono focus:border-indigo-500 focus:outline-none uppercase"
+                    className="w-full bg-white/[0.03] border border-white/[0.07] rounded-xl pl-8 pr-3 py-2.5 text-xs text-white placeholder-gray-600 font-mono focus:border-teal-500 focus:outline-none uppercase"
                   />
                 </div>
                 <button
                   onClick={handleApplyCoupon}
                   disabled={couponLoading || !couponInput.trim()}
-                  className="px-3 py-2.5 rounded-xl text-xs font-semibold bg-indigo-600/80 hover:bg-indigo-600 text-white transition-colors disabled:opacity-50"
+                  className="px-3 py-2.5 rounded-xl text-xs font-semibold bg-teal-600/80 hover:bg-teal-600 text-white transition-colors disabled:opacity-50"
                 >
                   {couponLoading ? <div className="w-3.5 h-3.5 border border-white/30 border-t-white rounded-full animate-spin" /> : 'Aplicar'}
                 </button>
@@ -384,7 +384,7 @@ export default function CheckoutPage() {
             )}
           </div>
           <div className="flex justify-between font-bold text-white">
-            <span>Total</span><span className="text-indigo-400 text-lg">${finalTotal.toFixed(2)}</span>
+            <span>Total</span><span className="text-teal-400 text-lg">${finalTotal.toFixed(2)}</span>
           </div>
           <div className="space-y-3 mt-4">
             {/* Stripe Checkout */}

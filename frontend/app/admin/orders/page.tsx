@@ -21,7 +21,7 @@ interface Order {
 const STATUS_COLORS: Record<string, string> = {
   pending: 'text-amber-500 bg-amber-500/10 border-amber-500/20',
   processing: 'text-blue-400 bg-blue-400/10 border-blue-400/20',
-  shipped: 'text-indigo-400 bg-indigo-400/10 border-indigo-400/20',
+  shipped: 'text-teal-400 bg-teal-400/10 border-teal-400/20',
   delivered: 'text-emerald-400 bg-emerald-400/10 border-emerald-400/20',
   cancelled: 'text-red-400 bg-red-400/10 border-red-400/20',
 };
@@ -68,12 +68,12 @@ export default function AdminOrders() {
         <div className="relative flex-1">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar por ID, nombre o email..."
-            className="w-full bg-gray-900 border border-gray-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:border-indigo-500 outline-none transition-colors" />
+            className="w-full bg-gray-900 border border-gray-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:border-teal-500 outline-none transition-colors" />
         </div>
         <div className="relative shrink-0">
           <Filter className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
           <select value={filter} onChange={e => setFilter(e.target.value)}
-            className="appearance-none bg-gray-900 border border-gray-800 rounded-xl pl-10 pr-10 py-2.5 text-sm text-gray-300 focus:border-indigo-500 outline-none cursor-pointer">
+            className="appearance-none bg-gray-900 border border-gray-800 rounded-xl pl-10 pr-10 py-2.5 text-sm text-gray-300 focus:border-teal-500 outline-none cursor-pointer">
             <option value="all">Todos los estados</option>
             {Object.entries(STATUS_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
           </select>
@@ -83,7 +83,7 @@ export default function AdminOrders() {
 
       <div className="space-y-4">
         {loading ? (
-          <div className="flex justify-center py-24"><div className="animate-spin w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full" /></div>
+          <div className="flex justify-center py-24"><div className="animate-spin w-8 h-8 border-2 border-teal-500 border-t-transparent rounded-full" /></div>
         ) : filtered.length === 0 ? (
           <div className="card p-12 text-center">
             <Package className="w-12 h-12 text-gray-700 mx-auto mb-3" />
@@ -111,7 +111,7 @@ export default function AdminOrders() {
 
               <div className="shrink-0 ml-auto md:ml-0" onClick={e => e.stopPropagation()}>
                 <select value={order.status} onChange={e => handleStatus(order._id, e.target.value)}
-                  className={`text-xs px-3 py-1.5 rounded-full border border-current font-medium bg-transparent cursor-pointer appearance-none outline-none focus:ring-2 ring-indigo-500/50 ${STATUS_COLORS[order.status || 'pending']}`}>
+                  className={`text-xs px-3 py-1.5 rounded-full border border-current font-medium bg-transparent cursor-pointer appearance-none outline-none focus:ring-2 ring-teal-500/50 ${STATUS_COLORS[order.status || 'pending']}`}>
                   {Object.entries(STATUS_LABELS).map(([v, l]) => <option key={v} value={v} className="bg-gray-900 text-white">{l}</option>)}
                 </select>
               </div>
