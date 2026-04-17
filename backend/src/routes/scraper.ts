@@ -75,15 +75,15 @@ const handleValidationError = (error: z.ZodError, res: Response) => {
   });
 };
 
-const parseEngines = (value?: string) => {
-  if (!value) return undefined;
+const parseEngines = (value?: string): ScraperEngine[] => {
+  if (!value) return [...SCRAPER_ENGINES];
   const engines = value
     .split(',')
     .map((engine) => engine.trim())
     .filter((engine): engine is ScraperEngine =>
       SCRAPER_ENGINES.includes(engine as ScraperEngine)
     );
-  return engines.length > 0 ? engines : undefined;
+  return engines.length > 0 ? engines : [...SCRAPER_ENGINES];
 };
 
 /**
