@@ -23,6 +23,7 @@ import {
   ProfitCalculatorBodySchema,
   ImportProductBodySchema,
   ScraperEngine,
+  SCRAPER_ENGINES,
 } from '../types/scraper';
 
 const router = Router();
@@ -98,9 +99,15 @@ router.get(
       );
 
       const engines = params.engines
-        ? (params.engines.split(',').map((engine) => engine.trim()) as ScraperEngine[])
+        ? params.engines
+            .split(',')
+            .map((engine) => engine.trim())
+            .filter((engine): engine is ScraperEngine =>
+              SCRAPER_ENGINES.includes(engine as ScraperEngine)
+            )
         : undefined;
-      let products = await scrapeByEngines(params.q, params.limit, engines);
+      const selectedEngines = engines && engines.length > 0 ? engines : undefined;
+      let products = await scrapeByEngines(params.q, params.limit, selectedEngines);
 
       // Optionally enrich with Cloudinary images
       if (params.cloudinary && products.length > 0) {

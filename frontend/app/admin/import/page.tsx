@@ -160,7 +160,7 @@ export default function AdminImport() {
 
   useEffect(() => {
     const nextTab = normalizeTab(searchParams.get('tab'));
-    setTab((prev) => (prev === nextTab ? prev : nextTab));
+    setTab(nextTab);
   }, [searchParams]);
 
   useEffect(() => {
