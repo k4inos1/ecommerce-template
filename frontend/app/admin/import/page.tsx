@@ -106,7 +106,7 @@ export default function AdminImport() {
 
   const handleTabClick = (tabId: string) => {
     setTab(tabId);
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(searchParams);
     if (tabId === 'search') {
       params.delete('tab');
     } else {
@@ -158,9 +158,8 @@ export default function AdminImport() {
   }, [apiFetch]);
 
   useEffect(() => {
-    const nextTab = normalizeTab(searchParams.get('tab'));
-    if (nextTab !== tab) setTab(nextTab);
-  }, [searchParams, tab]);
+    setTab(normalizeTab(searchParams.get('tab')));
+  }, [searchParams]);
 
   useEffect(() => {
     if (tab === 'history' && !historyLoaded) handleHistory();

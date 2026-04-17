@@ -75,6 +75,17 @@ const handleValidationError = (error: z.ZodError, res: Response) => {
   });
 };
 
+const parseEngines = (value?: string) => {
+  if (!value) return undefined;
+  const engines = value
+    .split(',')
+    .map((engine) => engine.trim())
+    .filter((engine): engine is ScraperEngine =>
+      SCRAPER_ENGINES.includes(engine as ScraperEngine)
+    );
+  return engines.length > 0 ? engines : undefined;
+};
+
 /**
  * ─────────────────────────────────────────────────────────────
  * ENDPOINTS
@@ -98,18 +109,11 @@ router.get(
         `📦 /search: query="${params.q}" limit=${params.limit}`
       );
 
-      const engines = params.engines
-        ? params.engines
-            .split(',')
-            .map((engine) => engine.trim())
-            .filter((engine): engine is ScraperEngine =>
-              SCRAPER_ENGINES.includes(engine as ScraperEngine)
-            )
-        : undefined;
+      const engines = parseEngines(params.engines);
       let products = await scrapeByEngines(
         params.q,
         params.limit,
-        engines && engines.length > 0 ? engines : undefined
+        engines
       );
 
       // Optionally enrich with Cloudinary images
