@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useCallback, useEffect } from 'react';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { AdminLayout } from '@/components/ui/AdminLayout';
 import { getToken } from '@/lib/api';
 import {
@@ -21,6 +21,8 @@ const TABS = [
   { id: 'optimize', label: 'Optimizar', icon: FileText },
   { id: 'history', label: 'Historial', icon: History },
 ];
+const TAB_IDS = new Set(TABS.map(tab => tab.id));
+const normalizeTab = (value: string | null) => (value && TAB_IDS.has(value) ? value : 'search');
 
 type ScraperEngine = 'aliexpress' | 'ebay';
 type EngineMeta = { label: string; color: string; dot: string };
@@ -41,8 +43,10 @@ const ENGINE_BY_SOURCE: Record<string, EngineMeta> = Object.fromEntries(
 
 export default function AdminImport() {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const token = getToken();
-  const [tab, setTab] = useState('search');
+  const [tab, setTab] = useState(() => normalizeTab(searchParams.get('tab')));
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('Audio');
   const [loading, setLoading] = useState(false);
@@ -103,6 +107,14 @@ export default function AdminImport() {
   const handleTabClick = (tabId: string) => {
     setTab(tabId);
     if (tabId === 'history' && !historyLoaded) handleHistory();
+    const params = new URLSearchParams(searchParams.toString());
+    if (tabId === 'search') {
+      params.delete('tab');
+    } else {
+      params.set('tab', tabId);
+    }
+    const qs = params.toString();
+    router.push(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
   };
 
   const handleSearch = async (e: React.FormEvent) => {
@@ -141,10 +153,19 @@ export default function AdminImport() {
     if (data) setOptimized(data);
   };
 
-  const handleHistory = async () => {
+  const handleHistory = useCallback(async () => {
     const data = await apiFetch(`${API}/api/scraper/history`);
     if (data) { setHistory(data.results || []); setHistoryLoaded(true); }
-  };
+  }, [apiFetch]);
+
+  useEffect(() => {
+    const nextTab = normalizeTab(searchParams.get('tab'));
+    if (nextTab !== tab) setTab(nextTab);
+  }, [searchParams, tab]);
+
+  useEffect(() => {
+    if (tab === 'history' && !historyLoaded) handleHistory();
+  }, [tab, historyLoaded, handleHistory]);
 
   const handleImport = async (p: any) => {
     setImporting(p.name);

@@ -22,6 +22,7 @@ import {
   ListingOptimizerParamsSchema,
   ProfitCalculatorBodySchema,
   ImportProductBodySchema,
+  ScraperEngine,
 } from '../types/scraper';
 
 const router = Router();
@@ -96,7 +97,10 @@ router.get(
         `📦 /search: query="${params.q}" limit=${params.limit}`
       );
 
-      let products = await scrapeByEngines(params.q, params.limit);
+      const engines = params.engines
+        ? (params.engines.split(',').map((engine) => engine.trim()) as ScraperEngine[])
+        : undefined;
+      let products = await scrapeByEngines(params.q, params.limit, engines);
 
       // Optionally enrich with Cloudinary images
       if (params.cloudinary && products.length > 0) {
