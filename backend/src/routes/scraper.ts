@@ -106,8 +106,11 @@ router.get(
               SCRAPER_ENGINES.includes(engine as ScraperEngine)
             )
         : undefined;
-      const selectedEngines = engines && engines.length > 0 ? engines : undefined;
-      let products = await scrapeByEngines(params.q, params.limit, selectedEngines);
+      let products = await scrapeByEngines(
+        params.q,
+        params.limit,
+        engines && engines.length > 0 ? engines : undefined
+      );
 
       // Optionally enrich with Cloudinary images
       if (params.cloudinary && products.length > 0) {
