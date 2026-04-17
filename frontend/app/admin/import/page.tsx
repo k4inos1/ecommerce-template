@@ -46,7 +46,7 @@ export default function AdminImport() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const token = getToken();
-  const [tab, setTab] = useState(() => normalizeTab(searchParams.get('tab')));
+  const [tab, setTab] = useState('search');
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('Audio');
   const [loading, setLoading] = useState(false);
@@ -160,8 +160,8 @@ export default function AdminImport() {
 
   useEffect(() => {
     const nextTab = normalizeTab(searchParams.get('tab'));
-    if (nextTab !== tab) setTab(nextTab);
-  }, [searchParams, tab]);
+    setTab((prev) => (prev === nextTab ? prev : nextTab));
+  }, [searchParams]);
 
   useEffect(() => {
     if (tab === 'history' && !historyLoaded) handleHistory();
