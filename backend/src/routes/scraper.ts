@@ -22,6 +22,8 @@ import {
   ListingOptimizerParamsSchema,
   ProfitCalculatorBodySchema,
   ImportProductBodySchema,
+  ScraperEngine,
+  SCRAPER_ENGINES,
 } from '../types/scraper';
 
 const router = Router();
@@ -73,6 +75,17 @@ const handleValidationError = (error: z.ZodError, res: Response) => {
   });
 };
 
+const parseEngines = (value?: string): ScraperEngine[] => {
+  if (!value) return [...SCRAPER_ENGINES];
+  const engines = value
+    .split(',')
+    .map((engine) => engine.trim())
+    .filter((engine): engine is ScraperEngine =>
+      SCRAPER_ENGINES.includes(engine as ScraperEngine)
+    );
+  return engines.length > 0 ? engines : [...SCRAPER_ENGINES];
+};
+
 /**
  * ─────────────────────────────────────────────────────────────
  * ENDPOINTS
@@ -96,7 +109,12 @@ router.get(
         `📦 /search: query="${params.q}" limit=${params.limit}`
       );
 
-      let products = await scrapeByEngines(params.q, params.limit);
+      const engines = parseEngines(params.engines);
+      let products = await scrapeByEngines(
+        params.q,
+        params.limit,
+        engines
+      );
 
       // Optionally enrich with Cloudinary images
       if (params.cloudinary && products.length > 0) {
