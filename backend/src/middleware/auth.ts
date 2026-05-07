@@ -2,20 +2,16 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { User } from '../models/User';
 
-declare global {
-  namespace Express {
-    interface User {
-      id: string;
-      role: string;
-      [key: string]: any;
-    }
-  }
+
+
+export interface AuthUser {
+  id: string;
+  role: string;
 }
 
 export interface AuthRequest extends Request {
-  user?: Express.User;
+  user?: AuthUser;
 }
-
 export const protect = async (req: AuthRequest, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
   if (!authHeader?.startsWith('Bearer ')) {
