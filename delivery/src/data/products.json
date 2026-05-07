@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "name": "Pizza Margarita",
+    "description": "Salsa de tomate, mozzarella fresca y albahaca.",
+    "price": 8500,
+    "category": "Pizza",
+    "imageUrl": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=500&q=80"
+  },
+  {
+    "id": 2,
+    "name": "Hamburguesa Clásica",
+    "description": "Doble carne, queso cheddar, lechuga, tomate y salsa especial.",
+    "price": 6900,
+    "category": "Burger",
+    "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&q=80"
+  },
+  {
+    "id": 3,
+    "name": "Sushi Roll",
+    "description": "Roll tempura de camarón, palta y queso crema.",
+    "price": 7500,
+    "category": "Sushi",
+    "imageUrl": "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500&q=80"
+  },
+  {
+    "id": 4,
+    "name": "Papas Fritas XL",
+    "description": "Porción grande de papas fritas con salsa de queso y tocino.",
+    "price": 4500,
+    "category": "Sides",
+    "imageUrl": "https://images.unsplash.com/photo-1576107232684-1279f390859f?w=500&q=80"
+  },
+  {
+    "id": 5,
+    "name": "Pizza Pepperoni",
+    "description": "Salsa de tomate, mozzarella y generosa cantidad de pepperoni.",
+    "price": 9500,
+    "category": "Pizza",
+    "imageUrl": "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=500&q=80"
+  },
+  {
+    "id": 6,
+    "name": "Hamburguesa BBQ",
+    "description": "Carne a la parrilla, cebolla caramelizada, tocino y salsa BBQ.",
+    "price": 7800,
+    "category": "Burger",
+    "imageUrl": "https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=500&q=80"
+  },
+  {
+    "id": 7,
+    "name": "Sushi Sashimi",
+    "description": "Selección de salmón y atún fresco cortado en finas láminas.",
+    "price": 9200,
+    "category": "Sushi",
+    "imageUrl": "https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=500&q=80"
+  }
+]
