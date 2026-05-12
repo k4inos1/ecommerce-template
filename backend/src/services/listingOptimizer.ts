@@ -1,6 +1,7 @@
 /**
- * Listing Optimizer — ecommerce-product-pro skill
- * Generates: optimized title, bullet points, keywords, description, A+ content ideas
+ * Professional E-Commerce Listing Optimizer
+ * Generates: optimized title, bullet points, keywords, description, and A+ content strategy
+ * Designed for AAA scalable marketplaces.
  */
 
 export interface ListingOptimization {
@@ -17,117 +18,120 @@ export interface ListingOptimization {
 }
 
 const KEYWORD_POOL: Record<string, string[]> = {
-  Laptops: ['laptop', 'notebook', 'portable', 'gaming laptop', 'business laptop', 'ultrabook', 'lightweight', 'fast SSD', 'long battery', 'thin notebook', 'budget laptop', 'i7', 'Ryzen', 'RAM DDR5'],
-  Phones: ['smartphone', 'unlocked phone', 'Android phone', '5G phone', 'camera phone', 'budget phone', 'flagship', 'dual SIM', 'long battery', 'gaming phone', 'AMOLED', 'fast charging'],
-  Audio: ['wireless headphones', 'noise cancelling', 'earbuds', 'bluetooth headset', 'gaming headset', 'over ear', 'true wireless', 'audiophile', 'bass boosted', 'microphone', 'foldable'],
-  Tablets: ['tablet', 'Android tablet', 'iPad alternative', '10 inch tablet', 'kids tablet', 'drawing tablet', 'stylus', 'HD display', 'quad core', 'portable screen', 'e-learning'],
-  Wearables: ['smart watch', 'fitness tracker', 'health monitor', 'GPS watch', 'heart rate', 'waterproof', 'step counter', 'sleep tracker', 'AMOLED watch', 'band', 'calories'],
-  Monitors: ['4K monitor', 'gaming monitor', 'USB-C monitor', 'curved monitor', 'IPS panel', '144Hz', 'ultrawide', 'portable monitor', 'OLED display', 'HDR', 'dual monitor'],
-  Accessories: ['phone case', 'charging cable', 'USB hub', 'keyboard', 'mouse', 'webcam', 'stand', 'adapter', 'screen protector', 'bag', 'organizer'],
+  'Fashion & Apparel': ['premium quality', 'sustainable material', 'modern design', 'comfortable fit', 'luxury', 'everyday wear', 'designer', 'exclusive', 'breathable', 'elegant', 'versatile'],
+  'Home & Living': ['minimalist', 'durable', 'eco-friendly', 'easy to clean', 'space saving', 'modern home', 'handcrafted', 'ergonomic', 'aesthetic', 'premium finish'],
+  'Health & Beauty': ['organic', 'cruelty-free', 'dermatologist tested', 'natural ingredients', 'anti-aging', 'hydrating', 'premium care', 'spa quality', 'clinically proven', 'vegan'],
+  'Digital Products': ['instant download', 'lifetime access', 'high resolution', 'easy setup', 'premium support', 'customizable', 'commercial license', 'updated regularly', 'cloud sync'],
+  'Food & Beverages': ['gourmet', 'organic', 'artisanal', 'freshly made', 'sugar-free', 'keto friendly', 'premium ingredients', 'locally sourced', 'award winning', 'gluten free'],
+  'Professional Services': ['expert consultation', 'certified', 'fast turnaround', '100% satisfaction', 'tailored solutions', 'dedicated support', 'proven results', 'industry standard'],
+  'General Merchandise': ['top rated', 'best seller', 'high quality', 'gift idea', 'essential', 'innovative', 'reliable', 'premium build', 'long lasting', 'user friendly'],
 };
 
 const APLUS_IDEAS: Record<string, string[]> = {
-  Laptops: ['Comparativa de rendimiento vs la competencia', 'Diagrama de puertos y conectividad', 'Guía de compatibilidad con software', 'Video unboxing y setup'],
-  Phones: ['Comparativa de cámara en condiciones reales', 'Gráfico de autonomía de batería', 'Cuadro de especificaciones técnicas', 'FAQ sobre garantía y reparaciones'],
-  Audio: ['Curva de respuesta de frecuencia', 'Comparativa antes/después de noise cancelling', 'Compatibilidad con dispositivos', 'Instrucciones de emparejamiento'],
-  Tablets: ['Casos de uso: trabajo, estudio, entretenimiento', 'Accesorios compatibles (stylus, teclado)', 'Tabla comparativa resolución/precio', 'Demo de rendimiento en apps'],
-  Wearables: ['Visualización de datos de salud en la app', 'Tabla de resistencia al agua IP', 'Comparativa de duración de batería', 'Guía de configuración inicial'],
-  Monitors: ['Test de calibración de colores sRGB/DCI-P3', 'Diagrama de conectividad (HDMI/DP/USB-C)', 'Comparativa Hz latencia para gaming', 'Setup ergonómico recomendado'],
-  Accessories: ['Guía de compatibilidad universal', 'Video de instalación en 60 segundos', 'Tabla de materiales y durabilidad', 'Pack regalo: accesorios complementarios'],
+  'Fashion & Apparel': ['Size guide and fit diagram', 'High-quality fabric close-ups', 'Lifestyle imagery in different settings', 'Care instructions and sustainability info'],
+  'Home & Living': ['Room context lifestyle photos', 'Dimensions and assembly diagram', 'Before/After transformation visuals', 'Material durability infographic'],
+  'Health & Beauty': ['Step-by-step application guide', 'Key ingredients highlight infographic', 'Clinical results or user testimonial charts', 'Texture and consistency macro shots'],
+  'Digital Products': ['Feature breakdown matrix', 'Quick start guide infographic', 'Dashboard/Interface screenshots', 'Compatibility and integration diagram'],
+  'Food & Beverages': ['Nutritional facts and origin map', 'Serving suggestions and recipe ideas', 'Packaging unboxing experience', 'Certifications (Organic, Vegan) badges'],
+  'Professional Services': ['Workflow process timeline', 'Case study results and metrics', 'Team expertise and certifications', 'Client testimonial carousel'],
+  'General Merchandise': ['Core features highlight', 'Unboxing and what\\'s included diagram', 'Comparison with standard market alternatives', 'FAQ and Warranty visual guide'],
 };
 
 function buildOptimizedTitle(name: string, category: string, keywords: string[]): string {
   const topKeyword = keywords[0] || category;
   const secondKeyword = keywords[1] || '';
-  // Pattern: [Keyword] + [Product Name] + [Key Feature]
+  
   const features: Record<string, string> = {
-    Laptops: '- SSD Rápido, Batería Larga Duración',
-    Phones: '- 5G, Cámara Pro, Carga Rápida',
-    Audio: '- Cancelación de Ruido, Bluetooth 5.3',
-    Tablets: '- Pantalla HD, Wi-Fi 6, Stylus Compatible',
-    Wearables: '- GPS, Frecuencia Cardíaca, Impermeable',
-    Monitors: '- 4K, HDR, Baja Latencia',
-    Accessories: '- Universal, Premium, Garantía 1 Año',
+    'Fashion & Apparel': '- Premium Quality, Modern Fit',
+    'Home & Living': '- Elegant Design, High Durability',
+    'Health & Beauty': '- Clinically Proven, Natural Ingredients',
+    'Digital Products': '- Instant Access, Premium Support',
+    'Food & Beverages': '- Artisanal Quality, Freshly Sourced',
+    'Professional Services': '- Expert Delivery, Guaranteed Results',
+    'General Merchandise': '- Top Rated, Premium Build',
   };
-  return `${name} ${features[category] || ''} | ${topKeyword} ${secondKeyword}`.replace(/\s+/g, ' ').trim().substring(0, 200);
+  
+  return `${name} ${features[category] || features['General Merchandise']} | ${topKeyword} ${secondKeyword}`.replace(/\\s+/g, ' ').trim().substring(0, 200);
 }
 
 function buildBullets(name: string, category: string): string[] {
   const categoryBullets: Record<string, string[]> = {
-    Laptops: [
-      `🚀 RENDIMIENTO SUPERIOR: ${name} equipado con procesador de última generación para multitarea fluida y productividad máxima`,
-      '🔋 BATERÍA DURADERA: Hasta 12 horas de uso continuo sin necesidad de conectarte a la corriente',
-      '⚡ ALMACENAMIENTO VELOZ: SSD integrado para tiempos de carga hasta 3x más rápidos que HDD convencional',
-      '🖥️ PANTALLA BRILLANTE: Display Full HD con colores vibrantes para trabajo, streaming y diseño',
-      '✅ GARANTÍA Y SOPORTE: Viene con garantía del fabricante y soporte técnico disponible',
+    'Fashion & Apparel': [
+      `✨ PREMIUM DESIGN: ${name} features a contemporary design crafted for both elegance and everyday comfort.`,
+      '🧵 HIGH-QUALITY MATERIALS: Made with sustainably sourced fabrics that ensure breathability and long-lasting wear.',
+      '📏 PERFECT FIT: Tailored to provide a modern silhouette that complements all body types.',
+      '🧼 EASY CARE: Machine washable and designed to resist fading and shrinking over time.',
+      '✅ SATISFACTION GUARANTEED: Enjoy our hassle-free return policy and dedicated customer support.',
     ],
-    Phones: [
-      `📸 CÁMARA PROFESIONAL: ${name} captura fotos increíbles gracias a su sistema de cámaras multi-lente con IA`,
-      '⚡ CARGA RÁPIDA: Batería de larga duración con carga rápida de 33W — 50% en solo 30 minutos',
-      '📶 CONECTIVIDAD 5G: Navega a velocidades ultrarrápidas y lleva tu productividad al siguiente nivel',
-      '🔒 DOBLE SIM: Compatible con dos SIMs simultáneas para separated personal y profesional',
-      '✅ DESBLOQUEADO: Compatible con todos los operadores — úsalo con tu SIM actual sin restricciones',
+    'Home & Living': [
+      `🏠 MODERN AESTHETIC: ${name} elevates your space with a minimalist and sophisticated design.`,
+      '🛠️ EXCEPTIONAL DURABILITY: Built with premium materials to withstand daily use for years to come.',
+      '🌿 ECO-FRIENDLY: Manufactured using sustainable practices and environmentally conscious materials.',
+      '⏱️ EASY ASSEMBLY: Quick and intuitive setup process with all necessary hardware included.',
+      '🛡️ 1-YEAR WARRANTY: Backed by our comprehensive manufacturer warranty against any defects.',
     ],
-    Audio: [
-      `🎵 SONIDO PREMIUM: ${name} ofrece audio de alta fidelidad con controladores de 40mm para una experiencia envolvente`,
-      '🔇 CANCELACIÓN DE RUIDO ACTIVA: Disfruta tu música sin interrupciones con ANC de última generación',
-      '🔋 40 HORAS DE BATERÍA: Música ininterrumpida durante todo tu día de trabajo y más',
-      '📱 MULTI-DISPOSITIVO: Conéctate a 2 dispositivos simultáneamente con Bluetooth 5.3 de bajo consumo',
-      '🎤 MICRÓFONO HD: Llamadas cristalinas con reducción de ruido ambiental integrada',
+    'Health & Beauty': [
+      `🌱 PURE INGREDIENTS: ${name} is formulated with 100% natural and organic components.`,
+      '🔬 CLINICALLY PROVEN: Dermatologist-tested to deliver visible results safely and effectively.',
+      '🐰 CRUELTY-FREE: Proudly vegan and never tested on animals, meeting the highest ethical standards.',
+      '💧 DEEP NOURISHMENT: Active ingredients penetrate deeply to restore and rejuvenate your natural glow.',
+      '✅ PREMIUM QUALITY: Manufactured in certified facilities ensuring the highest standards of purity.',
     ],
-    Tablets: [
-      `📱 PANTALLA INMERSIVA: ${name} con display Full HD de alta resolución para contenido, trabajo y estudio`,
-      '⚡ RENDIMIENTO FLUIDO: Procesador octa-core para apps, streaming y multitarea sin lag',
-      '✏️ COMPATIBLE CON STYLUS: Ideal para tomar notas, dibujar y anotar documentos con precisión',
-      '🔋 TODO DIA: Batería de larga duración para no preocuparte por el cargador en el día a día',
-      '🌐 CONECTIVIDAD UNIVERSAL: Wi-Fi 6 + Bluetooth para conexión rápida con todos tus dispositivos',
+    'Digital Products': [
+      `⚡ INSTANT ACCESS: Download and start using ${name} immediately after your secure purchase.`,
+      '📈 LIFETIME UPDATES: Enjoy continuous improvements and new features without recurring subscription fees.',
+      '🛠️ EASY INTEGRATION: Designed to work seamlessly with your existing workflow and standard industry tools.',
+      '📚 COMPREHENSIVE DOCS: Includes step-by-step guides, video tutorials, and best practices.',
+      '💬 24/7 SUPPORT: Get priority assistance from our team of dedicated technical experts.',
     ],
-    Wearables: [
-      `❤️ MONITOR DE SALUD: ${name} con sensor de frecuencia cardíaca 24/7, SpO2 y análisis de sueño`,
-      '🏃 GPS INTEGRADO: Rastrea tus rutas de running y ciclismo con precisión sin llevar el teléfono',
-      '💧 RESISTENTE AL AGUA: Certificación IP68 para natación y lluvia sin preocupaciones',
-      '🔋 7 DIAS DE BATERÍA: Úsalo toda la semana sin carga gracias a su gestión eficiente de energía',
-      '📊 APP COMPLETA: Sincroniza con iOS y Android para ver historial completo de tus métricas',
+    'Food & Beverages': [
+      `🌟 GOURMET QUALITY: ${name} is crafted by artisans using traditional methods for superior taste.`,
+      '🍃 FRESH & NATURAL: Made without artificial preservatives, colors, or high-fructose corn syrup.',
+      '📦 CAREFULLY PACKAGED: Sealed for maximum freshness and delivered safely to your door.',
+      '🏆 AWARD WINNING: Recognized by industry experts for its exceptional flavor profile.',
+      '✅ DIET FRIENDLY: Accommodates various dietary preferences while maintaining uncompromising taste.',
     ],
-    Monitors: [
-      `🖥️ RESOLUCIÓN 4K: ${name} con panel IPS 4K UHD para una nitidez photorealistic en trabajo y gaming`,
-      '🎮 144HZ GAMING: Movimiento ultrasuave con tecnología de 144Hz y tiempo de respuesta de 1ms',
-      '🎨 COLORES PRECISOS: 99% sRGB y Delta E<2 para profesionales del diseño y fotografía',
-      '🔌 CONECTIVIDAD COMPLETA: HDMI 2.1, DisplayPort 1.4 y USB-C con Power Delivery incluidos',
-      '👁️ SIN FATIGA VISUAL: Tecnología anti-parpadeo y filtro de luz azul para uso prolongado',
+    'Professional Services': [
+      `🎯 EXPERT EXECUTION: ${name} is delivered by certified professionals with years of proven industry experience.`,
+      '⚡ FAST TURNAROUND: Streamlined workflow ensures your project is completed on time, every time.',
+      '📊 MEASURABLE RESULTS: Focus on delivering clear, actionable outcomes that drive your success.',
+      '🤝 DEDICATED SUPPORT: You receive a dedicated account manager for personalized communication.',
+      '✅ 100% SATISFACTION: We revise and refine until the final deliverable meets your exact standards.',
     ],
-    Accessories: [
-      `✅ CALIDAD PREMIUM: ${name} fabricado con materiales de primera para máxima durabilidad y rendimiento`,
-      '🔌 COMPATIBILIDAD UNIVERSAL: Diseñado para funcionar con todos los dispositivos y sistemas operativos',
-      '⚡ PLUG & PLAY: Instalación inmediata sin drivers adicionales — conecta y úsalo al instante',
-      '🛡️ GARANTÍA 1 AÑO: Cubierto ante defectos de fabricación con soporte prioritario en español',
-      '📦 INCLUYE ACCESORIOS: Viene completo con todos los cables y adaptadores necesarios en la caja',
+    'General Merchandise': [
+      `⭐ TOP RATED QUALITY: ${name} consistently exceeds customer expectations with its premium build.`,
+      '💡 INNOVATIVE DESIGN: Thoughtfully engineered to solve everyday problems with ease.',
+      '💪 BUILT TO LAST: Constructed using high-grade materials for maximum longevity and reliability.',
+      '🎁 PERFECT GIFT: Comes in premium packaging, making it an ideal choice for any special occasion.',
+      '🛡️ BUY WITH CONFIDENCE: Backed by our robust customer satisfaction guarantee and easy returns.',
     ],
   };
-  return categoryBullets[category] || categoryBullets['Accessories'];
+  return categoryBullets[category] || categoryBullets['General Merchandise'];
 }
 
 export function optimizeListing(productName: string, category: string): ListingOptimization {
-  const poolKeywords = KEYWORD_POOL[category] || KEYWORD_POOL['Accessories'];
-  // Pick 8 relevant keywords
+  const poolKeywords = KEYWORD_POOL[category] || KEYWORD_POOL['General Merchandise'];
+  
+  // Select top 8 relevant keywords
   const keywords = poolKeywords.slice(0, 8);
   const optimizedTitle = buildOptimizedTitle(productName, category, keywords);
   const bullets = buildBullets(productName, category);
-  const aPlusIdeas = APLUS_IDEAS[category] || APLUS_IDEAS['Accessories'];
+  const aPlusIdeas = APLUS_IDEAS[category] || APLUS_IDEAS['General Merchandise'];
 
-  const description = `${productName} es la opción ideal para quienes buscan calidad y rendimiento en la categoría de ${category.toLowerCase()}. Diseñado para satisfacer las exigencias del usuario moderno, combina características técnicas avanzadas con una experiencia de uso intuitiva. Compatible con los principales sistemas y marcas del mercado. Ideal como regalo o para uso personal y profesional. Envío con garantía de satisfacción.`;
+  const description = `${productName} sets a new standard of excellence in the ${category.toLowerCase()} market. Designed with the modern consumer in mind, it combines premium quality with exceptional functionality. Whether you are looking for reliability, aesthetic appeal, or peak performance, this product delivers on all fronts. Backed by industry-leading support and manufactured to the highest standards, it represents the perfect balance of value and premium quality.`;
 
-  // Score based on title optimization and keyword presence
-  const titleScore = Math.min(100, 60 + (optimizedTitle.length > 100 ? 20 : 0) + (keywords.some(k => optimizedTitle.toLowerCase().includes(k.toLowerCase())) ? 20 : 0));
+  // Scoring logic based on SEO best practices
+  const titleScore = Math.min(100, 60 + (optimizedTitle.length > 80 ? 20 : 0) + (keywords.some(k => optimizedTitle.toLowerCase().includes(k.toLowerCase())) ? 20 : 0));
   const seoScore = Math.round((titleScore * 0.4) + (bullets.length >= 5 ? 30 : 15) + (keywords.length >= 7 ? 30 : 15));
 
   const suggestions = [
-    'Agrega entre 5 y 8 imágenes de alta resolución (mínimo 1000x1000px)',
-    'Incluye video demostrativo de 30-90 segundos para aumentar conversión',
-    'Solicita reseñas verificadas a tus primeros 10 compradores',
-    keywords.length < 8 ? 'Agrega más palabras clave long-tail para mejorar SEO' : 'Tus palabras clave están bien optimizadas',
-    'Responde todas las preguntas de clientes en menos de 24 horas',
+    'Add 5-8 high-resolution product images (minimum 2000x2000px for zoom capability)',
+    'Include a 30-60 second lifestyle video demonstrating the core value proposition',
+    'Leverage A+ Content to tell your brand story and highlight key differentiators',
+    keywords.length < 8 ? 'Incorporate more long-tail keywords in your backend search terms' : 'Your keyword density is currently optimized',
+    'Actively manage customer reviews and respond to inquiries within 24 hours to boost ranking',
   ];
 
   return { originalName: productName, category, optimizedTitle, bullets, keywords, description, aPlusIdeas, seoScore, titleScore, suggestions };
 }
+
