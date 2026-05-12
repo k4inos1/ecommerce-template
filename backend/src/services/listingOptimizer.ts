@@ -34,7 +34,7 @@ const APLUS_IDEAS: Record<string, string[]> = {
   'Digital Products': ['Feature breakdown matrix', 'Quick start guide infographic', 'Dashboard/Interface screenshots', 'Compatibility and integration diagram'],
   'Food & Beverages': ['Nutritional facts and origin map', 'Serving suggestions and recipe ideas', 'Packaging unboxing experience', 'Certifications (Organic, Vegan) badges'],
   'Professional Services': ['Workflow process timeline', 'Case study results and metrics', 'Team expertise and certifications', 'Client testimonial carousel'],
-  'General Merchandise': ['Core features highlight', 'Unboxing and what\\'s included diagram', 'Comparison with standard market alternatives', 'FAQ and Warranty visual guide'],
+  'General Merchandise': ['Core features highlight', "Unboxing and what's included diagram", 'Comparison with standard market alternatives', 'FAQ and Warranty visual guide'],
 };
 
 function buildOptimizedTitle(name: string, category: string, keywords: string[]): string {

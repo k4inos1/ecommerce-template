@@ -1,12 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { User } from '../models/User';
-
-
 
 export interface AuthUser {
   id: string;
   role: string;
+}
+
+// Augment Express namespace so req.user is always AuthUser across the app
+declare global {
+  namespace Express {
+    interface User extends AuthUser {}
+  }
 }
 
 export interface AuthRequest extends Request {
