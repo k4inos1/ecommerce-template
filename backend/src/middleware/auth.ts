@@ -7,8 +7,10 @@ export interface AuthUser {
 }
 
 // Augment Express namespace so req.user is always AuthUser across the app
+// eslint-disable-next-line @typescript-eslint/no-namespace
 declare global {
   namespace Express {
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     interface User extends AuthUser {}
   }
 }

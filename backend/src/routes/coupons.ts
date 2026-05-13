@@ -7,7 +7,7 @@ const router = Router();
 // ─── PUBLIC ──────────────────────────────────────────────────────────────────
 
 // POST /api/coupons/validate — validate a coupon code against a cart total
-router.post('/validate', protect, async (req: AuthRequest, res: Response, next: NextFunction) => {
+router.post('/validate', protect, async (req: AuthRequest, res: Response, _next: NextFunction) => {
   try {
     const { code, cartTotal } = req.body;
     if (!code) return res.status(400).json({ message: 'Código requerido' });
@@ -47,7 +47,7 @@ router.post('/validate', protect, async (req: AuthRequest, res: Response, next: 
 // ─── ADMIN ────────────────────────────────────────────────────────────────────
 
 // GET /api/coupons — list all coupons
-router.get('/', protect, adminOnly, async (_req: AuthRequest, res: Response, next: NextFunction) => {
+router.get('/', protect, adminOnly, async (_req: AuthRequest, res: Response, _next: NextFunction) => {
   try {
     const coupons = await Coupon.find().sort({ createdAt: -1 });
     res.json(coupons);
@@ -57,7 +57,7 @@ router.get('/', protect, adminOnly, async (_req: AuthRequest, res: Response, nex
 });
 
 // POST /api/coupons — create coupon
-router.post('/', protect, adminOnly, async (req: AuthRequest, res: Response, next: NextFunction) => {
+router.post('/', protect, adminOnly, async (req: AuthRequest, res: Response, _next: NextFunction) => {
   try {
     const coupon = await Coupon.create(req.body);
     res.status(201).json(coupon);
@@ -68,7 +68,7 @@ router.post('/', protect, adminOnly, async (req: AuthRequest, res: Response, nex
 });
 
 // PATCH /api/coupons/:id — update coupon (toggle active, change discount, etc.)
-router.patch('/:id', protect, adminOnly, async (req: AuthRequest, res: Response, next: NextFunction) => {
+router.patch('/:id', protect, adminOnly, async (req: AuthRequest, res: Response, _next: NextFunction) => {
   try {
     const coupon = await Coupon.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
     if (!coupon) return res.status(404).json({ message: 'Coupon not found' });
@@ -79,7 +79,7 @@ router.patch('/:id', protect, adminOnly, async (req: AuthRequest, res: Response,
 });
 
 // DELETE /api/coupons/:id — delete coupon
-router.delete('/:id', protect, adminOnly, async (req: AuthRequest, res: Response, next: NextFunction) => {
+router.delete('/:id', protect, adminOnly, async (req: AuthRequest, res: Response, _next: NextFunction) => {
   try {
     await Coupon.findByIdAndDelete(req.params.id);
     res.json({ message: 'Coupon deleted' });
