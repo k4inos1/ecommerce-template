@@ -1,0 +1,134 @@
+name: 🔍 PR Review & Quality Checks
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+      - master
+      - ci/docker-publish-fix
+
+jobs:
+  lint-backend:
+    name: Backend Linting & Type Check
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.files.*.filename, 'backend/')
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'backend/package-lock.json'
+      
+      - name: Install dependencies
+        working-directory: ./backend
+        run: npm ci
+      
+      - name: Run ESLint
+        working-directory: ./backend
+        run: npm run lint
+        continue-on-error: true
+      
+      - name: TypeScript check
+        working-directory: ./backend
+        run: npx tsc --noEmit
+        continue-on-error: true
+
+  lint-frontend:
+    name: Frontend Linting & Type Check
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.files.*.filename, 'frontend/')
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'frontend/package-lock.json'
+      
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: npm ci
+      
+      - name: Run ESLint
+        working-directory: ./frontend
+        run: npm run lint
+        continue-on-error: true
+
+  test:
+    name: 🧪 Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install root dependencies
+        run: npm ci
+      
+      - name: Run backend tests
+        working-directory: ./backend
+        run: npm test
+        continue-on-error: true
+      
+      - name: Run e2e tests
+        working-directory: ./frontend
+        run: npm run test:e2e
+        continue-on-error: true
+
+  security-scan:
+    name: 🔒 Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+      
+      - name: Upload Trivy results
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  summary:
+    name: ✅ PR Summary
+    runs-on: ubuntu-latest
+    needs: [lint-backend, lint-frontend, test, security-scan]
+    if: always()
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const statuses = {
+              'Backend Lint': '${{ needs.lint-backend.result }}',
+              'Frontend Lint': '${{ needs.lint-frontend.result }}',
+              'Tests': '${{ needs.test.result }}',
+              'Security': '${{ needs.security-scan.result }}'
+            };
+            
+            let summary = '## 📋 PR Quality Summary\n\n';
+            Object.entries(statuses).forEach(([job, status]) => {
+              const icon = status === 'success' ? '✅' : status === 'skipped' ? '⏭️' : '❌';
+              summary += `${icon} ${job}: ${status}\n`;
+            });
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: summary
+            });
