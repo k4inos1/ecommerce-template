@@ -1,15 +1,15 @@
 <div align="center">
 
-# TechStore — E-Commerce Platform
+# E-Commerce & Delivery Platform
 
-Plataforma full‑stack de comercio electrónico construida con Node.js, Express, MongoDB y Next.js.
+Plataforma full‑stack unificada de comercio electrónico y sistema de entrega construida con Node.js, Express, MongoDB y Next.js.
 
 [![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
 [![Next.js](https://img.shields.io/badge/Next.js-16.2.1-000000?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://typescriptlang.org)
 [![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://mongodb.com)
-[![CI — Backend](https://github.com/k4inos1/ecommerce-platform/actions/workflows/backend-ci.yml/badge.svg?branch=master)](https://github.com/k4inos1/ecommerce-platform/actions/workflows/backend-ci.yml)
-[![CI — Frontend](https://github.com/k4inos1/ecommerce-platform/actions/workflows/frontend-ci.yml/badge.svg?branch=master)](https://github.com/k4inos1/ecommerce-platform/actions/workflows/frontend-ci.yml)
+[![CI — Backend](https://github.com/k4inos1/ecommerce-delivery-app/actions/workflows/backend-ci.yml/badge.svg?branch=main)](https://github.com/k4inos1/ecommerce-delivery-app/actions/workflows/backend-ci.yml)
+[![CI — Frontend](https://github.com/k4inos1/ecommerce-delivery-app/actions/workflows/frontend-ci.yml/badge.svg?branch=main)](https://github.com/k4inos1/ecommerce-delivery-app/actions/workflows/frontend-ci.yml)
 [![Licencia](https://img.shields.io/badge/Licencia-MIT-blue?style=flat-square)](LICENSE)
 
 </div>
@@ -34,17 +34,39 @@ Plataforma full‑stack de comercio electrónico construida con Node.js, Express
 
 ## Resumen
 
-TechStore es una plataforma de comercio electrónico con backend en Express y frontend en Next.js. Incluye catálogo de productos, autenticación JWT, carrito persistente, checkout con Stripe y un panel administrativo para gestionar productos y órdenes.
+Plataforma unificada que integra un sistema completo de comercio electrónico con capacidades de gestión y rastreo de entregas. Incluye catálogo de productos, autenticación JWT, carrito persistente, checkout seguro con múltiples pasarelas de pago (Stripe, Transbank), y un sistema integral de órdenes y entregas con rastreo en tiempo real.
 
 ## Características
 
+### 🛒 E-Commerce
 - Autenticación con JWT y roles (admin/usuario)
 - CRUD de productos con búsqueda y paginación
 - Carrito persistente en cliente
-- Checkout con Stripe y soporte para Transbank (modo integración/producción)
-- Subida de imágenes vía Cloudinary
+- Wishlist (lista de deseos)
+- Sistema de reseñas y ratings
+- Gestión de cupones y descuentos
+
+### 💳 Pagos
+- Integración con Stripe (tarjetas de crédito/débito)
+- Integración con Transbank (WebPay)
+- Webhooks para confirmación de transacciones
+
+### 📦 Entregas
+- Gestión integral de órdenes
+- Rastreo de entregas en tiempo real
+- Notificaciones de estatus de entrega
+- Integración con sistemas de logística
+
+### 🔧 Administración
 - Panel administrativo para productos, órdenes y cupones
+- Gestión de usuarios
+- Reportes de ventas y entregas
+- Soporte al cliente integrado
+
+### 🎨 Frontend
 - UI responsive con Tailwind CSS
+- Componentes reutilizables con React
+- Optimizado para dispositivos móviles
 
 ## Stack
 
@@ -52,17 +74,19 @@ TechStore es una plataforma de comercio electrónico con backend en Express y fr
 - **Frontend:** Next.js 16, React 18, Tailwind CSS
 - **Pagos:** Stripe, Transbank
 - **Media:** Cloudinary
+- **Auth:** JWT, Passport (OAuth: Google, Facebook)
+- **Email:** Nodemailer
 
 ## Arquitectura
 
 ```
-ecommerce-platform/
+ecommerce-delivery-app/
 ├── backend/                    # API REST (Puerto :4000)
 │   └── src/
-│       ├── models/             # User, Product, Order (Mongoose)
-│       ├── routes/             # /auth /products /orders
+│       ├── models/             # User, Product, Order, Notification, Support
+│       ├── routes/             # /auth /products /orders /notifications /delivery
 │       ├── middleware/         # JWT protect + adminOnly guard
-│       ├── services/           # Stripe, Transbank, Cloudinary
+│       ├── services/           # Stripe, Transbank, Cloudinary, Email
 │       └── index.ts            # Express entry point
 └── frontend/                   # Next.js App (Puerto :3000)
     └── app/
@@ -70,7 +94,8 @@ ecommerce-platform/
         ├── products/           # Listing + filtros + búsqueda
         ├── products/[id]/      # Detalle con galería y ratings
         ├── cart/               # Carrito
-        └── checkout/           # Checkout
+        ├── checkout/           # Checkout
+        └── orders/             # Mi órdenes + rastreo
 ```
 
 ## Requisitos
@@ -112,7 +137,7 @@ npx ts-node src/config/seed.ts
 
 Esto crea 8 productos y cuentas demo:
 
-- `admin@techstore.cl` / `admin123456`
+- `admin@platform.cl` / `admin123456`
 - `user@test.cl` / `user123456`
 
 ## Variables de entorno
@@ -160,14 +185,54 @@ npm run build --workspace=frontend
 
 ## API
 
-Rutas principales:
+### 🔐 Autenticación
+- `POST /api/auth/register` — Registro de usuarios
+- `POST /api/auth/login` — Inicio de sesión
+- `GET /api/auth/logout` — Cierre de sesión
 
-- `POST /api/auth/register`
-- `POST /api/auth/login`
-- `GET /api/products`
-- `GET /api/products/:id`
-- `POST /api/orders`
-- `GET /api/orders/my`
+### 🛍️ Productos
+- `GET /api/products` — Listar productos (con paginación, búsqueda, filtros)
+- `GET /api/products/:id` — Detalle de producto
+- `POST /api/products` — Crear producto (admin)
+- `PATCH /api/products/:id` — Actualizar producto (admin)
+- `DELETE /api/products/:id` — Eliminar producto (admin)
+
+### 📦 Órdenes & Entregas
+- `POST /api/orders` — Crear orden
+- `GET /api/orders/my` — Mis órdenes
+- `GET /api/orders/:id` — Detalle de orden con rastreo
+- `PATCH /api/orders/:id/status` — Actualizar estado (admin)
+- `GET /api/notifications` — Notificaciones de entregas (último 30)
+- `PATCH /api/notifications/:id/read` — Marcar notificación como leída
+
+### 💳 Pagos
+- `POST /api/stripe/create-intent` — Crear intent de pago con Stripe
+- `POST /api/stripe/webhook` — Webhook de Stripe
+- `POST /api/transbank/init` — Iniciar pago con Transbank
+- `POST /api/transbank/commit` — Confirmar pago Transbank
+
+### 🎯 Cupones
+- `POST /api/coupons/validate` — Validar cupón
+- `GET /api/coupons` — Listar cupones (admin)
+- `POST /api/coupons` — Crear cupón (admin)
+- `PATCH /api/coupons/:id` — Actualizar cupón (admin)
+- `DELETE /api/coupons/:id` — Eliminar cupón (admin)
+
+### ⭐ Reseñas
+- `GET /api/reviews` — Listar reseñas de producto
+- `POST /api/reviews` — Crear reseña
+- `PATCH /api/reviews/:id` — Actualizar reseña
+- `DELETE /api/reviews/:id` — Eliminar reseña
+
+### 💬 Soporte
+- `POST /api/support` — Crear ticket de soporte
+- `GET /api/support` — Listar tickets (admin)
+- `PATCH /api/support/:id` — Actualizar ticket
+
+### 👥 Usuarios
+- `GET /api/users/profile` — Mi perfil
+- `PATCH /api/users/profile` — Actualizar perfil
+- `DELETE /api/users/:id` — Eliminar cuenta (admin)
 
 Revisa `backend/src/routes` para el detalle completo de endpoints.
 
