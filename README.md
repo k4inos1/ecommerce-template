@@ -1,8 +1,8 @@
 <div align="center">
 
-# TechStore — E-Commerce Platform
+# TechStore — E-Commerce & Delivery Platform
 
-Plataforma full‑stack de comercio electrónico construida con Node.js, Express, MongoDB y Next.js.
+Plataforma full‑stack unificada de comercio electrónico y delivery construida con Node.js, Express, MongoDB, Next.js y React + Vite.
 
 [![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
 [![Next.js](https://img.shields.io/badge/Next.js-16.2.1-000000?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org)
@@ -34,7 +34,9 @@ Plataforma full‑stack de comercio electrónico construida con Node.js, Express
 
 ## Resumen
 
-TechStore es una plataforma de comercio electrónico con backend en Express y frontend en Next.js. Incluye catálogo de productos, autenticación JWT, carrito persistente, checkout con Stripe y un panel administrativo para gestionar productos y órdenes.
+TechStore es una plataforma unificada que combina dos aplicaciones:
+1. **E-Commerce** — Tienda online con backend Express, frontend Next.js, catálogo de productos, autenticación JWT, carrito persistente, checkout con Stripe y panel administrativo.
+2. **Delivery** — Aplicación de pedidos y delivery construida con React + Vite, Firebase, integración con WhatsApp y panel administrativo independiente.
 
 ## Características
 
@@ -48,29 +50,44 @@ TechStore es una plataforma de comercio electrónico con backend en Express y fr
 
 ## Stack
 
+### E-Commerce
 - **Backend:** Node.js 20+, Express, MongoDB, Mongoose, TypeScript
 - **Frontend:** Next.js 16, React 18, Tailwind CSS
 - **Pagos:** Stripe, Transbank
 - **Media:** Cloudinary
 
+### Delivery
+- **Frontend:** React 19, Vite, TypeScript
+- **Backend:** Firebase (Firestore, Authentication)
+- **Routing:** React Router v7
+- **Checkout:** WhatsApp integration
+
 ## Arquitectura
 
 ```
 ecommerce-platform/
-├── backend/                    # API REST (Puerto :4000)
+├── backend/                    # E-Commerce API REST (Puerto :4000)
 │   └── src/
 │       ├── models/             # User, Product, Order (Mongoose)
 │       ├── routes/             # /auth /products /orders
 │       ├── middleware/         # JWT protect + adminOnly guard
 │       ├── services/           # Stripe, Transbank, Cloudinary
 │       └── index.ts            # Express entry point
-└── frontend/                   # Next.js App (Puerto :3000)
-    └── app/
-        ├── page.tsx            # Home
-        ├── products/           # Listing + filtros + búsqueda
-        ├── products/[id]/      # Detalle con galería y ratings
-        ├── cart/               # Carrito
-        └── checkout/           # Checkout
+├── frontend/                   # E-Commerce Next.js App (Puerto :3000)
+│   └── app/
+│       ├── page.tsx            # Home
+│       ├── products/           # Listing + filtros + búsqueda
+│       ├── products/[id]/      # Detalle con galería y ratings
+│       ├── cart/               # Carrito
+│       └── checkout/           # Checkout
+└── delivery/                   # Delivery React + Vite App (Puerto :5173)
+    └── src/
+        ├── App.tsx             # Main app component
+        ├── main.tsx            # Entry point with routing
+        ├── firebase.ts         # Firebase configuration
+        ├── components/         # Shared UI components
+        ├── pages/              # AdminRoute, AdminLogin, AdminPanel
+        └── data/               # Product catalog and services
 ```
 
 ## Requisitos
@@ -101,6 +118,13 @@ npm run dev --workspace=backend
 cp frontend/.env.local.example frontend/.env.local
 # editar NEXT_PUBLIC_API_URL
 npm run dev --workspace=frontend
+```
+
+### 4) Delivery (opcional)
+
+```bash
+# Configurar Firebase en delivery/src/firebase.ts
+npm run dev --workspace=delivery
 ```
 
 ## Datos de demostración
@@ -150,12 +174,14 @@ Esto crea 8 productos y cuentas demo:
 
 ```bash
 # Desarrollo
-npm run dev:backend
-npm run dev:frontend
+npm run dev:backend      # Inicia el servidor Express (puerto 4000)
+npm run dev:frontend     # Inicia Next.js (puerto 3000)
+npm run dev:delivery     # Inicia Vite delivery app (puerto 5173)
 
 # Build
 npm run build --workspace=backend
 npm run build --workspace=frontend
+npm run build --workspace=delivery
 ```
 
 ## API
