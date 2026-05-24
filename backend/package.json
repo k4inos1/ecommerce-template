@@ -2,7 +2,7 @@
   "name": "ecommerce-backend",
   "version": "1.0.0",
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=20.19.0"
   },
   "description": "REST API for E-Commerce Platform - Node.js + Express + MongoDB",
   "main": "dist/index.js",

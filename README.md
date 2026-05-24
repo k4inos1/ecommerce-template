@@ -5,11 +5,11 @@
 Plataforma full‑stack unificada de comercio electrónico y sistema de entrega construida con Node.js, Express, MongoDB y Next.js.
 
 [![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
-[![Next.js](https://img.shields.io/badge/Next.js-16.2.1-000000?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org)
+[![Next.js](https://img.shields.io/badge/Next.js-16.2.6-000000?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://typescriptlang.org)
 [![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://mongodb.com)
-[![CI — Backend](https://github.com/k4inos1/ecommerce-delivery-app/actions/workflows/backend-ci.yml/badge.svg?branch=master)](https://github.com/k4inos1/ecommerce-delivery-app/actions/workflows/backend-ci.yml)
-[![CI — Frontend](https://github.com/k4inos1/ecommerce-delivery-app/actions/workflows/frontend-ci.yml/badge.svg?branch=master)](https://github.com/k4inos1/ecommerce-delivery-app/actions/workflows/frontend-ci.yml)
+[![CI — Backend](https://github.com/k4inos1/ecommerce-template/actions/workflows/backend-ci.yml/badge.svg?branch=master)](https://github.com/k4inos1/ecommerce-template/actions/workflows/backend-ci.yml)
+[![CI — Frontend](https://github.com/k4inos1/ecommerce-template/actions/workflows/frontend-ci.yml/badge.svg?branch=master)](https://github.com/k4inos1/ecommerce-template/actions/workflows/frontend-ci.yml)
 [![Licencia](https://img.shields.io/badge/Licencia-MIT-blue?style=flat-square)](LICENSE)
 
 </div>
@@ -100,7 +100,7 @@ ecommerce-delivery-app/
 
 ## Requisitos
 
-- Node.js **>= 20**
+- Node.js **>= 20.19.0**
 - npm **>= 10**
 - MongoDB **>= 6** (local o Atlas)
 
