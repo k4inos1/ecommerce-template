@@ -1,11 +1,11 @@
-import { Router, Response, NextFunction } from 'express';
+import { Router, Response } from 'express';
 import { Notification } from '../models/Notification';
 import { protect, AuthRequest } from '../middleware/auth';
 
 const router = Router();
 
 // GET /api/notifications — get current user's notifications (latest 30)
-router.get('/', protect, async (req: AuthRequest, res: Response, _next: NextFunction) => {
+router.get('/', protect, async (req: AuthRequest, res: Response) => {
   try {
     const notifications = await Notification.find({ user: req.user!.id })
       .sort({ createdAt: -1 })
@@ -17,7 +17,7 @@ router.get('/', protect, async (req: AuthRequest, res: Response, _next: NextFunc
 });
 
 // PATCH /api/notifications/:id/read — mark one notification as read
-router.patch('/:id/read', protect, async (req: AuthRequest, res: Response, _next: NextFunction) => {
+router.patch('/:id/read', protect, async (req: AuthRequest, res: Response) => {
   try {
     const notification = await Notification.findOneAndUpdate(
       { _id: req.params.id, user: req.user!.id },
@@ -32,7 +32,7 @@ router.patch('/:id/read', protect, async (req: AuthRequest, res: Response, _next
 });
 
 // PATCH /api/notifications/read-all — mark all notifications as read
-router.patch('/read-all', protect, async (req: AuthRequest, res: Response, _next: NextFunction) => {
+router.patch('/read-all', protect, async (req: AuthRequest, res: Response) => {
   try {
     await Notification.updateMany({ user: req.user!.id, read: false }, { read: true });
     res.json({ message: 'All notifications marked as read' });

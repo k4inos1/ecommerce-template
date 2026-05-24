@@ -10,7 +10,7 @@ const router = Router();
 // GET /api/wishlist — get user's wishlist
 router.get('/', protect, async (req: AuthRequest, res: Response) => {
   try {
-    const user = await User.findById(req.user?.id).populate('wishlist');
+    const user = await User.findById(req.user?._id).populate('wishlist');
     if (!user) return res.status(404).json({ message: 'User not found' });
     res.json(user.wishlist);
   } catch (err) {
@@ -26,7 +26,7 @@ router.post('/:productId', protect, async (req: AuthRequest, res: Response) => {
         return res.status(400).json({ message: 'Invalid product ID' });
     }
 
-    const user = await User.findById(req.user?.id);
+    const user = await User.findById(req.user?._id);
     if (!user) return res.status(404).json({ message: 'User not found' });
 
     // Check if duplicate
@@ -48,7 +48,7 @@ router.post('/:productId', protect, async (req: AuthRequest, res: Response) => {
 router.delete('/:productId', protect, async (req: AuthRequest, res: Response) => {
   try {
     const { productId } = req.params;
-    const user = await User.findById(req.user?.id);
+    const user = await User.findById(req.user?._id);
     if (!user) return res.status(404).json({ message: 'User not found' });
 
     user.wishlist = user.wishlist.filter(id => id.toString() !== productId) as any;

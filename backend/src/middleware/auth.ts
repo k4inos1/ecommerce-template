@@ -1,23 +1,21 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import { User } from '../models/User';
 
-export interface AuthUser {
-  id: string;
-  role: string;
-}
-
-// Augment Express namespace so req.user is always AuthUser across the app
-// eslint-disable-next-line @typescript-eslint/no-namespace
 declare global {
   namespace Express {
-    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-    interface User extends AuthUser {}
+    interface User {
+      id: string;
+      role: string;
+      [key: string]: any;
+    }
   }
 }
 
 export interface AuthRequest extends Request {
-  user?: AuthUser;
+  user?: Express.User;
 }
+
 export const protect = async (req: AuthRequest, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
   if (!authHeader?.startsWith('Bearer ')) {
