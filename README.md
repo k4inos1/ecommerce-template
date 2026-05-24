@@ -95,7 +95,7 @@ ecommerce-delivery-app/
         ├── products/[id]/      # Detalle con galería y ratings
         ├── cart/               # Carrito
         ├── checkout/           # Checkout
-        └── orders/             # Mi órdenes + rastreo
+        └── orders/             # Mis órdenes + rastreo
 ```
 
 ## Requisitos
