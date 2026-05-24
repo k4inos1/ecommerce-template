@@ -188,7 +188,6 @@ npm run build --workspace=frontend
 ### 🔐 Autenticación
 - `POST /api/auth/register` — Registro de usuarios
 - `POST /api/auth/login` — Inicio de sesión
-- `GET /api/auth/logout` — Cierre de sesión
 
 ### 🛍️ Productos
 - `GET /api/products` — Listar productos (con paginación, búsqueda, filtros)
