@@ -51,7 +51,7 @@ function buildOptimizedTitle(name: string, category: string, keywords: string[])
     'General Merchandise': '- Top Rated, Premium Build',
   };
   
-  return `${name} ${features[category] || features['General Merchandise']} | ${topKeyword} ${secondKeyword}`.replace(/\\s+/g, ' ').trim().substring(0, 200);
+  return `${name} ${features[category] || features['General Merchandise']} | ${topKeyword} ${secondKeyword}`.replace(/\s+/g, ' ').trim().substring(0, 200);
 }
 
 function buildBullets(name: string, category: string): string[] {
