@@ -7,8 +7,8 @@
  */
 
 import fetch from 'node-fetch';
-import cloudinary, { uploadImage, deleteImage as cldDelete, ensureConfigured } from './cloudinary';
-export { isAllowedImageUrl } from './cloudinary';
+import cloudinary, { uploadImage, deleteImage as cldDelete, ensureConfigured, isAllowedImageUrl } from './cloudinary';
+export { isAllowedImageUrl };
 
 export interface UploadResult {
   url: string;
@@ -31,8 +31,8 @@ export const uploadImageFromUrl = async (
   imageUrl: string,
   folder: string = 'products/competitors',
 ): Promise<UploadResult> => {
-  if (!imageUrl || !imageUrl.startsWith('http')) {
-    throw new Error('Invalid image URL');
+  if (!imageUrl || !imageUrl.startsWith('http') || !isAllowedImageUrl(imageUrl)) {
+    throw new Error('Image URL is not allowed (SSRF protection)');
   }
 
   const response = await fetch(imageUrl);

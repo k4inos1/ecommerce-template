@@ -30,8 +30,11 @@ app.use(cors({
       'http://localhost:3000',
       'https://ecommerce-platform-frontend-three.vercel.app',
     ];
-    if (!origin || allowed.includes(origin)) callback(null, true);
-    else callback(null, true); // allow all in dev — tighten in prod
+    if (!origin || allowed.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
   },
   credentials: true,
 }));

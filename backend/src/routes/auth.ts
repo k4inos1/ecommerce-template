@@ -2,10 +2,23 @@ import { Router, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
 import crypto from 'crypto';
+import rateLimit from 'express-rate-limit';
 import { User } from '../models/User';
 import { sendWelcomeEmail, sendPasswordResetEmail } from '../services/email';
 
 const router = Router();
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20, // Limit each IP to 20 requests per windowMs for authentication routes
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    message: 'Too many requests from this IP, please try again after 15 minutes',
+  },
+});
+
+router.use(authLimiter);
 
 const signToken = (id: string, role: string) =>
   jwt.sign({ id, role }, process.env.JWT_SECRET || 'secret', { expiresIn: '7d' });
