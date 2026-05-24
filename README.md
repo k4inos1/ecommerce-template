@@ -8,8 +8,8 @@ Plataforma full‑stack unificada de comercio electrónico y sistema de entrega 
 [![Next.js](https://img.shields.io/badge/Next.js-16.2.1-000000?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://typescriptlang.org)
 [![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://mongodb.com)
-[![CI — Backend](https://github.com/k4inos1/ecommerce-delivery-app/actions/workflows/backend-ci.yml/badge.svg?branch=main)](https://github.com/k4inos1/ecommerce-delivery-app/actions/workflows/backend-ci.yml)
-[![CI — Frontend](https://github.com/k4inos1/ecommerce-delivery-app/actions/workflows/frontend-ci.yml/badge.svg?branch=main)](https://github.com/k4inos1/ecommerce-delivery-app/actions/workflows/frontend-ci.yml)
+[![CI — Backend](https://github.com/k4inos1/ecommerce-delivery-app/actions/workflows/backend-ci.yml/badge.svg?branch=master)](https://github.com/k4inos1/ecommerce-delivery-app/actions/workflows/backend-ci.yml)
+[![CI — Frontend](https://github.com/k4inos1/ecommerce-delivery-app/actions/workflows/frontend-ci.yml/badge.svg?branch=master)](https://github.com/k4inos1/ecommerce-delivery-app/actions/workflows/frontend-ci.yml)
 [![Licencia](https://img.shields.io/badge/Licencia-MIT-blue?style=flat-square)](LICENSE)
 
 </div>
