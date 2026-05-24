@@ -202,7 +202,7 @@ npm run build --workspace=frontend
 - `GET /api/orders/my` — Mis órdenes
 - `GET /api/orders/:id` — Detalle de orden con rastreo
 - `PATCH /api/orders/:id/status` — Actualizar estado (admin)
-- `GET /api/notifications` — Notificaciones de entregas (último 30)
+- `GET /api/notifications` — Notificaciones de entregas (últimas 30 notificaciones)
 - `PATCH /api/notifications/:id/read` — Marcar notificación como leída
 
 ### 💳 Pagos
