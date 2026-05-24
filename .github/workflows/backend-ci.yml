@@ -82,7 +82,5 @@ docker-publish:
       with:
         context: .
         push: true
-        tags: |
-          ${{ steps.meta.outputs.tags }}
-          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+        tags: ${{ steps.meta.outputs.tags }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
         labels: ${{ steps.meta.outputs.labels }}
