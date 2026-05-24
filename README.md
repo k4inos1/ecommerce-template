@@ -1,15 +1,15 @@
 <div align="center">
 
-# TechStore — E-Commerce & Delivery Platform
+# E-Commerce & Delivery Platform
 
-Plataforma full‑stack unificada de comercio electrónico y delivery construida con Node.js, Express, MongoDB, Next.js y React + Vite.
+Plataforma full‑stack unificada de comercio electrónico y sistema de entrega construida con Node.js, Express, MongoDB y Next.js.
 
 [![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
-[![Next.js](https://img.shields.io/badge/Next.js-16.2.1-000000?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org)
+[![Next.js](https://img.shields.io/badge/Next.js-16.2.6-000000?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://typescriptlang.org)
 [![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://mongodb.com)
-[![CI — Backend](https://github.com/k4inos1/ecommerce-platform/actions/workflows/backend-ci.yml/badge.svg?branch=master)](https://github.com/k4inos1/ecommerce-platform/actions/workflows/backend-ci.yml)
-[![CI — Frontend](https://github.com/k4inos1/ecommerce-platform/actions/workflows/frontend-ci.yml/badge.svg?branch=master)](https://github.com/k4inos1/ecommerce-platform/actions/workflows/frontend-ci.yml)
+[![CI — Backend](https://github.com/k4inos1/ecommerce-template/actions/workflows/backend-ci.yml/badge.svg?branch=master)](https://github.com/k4inos1/ecommerce-template/actions/workflows/backend-ci.yml)
+[![CI — Frontend](https://github.com/k4inos1/ecommerce-template/actions/workflows/frontend-ci.yml/badge.svg?branch=master)](https://github.com/k4inos1/ecommerce-template/actions/workflows/frontend-ci.yml)
 [![Licencia](https://img.shields.io/badge/Licencia-MIT-blue?style=flat-square)](LICENSE)
 
 </div>
@@ -34,65 +34,73 @@ Plataforma full‑stack unificada de comercio electrónico y delivery construida
 
 ## Resumen
 
-TechStore es una plataforma unificada que combina dos aplicaciones:
-1. **E-Commerce** — Tienda online con backend Express, frontend Next.js, catálogo de productos, autenticación JWT, carrito persistente, checkout con Stripe y panel administrativo.
-2. **Delivery** — Aplicación de pedidos y delivery construida con React + Vite, Firebase, integración con WhatsApp y panel administrativo independiente.
+Plataforma unificada que integra un sistema completo de comercio electrónico con capacidades de gestión y rastreo de entregas. Incluye catálogo de productos, autenticación JWT, carrito persistente, checkout seguro con múltiples pasarelas de pago (Stripe, Transbank), y un sistema integral de órdenes y entregas con rastreo en tiempo real.
 
 ## Características
 
+### 🛒 E-Commerce
 - Autenticación con JWT y roles (admin/usuario)
 - CRUD de productos con búsqueda y paginación
 - Carrito persistente en cliente
-- Checkout con Stripe y soporte para Transbank (modo integración/producción)
-- Subida de imágenes vía Cloudinary
+- Wishlist (lista de deseos)
+- Sistema de reseñas y ratings
+- Gestión de cupones y descuentos
+
+### 💳 Pagos
+- Integración con Stripe (tarjetas de crédito/débito)
+- Integración con Transbank (WebPay)
+- Webhooks para confirmación de transacciones
+
+### 📦 Entregas
+- Gestión integral de órdenes
+- Rastreo de entregas en tiempo real
+- Notificaciones de estatus de entrega
+- Integración con sistemas de logística
+
+### 🔧 Administración
 - Panel administrativo para productos, órdenes y cupones
+- Gestión de usuarios
+- Reportes de ventas y entregas
+- Soporte al cliente integrado
+
+### 🎨 Frontend
 - UI responsive con Tailwind CSS
+- Componentes reutilizables con React
+- Optimizado para dispositivos móviles
 
 ## Stack
 
-### E-Commerce
 - **Backend:** Node.js 20+, Express, MongoDB, Mongoose, TypeScript
 - **Frontend:** Next.js 16, React 18, Tailwind CSS
 - **Pagos:** Stripe, Transbank
 - **Media:** Cloudinary
-
-### Delivery
-- **Frontend:** React 19, Vite, TypeScript
-- **Backend:** Firebase (Firestore, Authentication)
-- **Routing:** React Router v7
-- **Checkout:** WhatsApp integration
+- **Auth:** JWT, Passport (OAuth: Google, Facebook)
+- **Email:** Nodemailer
 
 ## Arquitectura
 
 ```
-ecommerce-platform/
-├── backend/                    # E-Commerce API REST (Puerto :4000)
+ecommerce-delivery-app/
+├── backend/                    # API REST (Puerto :4000)
 │   └── src/
-│       ├── models/             # User, Product, Order (Mongoose)
-│       ├── routes/             # /auth /products /orders
+│       ├── models/             # User, Product, Order, Notification, Support
+│       ├── routes/             # /auth /products /orders /notifications /delivery
 │       ├── middleware/         # JWT protect + adminOnly guard
-│       ├── services/           # Stripe, Transbank, Cloudinary
+│       ├── services/           # Stripe, Transbank, Cloudinary, Email
 │       └── index.ts            # Express entry point
-├── frontend/                   # E-Commerce Next.js App (Puerto :3000)
-│   └── app/
-│       ├── page.tsx            # Home
-│       ├── products/           # Listing + filtros + búsqueda
-│       ├── products/[id]/      # Detalle con galería y ratings
-│       ├── cart/               # Carrito
-│       └── checkout/           # Checkout
-└── delivery/                   # Delivery React + Vite App (Puerto :5173)
-    └── src/
-        ├── App.tsx             # Main app component
-        ├── main.tsx            # Entry point with routing
-        ├── firebase.ts         # Firebase configuration
-        ├── components/         # Shared UI components
-        ├── pages/              # AdminRoute, AdminLogin, AdminPanel
-        └── data/               # Product catalog and services
+└── frontend/                   # Next.js App (Puerto :3000)
+    └── app/
+        ├── page.tsx            # Home
+        ├── products/           # Listing + filtros + búsqueda
+        ├── products/[id]/      # Detalle con galería y ratings
+        ├── cart/               # Carrito
+        ├── checkout/           # Checkout
+        └── orders/             # Mis órdenes + rastreo
 ```
 
 ## Requisitos
 
-- Node.js **>= 20**
+- Node.js **>= 20.19.0**
 - npm **>= 10**
 - MongoDB **>= 6** (local o Atlas)
 
@@ -120,13 +128,6 @@ cp frontend/.env.local.example frontend/.env.local
 npm run dev --workspace=frontend
 ```
 
-### 4) Delivery (opcional)
-
-```bash
-# Configurar Firebase en delivery/src/firebase.ts
-npm run dev --workspace=delivery
-```
-
 ## Datos de demostración
 
 ```bash
@@ -136,7 +137,7 @@ npx ts-node src/config/seed.ts
 
 Esto crea 8 productos y cuentas demo:
 
-- `admin@techstore.cl` / `admin123456`
+- `admin@platform.cl` / `admin123456`
 - `user@test.cl` / `user123456`
 
 ## Variables de entorno
@@ -174,26 +175,63 @@ Esto crea 8 productos y cuentas demo:
 
 ```bash
 # Desarrollo
-npm run dev:backend      # Inicia el servidor Express (puerto 4000)
-npm run dev:frontend     # Inicia Next.js (puerto 3000)
-npm run dev:delivery     # Inicia Vite delivery app (puerto 5173)
+npm run dev:backend
+npm run dev:frontend
 
 # Build
 npm run build --workspace=backend
 npm run build --workspace=frontend
-npm run build --workspace=delivery
 ```
 
 ## API
 
-Rutas principales:
+### 🔐 Autenticación
+- `POST /api/auth/register` — Registro de usuarios
+- `POST /api/auth/login` — Inicio de sesión
 
-- `POST /api/auth/register`
-- `POST /api/auth/login`
-- `GET /api/products`
-- `GET /api/products/:id`
-- `POST /api/orders`
-- `GET /api/orders/my`
+### 🛍️ Productos
+- `GET /api/products` — Listar productos (con paginación, búsqueda, filtros)
+- `GET /api/products/:id` — Detalle de producto
+- `POST /api/products` — Crear producto (admin)
+- `PATCH /api/products/:id` — Actualizar producto (admin)
+- `DELETE /api/products/:id` — Eliminar producto (admin)
+
+### 📦 Órdenes & Entregas
+- `POST /api/orders` — Crear orden
+- `GET /api/orders/my` — Mis órdenes
+- `GET /api/orders/:id` — Detalle de orden con rastreo
+- `PATCH /api/orders/:id/status` — Actualizar estado (admin)
+- `GET /api/notifications` — Notificaciones de entregas (últimas 30 notificaciones)
+- `PATCH /api/notifications/:id/read` — Marcar notificación como leída
+
+### 💳 Pagos
+- `POST /api/stripe/create-intent` — Crear intent de pago con Stripe
+- `POST /api/stripe/webhook` — Webhook de Stripe
+- `POST /api/transbank/init` — Iniciar pago con Transbank
+- `POST /api/transbank/commit` — Confirmar pago Transbank
+
+### 🎯 Cupones
+- `POST /api/coupons/validate` — Validar cupón
+- `GET /api/coupons` — Listar cupones (admin)
+- `POST /api/coupons` — Crear cupón (admin)
+- `PATCH /api/coupons/:id` — Actualizar cupón (admin)
+- `DELETE /api/coupons/:id` — Eliminar cupón (admin)
+
+### ⭐ Reseñas
+- `GET /api/reviews` — Listar reseñas de producto
+- `POST /api/reviews` — Crear reseña
+- `PATCH /api/reviews/:id` — Actualizar reseña
+- `DELETE /api/reviews/:id` — Eliminar reseña
+
+### 💬 Soporte
+- `POST /api/support` — Crear ticket de soporte
+- `GET /api/support` — Listar tickets (admin)
+- `PATCH /api/support/:id` — Actualizar ticket
+
+### 👥 Usuarios
+- `GET /api/users/profile` — Mi perfil
+- `PATCH /api/users/profile` — Actualizar perfil
+- `DELETE /api/users/:id` — Eliminar cuenta (admin)
 
 Revisa `backend/src/routes` para el detalle completo de endpoints.
 
