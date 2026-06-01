@@ -3,18 +3,22 @@ name: CI — Backend (Railway)
 on:
   push:
     branches: [master, develop]
-    paths: ['backend/**']
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-ci.yml'
   pull_request:
     branches: [master]
-    paths: ['backend/**']
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-ci.yml'
+
+permissions:
+  contents: read
 
 jobs:
   build-and-test:
-    name: Build & Type Check
+    name: Build & Smoke Test
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend
 
     steps:
       - uses: actions/checkout@v4
@@ -29,23 +33,30 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: TypeScript type check
-        run: npx tsc --noEmit
+      - name: Build backend
+        run: npm run build --workspace=backend
 
-      - name: Build
-        run: npm run build
+      - name: Start backend
+        run: |
+          nohup env \
+            PORT=4000 \
+            MONGODB_URI=mongodb://localhost:27017/test \
+            JWT_SECRET=ci-test-secret-key \
+            CLIENT_URL=http://localhost:3000 \
+            NODE_ENV=test \
+            node backend/dist/index.js >/tmp/backend-ci.log 2>&1 &
 
-      - name: Health check (dry run)
-        run: node -e "require('./dist/index.js')" &
-        env:
-          PORT: 4000
-          MONGODB_URI: mongodb://localhost:27017/test
-          JWT_SECRET: ci-test-secret-key
-          CLIENT_URL: http://localhost:3000
-          NODE_ENV: test
+      - name: Health check
+        run: |
+          for _ in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4000/api/health; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/backend-ci.log
+          exit 1
 
-  # Railway auto-deploys from GitHub when RAILWAY_TOKEN is set
-  # No additional deploy step needed — Railway watches the repo directly
   notify-deploy:
     name: Notify Deploy Status
     runs-on: ubuntu-latest
@@ -54,35 +65,3 @@ jobs:
     steps:
       - name: Deploy status
         run: echo "✅ Backend passed CI. Railway will auto-deploy from master."
-docker-publish:
-  needs: build-and-test
-  runs-on: ubuntu-latest
-  permissions:
-    contents: read
-    packages: write
-  env:
-    REGISTRY: ghcr.io
-    IMAGE_NAME: ${{ github.repository }}
-  steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    - name: Log in to the Container registry
-      uses: docker/login-action@v3
-      with:
-        registry: ${{ env.REGISTRY }}
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Extract metadata (tags, labels) for Docker
-      id: meta
-      uses: docker/metadata-action@v5
-      with:
-        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        push: true
-        tags: |
-          ${{ steps.meta.outputs.tags }}
-          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-        labels: ${{ steps.meta.outputs.labels }}
