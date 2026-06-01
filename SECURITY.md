@@ -14,8 +14,8 @@ currently being supported with security updates.
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+Please report security vulnerabilities privately using GitHub Security Advisories (Security tab → “Report a vulnerability”).
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+If you cannot use GitHub advisories, open an issue only for non-sensitive security discussions; do not include exploit details or sensitive data in public issues.
+
+We will acknowledge receipt of your report as soon as possible and provide status updates as remediation progresses.
