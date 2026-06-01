@@ -2,15 +2,12 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+Security updates are provided for the latest code in the `main` branch only.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| Version                | Supported          |
+| ---------------------- | ------------------ |
+| `main` (latest commit) | :white_check_mark: |
+| Older commits/branches | :x:                |
 
 ## Reporting a Vulnerability
 
