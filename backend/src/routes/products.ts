@@ -126,29 +126,72 @@ router.put('/:id', protect, adminOnly, async (req: AuthRequest, res: Response) =
       return res.status(400).json({ message: 'Invalid update payload' });
     }
 
-    const allowedFields = [
-      'name',
-      'description',
-      'price',
-      'category',
-      'image',
-      'images',
-      'stock',
-      'published',
-      'source',
-      'featured',
-      'sizes',
-      'colors',
-      'tags',
-      'sku',
-      'brand',
-    ] as const;
+    const isString = (v: unknown): v is string => typeof v === 'string';
+    const isNumber = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v);
+    const isBoolean = (v: unknown): v is boolean => typeof v === 'boolean';
+    const isStringArray = (v: unknown): v is string[] => Array.isArray(v) && v.every((item) => typeof item === 'string');
 
     const safeUpdate: Record<string, unknown> = {};
-    for (const field of allowedFields) {
-      if (Object.prototype.hasOwnProperty.call(body, field)) {
-        safeUpdate[field] = body[field];
-      }
+
+    if (Object.prototype.hasOwnProperty.call(body, 'name')) {
+      if (!isString(body.name)) return res.status(400).json({ message: 'Invalid name' });
+      safeUpdate.name = body.name;
+    }
+    if (Object.prototype.hasOwnProperty.call(body, 'description')) {
+      if (!isString(body.description)) return res.status(400).json({ message: 'Invalid description' });
+      safeUpdate.description = body.description;
+    }
+    if (Object.prototype.hasOwnProperty.call(body, 'price')) {
+      if (!isNumber(body.price)) return res.status(400).json({ message: 'Invalid price' });
+      safeUpdate.price = body.price;
+    }
+    if (Object.prototype.hasOwnProperty.call(body, 'category')) {
+      if (!isString(body.category)) return res.status(400).json({ message: 'Invalid category' });
+      safeUpdate.category = body.category;
+    }
+    if (Object.prototype.hasOwnProperty.call(body, 'image')) {
+      if (!isString(body.image)) return res.status(400).json({ message: 'Invalid image' });
+      safeUpdate.image = body.image;
+    }
+    if (Object.prototype.hasOwnProperty.call(body, 'images')) {
+      if (!isStringArray(body.images)) return res.status(400).json({ message: 'Invalid images' });
+      safeUpdate.images = body.images;
+    }
+    if (Object.prototype.hasOwnProperty.call(body, 'stock')) {
+      if (!isNumber(body.stock)) return res.status(400).json({ message: 'Invalid stock' });
+      safeUpdate.stock = body.stock;
+    }
+    if (Object.prototype.hasOwnProperty.call(body, 'published')) {
+      if (!isBoolean(body.published)) return res.status(400).json({ message: 'Invalid published value' });
+      safeUpdate.published = body.published;
+    }
+    if (Object.prototype.hasOwnProperty.call(body, 'source')) {
+      if (!isString(body.source)) return res.status(400).json({ message: 'Invalid source' });
+      safeUpdate.source = body.source;
+    }
+    if (Object.prototype.hasOwnProperty.call(body, 'featured')) {
+      if (!isBoolean(body.featured)) return res.status(400).json({ message: 'Invalid featured value' });
+      safeUpdate.featured = body.featured;
+    }
+    if (Object.prototype.hasOwnProperty.call(body, 'sizes')) {
+      if (!isStringArray(body.sizes)) return res.status(400).json({ message: 'Invalid sizes' });
+      safeUpdate.sizes = body.sizes;
+    }
+    if (Object.prototype.hasOwnProperty.call(body, 'colors')) {
+      if (!isStringArray(body.colors)) return res.status(400).json({ message: 'Invalid colors' });
+      safeUpdate.colors = body.colors;
+    }
+    if (Object.prototype.hasOwnProperty.call(body, 'tags')) {
+      if (!isStringArray(body.tags)) return res.status(400).json({ message: 'Invalid tags' });
+      safeUpdate.tags = body.tags;
+    }
+    if (Object.prototype.hasOwnProperty.call(body, 'sku')) {
+      if (!isString(body.sku)) return res.status(400).json({ message: 'Invalid sku' });
+      safeUpdate.sku = body.sku;
+    }
+    if (Object.prototype.hasOwnProperty.call(body, 'brand')) {
+      if (!isString(body.brand)) return res.status(400).json({ message: 'Invalid brand' });
+      safeUpdate.brand = body.brand;
     }
 
     const product = await Product.findByIdAndUpdate(req.params.id, safeUpdate, { new: true, runValidators: true });
