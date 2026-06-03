@@ -1,6 +1,7 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
+import crypto from 'crypto';
 import { User } from '../models/User';
 
 passport.use(
@@ -24,7 +25,7 @@ passport.use(
           user = await User.create({
             name: profile.displayName || email.split('@')[0],
             email,
-            password: `oauth_${Date.now()}_${Math.random()}`, // Password required by schema but useless for OAuth
+            password: `oauth_${Date.now()}_${crypto.randomBytes(16).toString('hex')}`, // Password required by schema but useless for OAuth
             role: 'user',
           });
         }
@@ -58,7 +59,7 @@ passport.use(
           user = await User.create({
             name: profile.displayName || email.split('@')[0],
             email,
-            password: `oauth_${Date.now()}_${Math.random()}`,
+            password: `oauth_${Date.now()}_${crypto.randomBytes(16).toString('hex')}`,
             role: 'user',
           });
         }
