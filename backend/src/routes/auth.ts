@@ -27,14 +27,20 @@ const signToken = (id: string, role: string) =>
 router.post('/register', async (req: Request, res: Response) => {
   try {
     const { name, email, password } = req.body;
-    const exists = await User.findOne({ email });
+
+    if (typeof email !== 'string') {
+      return res.status(400).json({ message: 'Invalid email' });
+    }
+    const safeEmail = email.trim().toLowerCase();
+
+    const exists = await User.findOne({ email: safeEmail });
     if (exists) return res.status(400).json({ message: 'Email already in use' });
 
-    const user = await User.create({ name, email, password });
+    const user = await User.create({ name, email: safeEmail, password });
     
     // Send welcome email asynchronously so it doesn't block the response
-    if (!email.includes('guest_')) {
-      sendWelcomeEmail(email, name).catch(err => console.error('Failed to send welcome email:', err));
+    if (!safeEmail.includes('guest_')) {
+      sendWelcomeEmail(safeEmail, name).catch(err => console.error('Failed to send welcome email:', err));
     }
 
     const token = signToken(String(user._id), user.role);
