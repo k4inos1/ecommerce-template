@@ -1,8 +1,16 @@
 import { Router, Response } from 'express';
+import rateLimit from 'express-rate-limit';
 import { Coupon } from '../models/Coupon';
 import { protect, adminOnly, AuthRequest } from '../middleware/auth';
 
 const router = Router();
+
+const adminCouponsWriteLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 // ─── PUBLIC ──────────────────────────────────────────────────────────────────
 
@@ -57,7 +65,7 @@ router.get('/', protect, adminOnly, async (_req: AuthRequest, res: Response) => 
 });
 
 // POST /api/coupons — create coupon
-router.post('/', protect, adminOnly, async (req: AuthRequest, res: Response) => {
+router.post('/', adminCouponsWriteLimiter, protect, adminOnly, async (req: AuthRequest, res: Response) => {
   try {
     const coupon = await Coupon.create(req.body);
     res.status(201).json(coupon);
@@ -68,7 +76,7 @@ router.post('/', protect, adminOnly, async (req: AuthRequest, res: Response) => 
 });
 
 // PATCH /api/coupons/:id — update coupon (toggle active, change discount, etc.)
-router.patch('/:id', protect, adminOnly, async (req: AuthRequest, res: Response) => {
+router.patch('/:id', adminCouponsWriteLimiter, protect, adminOnly, async (req: AuthRequest, res: Response) => {
   try {
     const allowedFields = [
       'code',
@@ -153,7 +161,7 @@ router.patch('/:id', protect, adminOnly, async (req: AuthRequest, res: Response)
 });
 
 // DELETE /api/coupons/:id — delete coupon
-router.delete('/:id', protect, adminOnly, async (req: AuthRequest, res: Response) => {
+router.delete('/:id', adminCouponsWriteLimiter, protect, adminOnly, async (req: AuthRequest, res: Response) => {
   try {
     await Coupon.findByIdAndDelete(req.params.id);
     res.json({ message: 'Coupon deleted' });
