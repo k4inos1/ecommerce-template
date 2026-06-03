@@ -70,7 +70,81 @@ router.post('/', protect, adminOnly, async (req: AuthRequest, res: Response) => 
 // PATCH /api/coupons/:id — update coupon (toggle active, change discount, etc.)
 router.patch('/:id', protect, adminOnly, async (req: AuthRequest, res: Response) => {
   try {
-    const coupon = await Coupon.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    const allowedFields = [
+      'code',
+      'type',
+      'discount',
+      'minOrderAmount',
+      'maxUses',
+      'usedCount',
+      'active',
+      'expiresAt',
+    ] as const;
+
+    const body = req.body as Record<string, unknown>;
+    const updateData: Record<string, unknown> = {};
+
+    for (const field of allowedFields) {
+      if (!Object.prototype.hasOwnProperty.call(body, field)) continue;
+
+      const value = body[field];
+
+      if (field === 'code' || field === 'type') {
+        if (typeof value !== 'string') {
+          return res.status(400).json({ message: `Invalid type for ${field}` });
+        }
+        updateData[field] = field === 'code' ? value.toUpperCase().trim() : value.trim();
+        continue;
+      }
+
+      if (
+        field === 'discount' ||
+        field === 'minOrderAmount' ||
+        field === 'maxUses' ||
+        field === 'usedCount'
+      ) {
+        if (typeof value !== 'number' || !Number.isFinite(value)) {
+          return res.status(400).json({ message: `Invalid type for ${field}` });
+        }
+        updateData[field] = value;
+        continue;
+      }
+
+      if (field === 'active') {
+        if (typeof value !== 'boolean') {
+          return res.status(400).json({ message: `Invalid type for ${field}` });
+        }
+        updateData[field] = value;
+        continue;
+      }
+
+      if (field === 'expiresAt') {
+        if (
+          !(
+            typeof value === 'string' ||
+            typeof value === 'number' ||
+            value instanceof Date
+          )
+        ) {
+          return res.status(400).json({ message: `Invalid type for ${field}` });
+        }
+        const parsedDate = new Date(value);
+        if (Number.isNaN(parsedDate.getTime())) {
+          return res.status(400).json({ message: `Invalid date for ${field}` });
+        }
+        updateData[field] = parsedDate;
+      }
+    }
+
+    if (Object.keys(updateData).length === 0) {
+      return res.status(400).json({ message: 'No valid fields to update' });
+    }
+
+    const coupon = await Coupon.findByIdAndUpdate(req.params.id, updateData, {
+      new: true,
+      runValidators: true,
+      context: 'query',
+    });
     if (!coupon) return res.status(404).json({ message: 'Coupon not found' });
     res.json(coupon);
   } catch (err) {
