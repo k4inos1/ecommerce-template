@@ -70,7 +70,35 @@ router.post('/', protect, adminOnly, async (req: AuthRequest, res: Response) => 
 // PATCH /api/coupons/:id — update coupon (toggle active, change discount, etc.)
 router.patch('/:id', protect, adminOnly, async (req: AuthRequest, res: Response) => {
   try {
-    const coupon = await Coupon.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    const allowedFields = [
+      'code',
+      'type',
+      'discount',
+      'minOrderAmount',
+      'maxUses',
+      'usedCount',
+      'active',
+      'expiresAt',
+    ] as const;
+
+    const body = req.body as Record<string, unknown>;
+    const updateData: Record<string, unknown> = {};
+
+    for (const field of allowedFields) {
+      if (Object.prototype.hasOwnProperty.call(body, field)) {
+        updateData[field] = body[field];
+      }
+    }
+
+    if (Object.keys(updateData).length === 0) {
+      return res.status(400).json({ message: 'No valid fields to update' });
+    }
+
+    const coupon = await Coupon.findByIdAndUpdate(req.params.id, updateData, {
+      new: true,
+      runValidators: true,
+      context: 'query',
+    });
     if (!coupon) return res.status(404).json({ message: 'Coupon not found' });
     res.json(coupon);
   } catch (err) {
