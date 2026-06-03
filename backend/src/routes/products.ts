@@ -116,7 +116,42 @@ router.post('/', protect, adminOnly, async (req: AuthRequest, res: Response) => 
 // PUT /api/products/:id — admin: full update
 router.put('/:id', protect, adminOnly, async (req: AuthRequest, res: Response) => {
   try {
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    if (!req.body || typeof req.body !== 'object' || Array.isArray(req.body)) {
+      return res.status(400).json({ message: 'Invalid data' });
+    }
+
+    const body = req.body as Record<string, unknown>;
+    const hasUnsafeKey = Object.keys(body).some((key) => key.startsWith('$') || key.includes('.'));
+    if (hasUnsafeKey) {
+      return res.status(400).json({ message: 'Invalid update payload' });
+    }
+
+    const allowedFields = [
+      'name',
+      'description',
+      'price',
+      'category',
+      'image',
+      'images',
+      'stock',
+      'published',
+      'source',
+      'featured',
+      'sizes',
+      'colors',
+      'tags',
+      'sku',
+      'brand',
+    ] as const;
+
+    const safeUpdate: Record<string, unknown> = {};
+    for (const field of allowedFields) {
+      if (Object.prototype.hasOwnProperty.call(body, field)) {
+        safeUpdate[field] = body[field];
+      }
+    }
+
+    const product = await Product.findByIdAndUpdate(req.params.id, safeUpdate, { new: true, runValidators: true });
     if (!product) return res.status(404).json({ message: 'Product not found' });
     clearProductCache();
     res.json(product);
