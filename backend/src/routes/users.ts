@@ -1,9 +1,17 @@
 import { Router, Response } from 'express';
+import rateLimit from 'express-rate-limit';
 import { protect, adminOnly, AuthRequest } from '../middleware/auth';
 import { User } from '../models/User';
 import { Product } from '../models/Product';
 
 const router = Router();
+
+const wishlistWriteLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 // GET /api/users/profile
 router.get('/profile', protect, async (req: AuthRequest, res: Response) => {
@@ -68,7 +76,7 @@ router.get('/wishlist', protect, async (req: AuthRequest, res: Response) => {
 });
 
 // POST /api/users/wishlist/:productId — add product to wishlist
-router.post('/wishlist/:productId', protect, async (req: AuthRequest, res: Response) => {
+router.post('/wishlist/:productId', wishlistWriteLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     const product = await Product.findById(req.params.productId);
     if (!product) return res.status(404).json({ message: 'Product not found' });
@@ -86,7 +94,7 @@ router.post('/wishlist/:productId', protect, async (req: AuthRequest, res: Respo
 });
 
 // DELETE /api/users/wishlist/:productId — remove product from wishlist
-router.delete('/wishlist/:productId', protect, async (req: AuthRequest, res: Response) => {
+router.delete('/wishlist/:productId', protect, wishlistWriteLimiter, async (req: AuthRequest, res: Response) => {
   try {
     const user = await User.findByIdAndUpdate(
       req.user!.id,
