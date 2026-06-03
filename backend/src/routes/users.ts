@@ -76,7 +76,7 @@ router.get('/wishlist', protect, async (req: AuthRequest, res: Response) => {
 });
 
 // POST /api/users/wishlist/:productId — add product to wishlist
-router.post('/wishlist/:productId', protect, wishlistWriteLimiter, async (req: AuthRequest, res: Response) => {
+router.post('/wishlist/:productId', wishlistWriteLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     const product = await Product.findById(req.params.productId);
     if (!product) return res.status(404).json({ message: 'Product not found' });
