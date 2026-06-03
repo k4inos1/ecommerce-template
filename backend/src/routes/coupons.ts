@@ -85,8 +85,54 @@ router.patch('/:id', protect, adminOnly, async (req: AuthRequest, res: Response)
     const updateData: Record<string, unknown> = {};
 
     for (const field of allowedFields) {
-      if (Object.prototype.hasOwnProperty.call(body, field)) {
-        updateData[field] = body[field];
+      if (!Object.prototype.hasOwnProperty.call(body, field)) continue;
+
+      const value = body[field];
+
+      if (field === 'code' || field === 'type') {
+        if (typeof value !== 'string') {
+          return res.status(400).json({ message: `Invalid type for ${field}` });
+        }
+        updateData[field] = field === 'code' ? value.toUpperCase().trim() : value.trim();
+        continue;
+      }
+
+      if (
+        field === 'discount' ||
+        field === 'minOrderAmount' ||
+        field === 'maxUses' ||
+        field === 'usedCount'
+      ) {
+        if (typeof value !== 'number' || !Number.isFinite(value)) {
+          return res.status(400).json({ message: `Invalid type for ${field}` });
+        }
+        updateData[field] = value;
+        continue;
+      }
+
+      if (field === 'active') {
+        if (typeof value !== 'boolean') {
+          return res.status(400).json({ message: `Invalid type for ${field}` });
+        }
+        updateData[field] = value;
+        continue;
+      }
+
+      if (field === 'expiresAt') {
+        if (
+          !(
+            typeof value === 'string' ||
+            typeof value === 'number' ||
+            value instanceof Date
+          )
+        ) {
+          return res.status(400).json({ message: `Invalid type for ${field}` });
+        }
+        const parsedDate = new Date(value);
+        if (Number.isNaN(parsedDate.getTime())) {
+          return res.status(400).json({ message: `Invalid date for ${field}` });
+        }
+        updateData[field] = parsedDate;
       }
     }
 
