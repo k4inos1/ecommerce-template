@@ -1,10 +1,17 @@
 import { Router, Request, Response } from 'express';
+import rateLimit from 'express-rate-limit';
 import { Product } from '../models/Product';
 import { protect, adminOnly, AuthRequest } from '../middleware/auth';
 import multer from 'multer';
 import { uploadImage } from '../services/cloudinary';
 
 const router = Router();
+const adminWriteLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 // Configure Multer to store products in memory buffer for easy upload to Cloudinary
 const storage = multer.memoryStorage();
@@ -114,7 +121,7 @@ router.post('/', protect, adminOnly, async (req: AuthRequest, res: Response) => 
 });
 
 // PUT /api/products/:id — admin: full update
-router.put('/:id', protect, adminOnly, async (req: AuthRequest, res: Response) => {
+router.put('/:id', protect, adminOnly, adminWriteLimiter, async (req: AuthRequest, res: Response) => {
   try {
     if (!req.body || typeof req.body !== 'object' || Array.isArray(req.body)) {
       return res.status(400).json({ message: 'Invalid data' });
