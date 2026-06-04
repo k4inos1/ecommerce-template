@@ -28,6 +28,14 @@ import {
 
 const router = Router();
 
+const importRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 30, // limit import attempts per window per IP
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many import requests, please try again later.' },
+});
+
 /**
  * ─────────────────────────────────────────────────────────────
  * RATE LIMITING
@@ -305,6 +313,7 @@ router.post(
   '/import',
   protect,
   adminOnly,
+  importRateLimiter,
   async (req: AuthRequest, res: Response) => {
     try {
       const body = parseQueryParams(ImportProductBodySchema, req.body);
