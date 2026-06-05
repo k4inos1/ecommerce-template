@@ -311,9 +311,9 @@ router.post(
  */
 router.post(
   '/import',
+  importRateLimiter,
   protect,
   adminOnly,
-  importRateLimiter,
   async (req: AuthRequest, res: Response) => {
     try {
       const body = parseQueryParams(ImportProductBodySchema, req.body);
