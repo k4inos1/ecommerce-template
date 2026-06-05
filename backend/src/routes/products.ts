@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import rateLimit from 'express-rate-limit';
+import { Types } from 'mongoose';
 import { Product } from '../models/Product';
 import { protect, adminOnly, AuthRequest } from '../middleware/auth';
 import multer from 'multer';
@@ -201,7 +202,12 @@ router.put('/:id', protect, adminOnly, adminWriteLimiter, async (req: AuthReques
       safeUpdate.brand = body.brand;
     }
 
-    const product = await Product.findByIdAndUpdate(req.params.id, safeUpdate, { new: true, runValidators: true });
+    const productId = req.params.id;
+    if (!Types.ObjectId.isValid(productId)) {
+      return res.status(400).json({ message: 'Invalid product id' });
+    }
+
+    const product = await Product.findByIdAndUpdate(productId, { $set: safeUpdate }, { new: true, runValidators: true });
     if (!product) return res.status(404).json({ message: 'Product not found' });
     clearProductCache();
     res.json(product);
