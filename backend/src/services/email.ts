@@ -1,5 +1,13 @@
 import nodemailer from 'nodemailer';
 
+const escapeHtml = (value: string): string =>
+  value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -105,6 +113,8 @@ export async function sendWelcomeEmail(to: string, name: string) {
     return;
   }
 
+  const safeName = escapeHtml(name);
+
   const html = `
   <!DOCTYPE html><html><head><meta charset="UTF-8"><style>${corporateStyle}</style></head>
   <body>
@@ -116,7 +126,7 @@ export async function sendWelcomeEmail(to: string, name: string) {
         <div style="font-size:14px;color:#6b7280;letter-spacing:1px;text-transform:uppercase;font-weight:600">Tecnología de Vanguardia</div>
       </div>
       <div class="content" style="text-align:center">
-        <div class="greeting" style="font-size:26px">¡Bienvenido a TechStore, ${name}!</div>
+        <div class="greeting" style="font-size:26px">¡Bienvenido a TechStore, ${safeName}!</div>
         <p class="text" style="font-size:16px;line-height:1.7;margin:25px 0 35px">
           Queremos darte la bienvenida oficial a nuestra plataforma. Tu cuenta ha sido validada y ya formas parte de nuestra red de clientes preferenciales. 
           <br><br>Prepárate para explorar la mejor tecnología del mercado con procesos de compra seguros y garantizados.
@@ -133,7 +143,7 @@ export async function sendWelcomeEmail(to: string, name: string) {
   await transporter.sendMail({
     from: `"TechStore Corporativo" <${process.env.EMAIL_USER}>`,
     to,
-    subject: `¡Tu cuenta oficial ha sido activada, ${name}! | TechStore`,
+    subject: `¡Tu cuenta oficial ha sido activada, ${safeName}! | TechStore`,
     html,
   });
   console.log(`📧 Corporate welcome email sent to ${to}`);
