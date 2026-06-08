@@ -78,7 +78,11 @@ router.post('/login', async (req: Request, res: Response) => {
 router.post('/forgot-password', async (req: Request, res: Response) => {
   try {
     const { email } = req.body;
-    const user = await User.findOne({ email });
+    if (typeof email !== 'string') {
+      return res.status(200).json({ message: 'Si el correo existe, se ha enviado un enlace de recuperación.' });
+    }
+    const safeEmail = email.trim().toLowerCase();
+    const user = await User.findOne({ email: { $eq: safeEmail } });
     
     // We send success even if user not found to prevent email enumeration
     if (!user) {
