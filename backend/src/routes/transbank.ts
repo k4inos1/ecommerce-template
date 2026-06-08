@@ -1,5 +1,6 @@
 import { Router, Response } from 'express';
 import rateLimit from 'express-rate-limit';
+import { Types } from 'mongoose';
 import { Order } from '../models/Order';
 import { protect, AuthRequest } from '../middleware/auth';
 import { createTransbankTransaction, confirmTransbankTransaction } from '../services/payment';
@@ -33,6 +34,9 @@ router.post('/create', paymentLimiter, protect, async (req: AuthRequest, res: Re
 
     // Store the transbank token in the order
     if (orderId) {
+      if (typeof orderId !== 'string' || !Types.ObjectId.isValid(orderId)) {
+        return res.status(400).json({ message: 'Invalid orderId' });
+      }
       await Order.findByIdAndUpdate(orderId, { webpayToken: result.token, paymentMethod: 'webpay' });
     }
 
