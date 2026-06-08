@@ -28,6 +28,13 @@ import {
 
 const router = Router();
 
+const scraperActionLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per window
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 const importRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 30, // limit import attempts per window per IP
@@ -284,6 +291,7 @@ router.get('/optimize', protect, adminOnly, (req: AuthRequest, res: Response) =>
  */
 router.post(
   '/calculate',
+  scraperActionLimiter,
   protect,
   adminOnly,
   (req: AuthRequest, res: Response) => {
