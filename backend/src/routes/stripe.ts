@@ -1,10 +1,19 @@
 import { Router, Request, Response } from 'express';
 import Stripe from 'stripe';
+import rateLimit from 'express-rate-limit';
 import { Order } from '../models/Order';
 import { protect, AuthRequest } from '../middleware/auth';
 import { createStripeCheckoutSession, constructStripeWebhookEvent } from '../services/payment';
 
 const router = Router();
+
+const webhookRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 300,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many webhook requests, please try again later.' },
+});
 
 // POST /api/stripe/checkout-session
 // Creates a Stripe Checkout Session and returns the URL to redirect to
@@ -31,7 +40,7 @@ router.post('/checkout-session', protect, async (req: AuthRequest, res: Response
 
 // POST /api/stripe/webhook — Stripe sends events here
 // Must have raw body (configured in index.ts with express.raw)
-router.post('/webhook', async (req: Request, res: Response) => {
+router.post('/webhook', webhookRateLimiter, async (req: Request, res: Response) => {
   const sig = req.headers['stripe-signature'] as string;
   const secret = process.env.STRIPE_WEBHOOK_SECRET;
 
