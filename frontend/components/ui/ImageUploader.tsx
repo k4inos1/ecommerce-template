@@ -10,10 +10,22 @@ interface ImageUploaderProps {
   onChange: (url: string) => void;
 }
 
+const sanitizeImageUrl = (raw: string): string => {
+  const trimmed = raw.trim();
+  if (!trimmed) return '';
+  try {
+    const parsed = new URL(trimmed, window.location.origin);
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:' ? parsed.toString() : '';
+  } catch {
+    return '';
+  }
+};
+
 export function ImageUploader({ value, onChange }: ImageUploaderProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
+  const safeValue = sanitizeImageUrl(value);
 
   const handleFile = async (file: File) => {
     if (!file.type.startsWith('image/')) { setError('Solo se aceptan imágenes'); return; }
@@ -30,7 +42,9 @@ export function ImageUploader({ value, onChange }: ImageUploaderProps) {
       });
       if (!res.ok) throw new Error('Upload failed');
       const data = await res.json();
-      onChange(data.url);
+      const safeUrl = sanitizeImageUrl(String(data.url || ''));
+      if (!safeUrl) throw new Error('Invalid image URL');
+      onChange(safeUrl);
     } catch {
       setError('Error al subir imagen. Verifica las credenciales de Cloudinary.');
     } finally {
@@ -48,9 +62,9 @@ export function ImageUploader({ value, onChange }: ImageUploaderProps) {
     <div className="space-y-2">
       <label className="text-xs text-gray-400 block">Imagen</label>
 
-      {value ? (
+      {safeValue ? (
         <div className="relative rounded-lg overflow-hidden border border-gray-700">
-          <img src={value} alt="Product" className="w-full h-40 object-cover" />
+          <img src={safeValue} alt="Product" className="w-full h-40 object-cover" />
           <button type="button" onClick={() => onChange('')}
             className="absolute top-2 right-2 bg-black/70 text-white p-1.5 rounded-lg hover:bg-red-500 transition-colors">
             <X className="w-4 h-4" />
@@ -81,7 +95,16 @@ export function ImageUploader({ value, onChange }: ImageUploaderProps) {
 
       {/* URL manual fallback */}
       <input type="url" placeholder="O pega una URL de imagen..."
-        value={value} onChange={e => onChange(e.target.value)}
+        value={value} onChange={e => {
+          const nextValue = e.target.value;
+          const safeUrl = sanitizeImageUrl(nextValue);
+          if (!nextValue.trim() || safeUrl) {
+            setError('');
+            onChange(safeUrl);
+          } else {
+            setError('URL de imagen inválida. Usa http(s).');
+          }
+        }}
         className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-xs text-white placeholder-gray-600 focus:border-brand focus:outline-none" />
 
       {error && <p className="text-red-400 text-xs">{error}</p>}
