@@ -94,8 +94,11 @@ router.get('/admin/all', protect, adminOnly, async (req: AuthRequest, res: Respo
     const { search, category, published, page = 1, limit = 20 } = req.query;
     const query: Record<string, unknown> = {};
 
-    if (search) query.$text = { $search: search as string };
-    if (category && category !== 'All') query.category = category;
+    const safeSearch = typeof search === 'string' ? search.trim() : '';
+    const safeCategory = typeof category === 'string' ? category.trim() : '';
+
+    if (safeSearch) query.$text = { $search: safeSearch };
+    if (safeCategory && safeCategory !== 'All') query.category = safeCategory;
     if (published !== undefined) query.published = published === 'true';
 
     const skip = (Number(page) - 1) * Number(limit);
