@@ -55,10 +55,12 @@ export async function sendOrderConfirmation(data: OrderEmailData) {
 
   const itemRows = data.items.map(i =>
     `<tr>
-      <td style="color:#374151">${i.name} <span style="color:#9ca3af;font-size:12px">×${i.quantity}</span></td>
+      <td style="color:#374151">${escapeHtml(String(i.name))} <span style="color:#9ca3af;font-size:12px">×${i.quantity}</span></td>
       <td style="text-align:right;color:#111827;font-weight:500">$${(i.price * i.quantity).toFixed(2)}</td>
     </tr>`
   ).join('');
+
+  const safeClientUrl = escapeHtml(String(process.env.CLIENT_URL || 'http://localhost:3000').replace(/\/$/, ''));
 
   const html = `
   <!DOCTYPE html><html><head><meta charset="UTF-8"><style>${corporateStyle}</style></head>
@@ -71,7 +73,7 @@ export async function sendOrderConfirmation(data: OrderEmailData) {
         <div style="font-size:14px;color:#6b7280;letter-spacing:1px;text-transform:uppercase;font-weight:600">Comprobante de Orden</div>
       </div>
       <div class="content">
-        <div class="greeting">¡Gracias por tu compra, ${data.customerName}!</div>
+        <div class="greeting">¡Gracias por tu compra, ${escapeHtml(String(data.customerName))}!</div>
         <p class="text">Hemos recibido tu orden y ya estamos preparándola para el envío. A continuación encontrarás el resumen detallado de tu transacción corporativa.</p>
         
         <p style="font-size:13px;color:#6b7280;margin:0 0 10px">ID de Orden Ref: <strong style="color:#4f46e5">#${String(data.orderId).slice(-8).toUpperCase()}</strong></p>
@@ -84,11 +86,11 @@ export async function sendOrderConfirmation(data: OrderEmailData) {
 
         ${data.shippingAddress ? `<div class="address-box">
           <strong>Dirección de Despacho Logístico</strong>
-          <span style="color:#4b5563;font-size:14px">${data.shippingAddress.street || ''}, ${data.shippingAddress.city || ''}, ${data.shippingAddress.country || ''}</span>
+          <span style="color:#4b5563;font-size:14px">${escapeHtml(String(data.shippingAddress.street || ''))}, ${escapeHtml(String(data.shippingAddress.city || ''))}, ${escapeHtml(String(data.shippingAddress.country || ''))}</span>
         </div>` : ''}
         
         <div style="text-align:center;margin-top:35px">
-          <a href="${process.env.CLIENT_URL || 'http://localhost:3000'}/mis-ordenes" class="button">Rastrear mi orden</a>
+          <a href="${safeClientUrl}/mis-ordenes" class="button">Rastrear mi orden</a>
         </div>
       </div>
       <div class="footer">
