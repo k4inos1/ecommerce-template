@@ -111,7 +111,7 @@ router.get('/admin/all', protect, adminOnly, async (req: AuthRequest, res: Respo
 });
 
 // POST /api/products — admin: create manually (published: true by default for manual)
-router.post('/', protect, adminOnly, adminWriteLimiter, async (req: AuthRequest, res: Response) => {
+router.post('/', adminWriteLimiter, protect, adminOnly, async (req: AuthRequest, res: Response) => {
   try {
     const product = await Product.create({ published: true, source: 'manual', ...req.body });
     clearProductCache();
