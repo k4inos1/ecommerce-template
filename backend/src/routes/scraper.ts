@@ -269,7 +269,7 @@ router.get(
  * GET /api/scraper/optimize
  * Generate SEO-optimized product title and bullets
  */
-router.get('/optimize', protect, adminOnly, (req: AuthRequest, res: Response) => {
+router.get('/optimize', scraperLimiter, protect, adminOnly, (req: AuthRequest, res: Response) => {
   try {
     const params = parseQueryParams(ListingOptimizerParamsSchema, req.query);
     logger.debug(`✨ /optimize: name="${params.name}" category="${params.category}"`);
