@@ -125,7 +125,7 @@ router.post('/', adminWriteLimiter, protect, adminOnly, async (req: AuthRequest,
 });
 
 // PUT /api/products/:id — admin: full update
-router.put('/:id', protect, adminOnly, adminWriteLimiter, async (req: AuthRequest, res: Response) => {
+router.put('/:id', adminWriteLimiter, protect, adminOnly, async (req: AuthRequest, res: Response) => {
   try {
     if (!req.body || typeof req.body !== 'object' || Array.isArray(req.body)) {
       return res.status(400).json({ message: 'Invalid data' });
