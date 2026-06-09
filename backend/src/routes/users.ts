@@ -124,7 +124,7 @@ router.get('/', protect, adminOnly, async (_req: AuthRequest, res: Response) => 
 router.patch('/:id/role', protect, adminOnly, async (req: AuthRequest, res: Response) => {
   try {
     const { role } = req.body;
-    if (!['user', 'admin'].includes(role)) {
+    if (typeof role !== 'string' || !['user', 'admin'].includes(role)) {
       return res.status(400).json({ message: 'Invalid role' });
     }
     const user = await User.findByIdAndUpdate(req.params.id, { role }, { new: true }).select('-password');
