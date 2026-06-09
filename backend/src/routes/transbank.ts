@@ -51,14 +51,16 @@ router.post('/create', paymentLimiter, protect, async (req: AuthRequest, res: Re
 router.post('/confirm', paymentLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     const { token_ws } = req.body;
-    if (!token_ws) return res.status(400).json({ message: 'No token_ws' });
+    if (typeof token_ws !== 'string' || token_ws.trim() === '') {
+      return res.status(400).json({ message: 'Invalid token_ws' });
+    }
 
     const result = await confirmTransbankTransaction(token_ws);
 
     if (result.success) {
       // Payment approved — find order by token and mark as processing
       await Order.findOneAndUpdate(
-        { webpayToken: token_ws },
+        { webpayToken: { $eq: token_ws } },
         { status: 'processing', paidAt: new Date() }
       );
       res.json({ success: true, response: result.response });
