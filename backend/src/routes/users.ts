@@ -94,7 +94,7 @@ router.post('/wishlist/:productId', wishlistWriteLimiter, protect, async (req: A
 });
 
 // DELETE /api/users/wishlist/:productId — remove product from wishlist
-router.delete('/wishlist/:productId', protect, wishlistWriteLimiter, async (req: AuthRequest, res: Response) => {
+router.delete('/wishlist/:productId', wishlistWriteLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     const user = await User.findByIdAndUpdate(
       req.user!.id,
