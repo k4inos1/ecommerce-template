@@ -13,6 +13,13 @@ const wishlistWriteLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+const adminRoleChangeLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // GET /api/users/profile
 router.get('/profile', protect, async (req: AuthRequest, res: Response) => {
   try {
@@ -121,7 +128,7 @@ router.get('/', protect, adminOnly, async (_req: AuthRequest, res: Response) => 
 });
 
 // PATCH /api/users/:id/role — change user role (admin only)
-router.patch('/:id/role', protect, adminOnly, async (req: AuthRequest, res: Response) => {
+router.patch('/:id/role', adminRoleChangeLimiter, protect, adminOnly, async (req: AuthRequest, res: Response) => {
   try {
     const { role } = req.body;
     if (typeof role !== 'string' || !['user', 'admin'].includes(role)) {
