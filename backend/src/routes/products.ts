@@ -237,7 +237,7 @@ router.patch('/:id/publish', protect, adminOnly, async (req: AuthRequest, res: R
 });
 
 // DELETE /api/products/:id — admin
-router.delete('/:id', protect, adminOnly, async (req: AuthRequest, res: Response) => {
+router.delete('/:id', protect, adminOnly, adminWriteLimiter, async (req: AuthRequest, res: Response) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
     clearProductCache();
@@ -252,7 +252,7 @@ router.delete('/:id', protect, adminOnly, async (req: AuthRequest, res: Response
  * @desc    Upload product image to Cloudinary (Admin only)
  * @access  Private/Admin
  */
-router.post('/upload', protect, adminOnly, upload.single('image'), async (req: AuthRequest, res: Response) => {
+router.post('/upload', protect, adminOnly, adminWriteLimiter, upload.single('image'), async (req: AuthRequest, res: Response) => {
   try {
     if (!req.file) {
       return res.status(400).json({ message: 'No image file provided' });
