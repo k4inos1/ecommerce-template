@@ -272,7 +272,7 @@ router.post('/upload', protect, adminOnly, upload.single('image'), async (req: A
 });
 
 // GET /api/products/admin/insights — admin: get market analysis and suppliers
-router.get('/admin/insights', protect, adminOnly, async (req: AuthRequest, res: Response) => {
+router.get('/admin/insights', protect, adminOnly, adminWriteLimiter, async (req: AuthRequest, res: Response) => {
   try {
     const { query, category } = req.query;
     if (!query || !category) return res.status(400).json({ message: 'Missing query or category' });
