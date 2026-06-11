@@ -237,7 +237,7 @@ router.patch('/:id/publish', protect, adminOnly, async (req: AuthRequest, res: R
 });
 
 // DELETE /api/products/:id — admin
-router.delete('/:id', protect, adminOnly, adminWriteLimiter, async (req: AuthRequest, res: Response) => {
+router.delete('/:id', adminWriteLimiter, protect, adminOnly, async (req: AuthRequest, res: Response) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
     clearProductCache();
