@@ -252,7 +252,7 @@ router.delete('/:id', adminWriteLimiter, protect, adminOnly, async (req: AuthReq
  * @desc    Upload product image to Cloudinary (Admin only)
  * @access  Private/Admin
  */
-router.post('/upload', protect, adminOnly, adminWriteLimiter, upload.single('image'), async (req: AuthRequest, res: Response) => {
+router.post('/upload', adminWriteLimiter, protect, adminOnly, upload.single('image'), async (req: AuthRequest, res: Response) => {
   try {
     if (!req.file) {
       return res.status(400).json({ message: 'No image file provided' });
