@@ -13,6 +13,13 @@ const wishlistWriteLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+const adminListUsersLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 60,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 const adminRoleChangeLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 20,
@@ -118,7 +125,7 @@ router.delete('/wishlist/:productId', wishlistWriteLimiter, protect, async (req:
 // ─── ADMIN ────────────────────────────────────────────────────────────────────
 
 // GET /api/users — list all users (admin only)
-router.get('/', protect, adminOnly, async (_req: AuthRequest, res: Response) => {
+router.get('/', adminListUsersLimiter, protect, adminOnly, async (_req: AuthRequest, res: Response) => {
   try {
     const users = await User.find().select('-password').sort({ createdAt: -1 });
     res.json(users);
