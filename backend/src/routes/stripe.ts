@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import Stripe from 'stripe';
 import rateLimit from 'express-rate-limit';
+import { Types } from 'mongoose';
 import { Order } from '../models/Order';
 import { protect, AuthRequest } from '../middleware/auth';
 import { createStripeCheckoutSession, constructStripeWebhookEvent } from '../services/payment';
@@ -56,13 +57,15 @@ router.post('/webhook', webhookRateLimiter, async (req: Request, res: Response) 
     const session = event.data.object as Stripe.Checkout.Session;
     const orderId = session.metadata?.orderId;
 
-    if (orderId) {
-      await Order.findByIdAndUpdate(orderId, {
+    if (typeof orderId === 'string' && Types.ObjectId.isValid(orderId)) {
+      await Order.findByIdAndUpdate(new Types.ObjectId(orderId), {
         status: 'processing',
         stripeSessionId: session.id,
         paidAt: new Date(),
       });
       console.log(`✅ Order ${orderId} marked as paid via Stripe`);
+    } else if (orderId !== undefined) {
+      console.warn('Ignoring webhook with invalid orderId metadata');
     }
   }
 
