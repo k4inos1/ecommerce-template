@@ -28,7 +28,7 @@ const profileReadLimiter = rateLimit({
 });
 
 // GET /api/users/profile
-router.get('/profile', protect, profileReadLimiter, async (req: AuthRequest, res: Response) => {
+router.get('/profile', profileReadLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     const user = await User.findById(req.user?.id).select('-password');
     if (!user) {
