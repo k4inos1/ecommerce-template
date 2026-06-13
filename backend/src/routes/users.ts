@@ -27,8 +27,15 @@ const adminRoleChangeLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+const profileReadLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // GET /api/users/profile
-router.get('/profile', protect, async (req: AuthRequest, res: Response) => {
+router.get('/profile', profileReadLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     const user = await User.findById(req.user?.id).select('-password');
     if (!user) {
