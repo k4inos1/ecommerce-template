@@ -53,10 +53,23 @@ export async function sendOrderConfirmation(data: OrderEmailData) {
     return;
   }
 
-  const itemRows = data.items.map(i =>
+  const safeItems = data.items.map(i => {
+    const quantity = Number.isFinite(Number(i.quantity)) ? Number(i.quantity) : 0;
+    const price = Number.isFinite(Number(i.price)) ? Number(i.price) : 0;
+    return {
+      name: escapeHtml(String(i.name)),
+      quantity,
+      price,
+      subtotal: price * quantity,
+    };
+  });
+
+  const safeTotalAmount = Number.isFinite(Number(data.totalAmount)) ? Number(data.totalAmount) : 0;
+
+  const itemRows = safeItems.map(i =>
     `<tr>
-      <td style="color:#374151">${escapeHtml(String(i.name))} <span style="color:#9ca3af;font-size:12px">×${i.quantity}</span></td>
-      <td style="text-align:right;color:#111827;font-weight:500">$${(i.price * i.quantity).toFixed(2)}</td>
+      <td style="color:#374151">${i.name} <span style="color:#9ca3af;font-size:12px">×${i.quantity}</span></td>
+      <td style="text-align:right;color:#111827;font-weight:500">$${i.subtotal.toFixed(2)}</td>
     </tr>`
   ).join('');
 
@@ -81,7 +94,7 @@ export async function sendOrderConfirmation(data: OrderEmailData) {
         <table class="table">
           <thead><tr><th>Descripción</th><th style="text-align:right">Subtotal</th></tr></thead>
           <tbody>${itemRows}</tbody>
-          <tfoot><tr class="total-row"><td>Total a Pagar</td><td style="text-align:right;color:#4f46e5;font-size:16px">$${data.totalAmount.toFixed(2)}</td></tr></tfoot>
+          <tfoot><tr class="total-row"><td>Total a Pagar</td><td style="text-align:right;color:#4f46e5;font-size:16px">$${safeTotalAmount.toFixed(2)}</td></tr></tfoot>
         </table>
 
         ${data.shippingAddress ? `<div class="address-box">
