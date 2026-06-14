@@ -12,10 +12,17 @@ const adminCouponsWriteLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+const couponValidationLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 60,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // ─── PUBLIC ──────────────────────────────────────────────────────────────────
 
 // POST /api/coupons/validate — validate a coupon code against a cart total
-router.post('/validate', protect, async (req: AuthRequest, res: Response) => {
+router.post('/validate', protect, couponValidationLimiter, async (req: AuthRequest, res: Response) => {
   try {
     const { code, cartTotal } = req.body;
     if (!code) return res.status(400).json({ message: 'Código requerido' });
