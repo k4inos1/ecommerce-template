@@ -1,4 +1,5 @@
 import { Router, Response } from 'express';
+import rateLimit from 'express-rate-limit';
 import { Order } from '../models/Order';
 import { protect, adminOnly, AuthRequest } from '../middleware/auth';
 import { sendOrderConfirmation } from '../services/email';
@@ -7,6 +8,13 @@ import { Coupon } from '../models/Coupon';
 import { Notification } from '../models/Notification';
 
 const router = Router();
+
+const orderDetailLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 60, // limit each IP to 60 order-detail requests per window
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 // POST /api/orders - Create order (authenticated users)
 router.post('/', protect, async (req: AuthRequest, res: Response) => {
@@ -77,7 +85,7 @@ router.get('/my', protect, async (req: AuthRequest, res: Response) => {
 });
 
 // GET /api/orders/:id - Order detail
-router.get('/:id', protect, async (req: AuthRequest, res: Response) => {
+router.get('/:id', protect, orderDetailLimiter, async (req: AuthRequest, res: Response) => {
   try {
     const order = await Order.findById(req.params.id).populate('user', 'name email');
     if (!order) return res.status(404).json({ message: 'Order not found' });
