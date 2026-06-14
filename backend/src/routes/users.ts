@@ -34,6 +34,13 @@ const profileReadLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+const wishlistReadLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // GET /api/users/profile
 router.get('/profile', profileReadLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
@@ -86,7 +93,7 @@ router.put('/profile', protect, async (req: AuthRequest, res: Response) => {
 // ─── Wishlist ────────────────────────────────────────────────────────────────
 
 // GET /api/users/wishlist — get current user's wishlist (populated)
-router.get('/wishlist', protect, async (req: AuthRequest, res: Response) => {
+router.get('/wishlist', wishlistReadLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     const user = await User.findById(req.user!.id).populate('wishlist');
     if (!user) return res.status(404).json({ message: 'User not found' });
