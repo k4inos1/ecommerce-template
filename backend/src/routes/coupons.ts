@@ -22,7 +22,7 @@ const couponValidationLimiter = rateLimit({
 // ─── PUBLIC ──────────────────────────────────────────────────────────────────
 
 // POST /api/coupons/validate — validate a coupon code against a cart total
-router.post('/validate', protect, couponValidationLimiter, async (req: AuthRequest, res: Response) => {
+router.post('/validate', couponValidationLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     const { code, cartTotal } = req.body;
     if (!code) return res.status(400).json({ message: 'Código requerido' });
