@@ -94,11 +94,10 @@ export function constructStripeWebhookEvent(
   signature: string,
   secret?: string
 ): Stripe.Event {
-  if (secret) {
-    return getStripe().webhooks.constructEvent(rawBody, signature, secret);
+  if (!secret) {
+    throw new Error('STRIPE_WEBHOOK_SECRET is not configured');
   }
-  // Dev-mode: skip signature verification
-  return JSON.parse(rawBody.toString()) as Stripe.Event;
+  return getStripe().webhooks.constructEvent(rawBody, signature, secret);
 }
 
 // ─── WebPay (Transbank) ──────────────────────────────────────────────────────
