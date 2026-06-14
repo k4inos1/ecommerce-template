@@ -1,14 +1,22 @@
 import { Router, Response } from 'express';
+import rateLimit from 'express-rate-limit';
 import { User } from '../models/User';
 import { protect, AuthRequest } from '../middleware/auth';
 import mongoose from 'mongoose';
 
 const router = Router();
 
+const wishlistLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per window
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // ─── PRIVATE ─────────────────────────────────────────────────────────────────
 
 // GET /api/wishlist — get user's wishlist
-router.get('/', protect, async (req: AuthRequest, res: Response) => {
+router.get('/', wishlistLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     const user = await User.findById(req.user?._id).populate('wishlist');
     if (!user) return res.status(404).json({ message: 'User not found' });
@@ -19,7 +27,7 @@ router.get('/', protect, async (req: AuthRequest, res: Response) => {
 });
 
 // POST /api/wishlist/:productId — add product to wishlist
-router.post('/:productId', protect, async (req: AuthRequest, res: Response) => {
+router.post('/:productId', wishlistLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     const { productId } = req.params;
     if (!mongoose.Types.ObjectId.isValid(productId)) {
@@ -45,7 +53,7 @@ router.post('/:productId', protect, async (req: AuthRequest, res: Response) => {
 });
 
 // DELETE /api/wishlist/:productId — remove product from wishlist
-router.delete('/:productId', protect, async (req: AuthRequest, res: Response) => {
+router.delete('/:productId', wishlistLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     const { productId } = req.params;
     const user = await User.findById(req.user?._id);
