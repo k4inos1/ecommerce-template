@@ -1,8 +1,16 @@
 import { Router, Response } from 'express';
+import rateLimit from 'express-rate-limit';
 import { Review } from '../models/Review';
 import { protect, AuthRequest } from '../middleware/auth';
 
 const router = Router();
+
+const deleteReviewLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 // GET /api/reviews/:productId — Get reviews for a product
 router.get('/:productId', async (req, res: Response) => {
@@ -39,7 +47,7 @@ router.post('/:productId', protect, async (req: AuthRequest, res: Response) => {
 });
 
 // DELETE /api/reviews/:id — Admin can delete reviews
-router.delete('/:id', protect, async (req: AuthRequest, res: Response) => {
+router.delete('/:id', protect, deleteReviewLimiter, async (req: AuthRequest, res: Response) => {
   try {
     await Review.findByIdAndDelete(req.params.id);
     res.json({ message: 'Review deleted' });
