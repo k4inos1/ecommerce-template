@@ -12,6 +12,13 @@ const deleteReviewLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+const createReviewLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // GET /api/reviews/:productId — Get reviews for a product
 router.get('/:productId', async (req, res: Response) => {
   try {
@@ -24,7 +31,7 @@ router.get('/:productId', async (req, res: Response) => {
 });
 
 // POST /api/reviews/:productId — Create a review (authenticated)
-router.post('/:productId', protect, async (req: AuthRequest, res: Response) => {
+router.post('/:productId', protect, createReviewLimiter, async (req: AuthRequest, res: Response) => {
   try {
     const { rating, comment } = req.body;
     if (!rating || !comment) return res.status(400).json({ message: 'Rating and comment are required' });
