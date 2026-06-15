@@ -110,7 +110,7 @@ const STATUS_LABELS: Record<string, { title: string; message: string }> = {
 };
 
 // PATCH /api/orders/:id/status - Admin: update order status
-router.patch('/:id/status', protect, adminOnly, orderStatusUpdateLimiter, async (req: AuthRequest, res: Response) => {
+router.patch('/:id/status', orderStatusUpdateLimiter, protect, adminOnly, async (req: AuthRequest, res: Response) => {
   try {
     const { status } = req.body;
     const order = await Order.findByIdAndUpdate(req.params.id, { status }, { new: true }).populate('user', 'name email');
