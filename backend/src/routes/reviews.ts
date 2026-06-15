@@ -31,7 +31,7 @@ router.get('/:productId', async (req, res: Response) => {
 });
 
 // POST /api/reviews/:productId — Create a review (authenticated)
-router.post('/:productId', protect, createReviewLimiter, async (req: AuthRequest, res: Response) => {
+router.post('/:productId', createReviewLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     const { rating, comment } = req.body;
     if (!rating || !comment) return res.status(400).json({ message: 'Rating and comment are required' });
@@ -54,7 +54,7 @@ router.post('/:productId', protect, createReviewLimiter, async (req: AuthRequest
 });
 
 // DELETE /api/reviews/:id — Admin can delete reviews
-router.delete('/:id', protect, deleteReviewLimiter, async (req: AuthRequest, res: Response) => {
+router.delete('/:id', deleteReviewLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     await Review.findByIdAndDelete(req.params.id);
     res.json({ message: 'Review deleted' });
