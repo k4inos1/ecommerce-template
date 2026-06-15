@@ -1,4 +1,5 @@
 import { Router, Response } from 'express';
+import rateLimit from 'express-rate-limit';
 import { Order } from '../models/Order';
 import { protect, adminOnly, AuthRequest } from '../middleware/auth';
 import { sendOrderConfirmation } from '../services/email';
@@ -7,6 +8,14 @@ import { Coupon } from '../models/Coupon';
 import { Notification } from '../models/Notification';
 
 const router = Router();
+
+const orderStatusUpdateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many status update requests, please try again later.' },
+});
 
 // POST /api/orders - Create order (authenticated users)
 router.post('/', protect, async (req: AuthRequest, res: Response) => {
@@ -101,7 +110,7 @@ const STATUS_LABELS: Record<string, { title: string; message: string }> = {
 };
 
 // PATCH /api/orders/:id/status - Admin: update order status
-router.patch('/:id/status', protect, adminOnly, async (req: AuthRequest, res: Response) => {
+router.patch('/:id/status', orderStatusUpdateLimiter, protect, adminOnly, async (req: AuthRequest, res: Response) => {
   try {
     const { status } = req.body;
     const order = await Order.findByIdAndUpdate(req.params.id, { status }, { new: true }).populate('user', 'name email');
