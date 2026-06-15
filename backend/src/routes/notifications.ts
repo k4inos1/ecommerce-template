@@ -8,6 +8,10 @@ const router = Router();
 const notificationsLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // limit each authenticated client to 100 requests per window
+  keyGenerator: (req) => {
+    const authReq = req as AuthRequest;
+    return authReq.user?.id || req.ip;
+  },
   standardHeaders: true,
   legacyHeaders: false,
 });
