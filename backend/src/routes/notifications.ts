@@ -1,11 +1,19 @@
 import { Router, Response } from 'express';
+import rateLimit from 'express-rate-limit';
 import { Notification } from '../models/Notification';
 import { protect, AuthRequest } from '../middleware/auth';
 
 const router = Router();
 
+const notificationsLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each authenticated client to 100 requests per window
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // GET /api/notifications — get current user's notifications (latest 30)
-router.get('/', protect, async (req: AuthRequest, res: Response) => {
+router.get('/', protect, notificationsLimiter, async (req: AuthRequest, res: Response) => {
   try {
     const notifications = await Notification.find({ user: req.user!.id })
       .sort({ createdAt: -1 })
@@ -17,7 +25,7 @@ router.get('/', protect, async (req: AuthRequest, res: Response) => {
 });
 
 // PATCH /api/notifications/:id/read — mark one notification as read
-router.patch('/:id/read', protect, async (req: AuthRequest, res: Response) => {
+router.patch('/:id/read', protect, notificationsLimiter, async (req: AuthRequest, res: Response) => {
   try {
     const notification = await Notification.findOneAndUpdate(
       { _id: req.params.id, user: req.user!.id },
@@ -32,7 +40,7 @@ router.patch('/:id/read', protect, async (req: AuthRequest, res: Response) => {
 });
 
 // PATCH /api/notifications/read-all — mark all notifications as read
-router.patch('/read-all', protect, async (req: AuthRequest, res: Response) => {
+router.patch('/read-all', protect, notificationsLimiter, async (req: AuthRequest, res: Response) => {
   try {
     await Notification.updateMany({ user: req.user!.id, read: false }, { read: true });
     res.json({ message: 'All notifications marked as read' });
