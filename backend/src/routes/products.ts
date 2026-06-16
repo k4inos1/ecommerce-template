@@ -29,10 +29,14 @@ const TTL = 60 * 1000; // 1 minute
 // GET /api/products — only published products for the store
 router.get('/', async (req: Request, res: Response) => {
   try {
-    const { search, category, minPrice, maxPrice, page = 1, limit = 12 } = req.query;
+    const { minPrice, maxPrice, page = 1, limit = 12 } = req.query;
+    const rawSearch = req.query.search;
+    const rawCategory = req.query.category;
+    const search = typeof rawSearch === 'string' ? rawSearch : undefined;
+    const category = typeof rawCategory === 'string' ? rawCategory : undefined;
     const query: Record<string, any> = { published: true };
 
-    if (search) query.$text = { $search: search as string };
+    if (search) query.$text = { $search: search };
     if (category && category !== 'All') query.category = category;
     
     // Price filtering
