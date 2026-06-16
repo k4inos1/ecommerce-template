@@ -13,7 +13,7 @@ const notificationsLimiter = rateLimit({
 });
 
 // GET /api/notifications — get current user's notifications (latest 30)
-router.get('/', protect, notificationsLimiter, async (req: AuthRequest, res: Response) => {
+router.get('/', notificationsLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     const notifications = await Notification.find({ user: req.user!.id })
       .sort({ createdAt: -1 })
@@ -25,7 +25,7 @@ router.get('/', protect, notificationsLimiter, async (req: AuthRequest, res: Res
 });
 
 // PATCH /api/notifications/:id/read — mark one notification as read
-router.patch('/:id/read', protect, notificationsLimiter, async (req: AuthRequest, res: Response) => {
+router.patch('/:id/read', notificationsLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     const notification = await Notification.findOneAndUpdate(
       { _id: req.params.id, user: req.user!.id },
@@ -40,7 +40,7 @@ router.patch('/:id/read', protect, notificationsLimiter, async (req: AuthRequest
 });
 
 // PATCH /api/notifications/read-all — mark all notifications as read
-router.patch('/read-all', protect, notificationsLimiter, async (req: AuthRequest, res: Response) => {
+router.patch('/read-all', notificationsLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     await Notification.updateMany({ user: req.user!.id, read: false }, { read: true });
     res.json({ message: 'All notifications marked as read' });
