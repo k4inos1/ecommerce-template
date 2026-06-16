@@ -19,6 +19,13 @@ const couponValidationLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+const adminCouponsReadLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 300,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // ─── PUBLIC ──────────────────────────────────────────────────────────────────
 
 // POST /api/coupons/validate — validate a coupon code against a cart total
@@ -62,7 +69,7 @@ router.post('/validate', couponValidationLimiter, protect, async (req: AuthReque
 // ─── ADMIN ────────────────────────────────────────────────────────────────────
 
 // GET /api/coupons — list all coupons
-router.get('/', protect, adminOnly, async (_req: AuthRequest, res: Response) => {
+router.get('/', adminCouponsReadLimiter, protect, adminOnly, async (_req: AuthRequest, res: Response) => {
   try {
     const coupons = await Coupon.find().sort({ createdAt: -1 });
     res.json(coupons);
