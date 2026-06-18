@@ -25,6 +25,14 @@ const createOrderLimiter = rateLimit({
   message: { message: 'Too many order creation requests, please try again later.' },
 });
 
+const myOrdersLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 120,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many requests for your orders, please try again later.' },
+});
+
 // POST /api/orders - Create order (authenticated users)
 router.post('/', createOrderLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
@@ -84,7 +92,7 @@ router.post('/', createOrderLimiter, protect, async (req: AuthRequest, res: Resp
 });
 
 // GET /api/orders/my - Current user's orders
-router.get('/my', protect, async (req: AuthRequest, res: Response) => {
+router.get('/my', myOrdersLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     const orders = await Order.find({ user: req.user!.id }).sort({ createdAt: -1 });
     res.json(orders);
