@@ -19,8 +19,15 @@ const createReviewLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+const getReviewsLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // GET /api/reviews/:productId — Get reviews for a product
-router.get('/:productId', async (req, res: Response) => {
+router.get('/:productId', getReviewsLimiter, async (req, res: Response) => {
   try {
     const reviews = await Review.find({ product: req.params.productId }).sort({ createdAt: -1 });
     const avg = reviews.length ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length : 0;
