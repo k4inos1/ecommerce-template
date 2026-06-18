@@ -17,8 +17,16 @@ const orderStatusUpdateLimiter = rateLimit({
   message: { message: 'Too many status update requests, please try again later.' },
 });
 
+const createOrderLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many order creation requests, please try again later.' },
+});
+
 // POST /api/orders - Create order (authenticated users)
-router.post('/', protect, async (req: AuthRequest, res: Response) => {
+router.post('/', createOrderLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     const { items, shippingAddress, paymentMethod, totalAmount, discountAmount, couponCode } = req.body;
     if (!items?.length) return res.status(400).json({ message: 'No order items' });
