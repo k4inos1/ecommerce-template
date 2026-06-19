@@ -129,11 +129,16 @@ const STATUS_LABELS: Record<string, { title: string; message: string }> = {
 router.patch('/:id/status', orderStatusUpdateLimiter, protect, adminOnly, async (req: AuthRequest, res: Response) => {
   try {
     const { status } = req.body;
-    const order = await Order.findByIdAndUpdate(req.params.id, { status }, { new: true }).populate('user', 'name email');
+    if (typeof status !== 'string' || !(status in STATUS_LABELS)) {
+      return res.status(400).json({ message: 'Invalid status value' });
+    }
+
+    const nextStatus = status as keyof typeof STATUS_LABELS;
+    const order = await Order.findByIdAndUpdate(req.params.id, { status: nextStatus }, { new: true }).populate('user', 'name email');
     if (!order) return res.status(404).json({ message: 'Order not found' });
 
     // Create in-app notification for the order owner
-    const label = STATUS_LABELS[status];
+    const label = STATUS_LABELS[nextStatus];
     if (label && order.user) {
       Notification.create({
         user: order.user,
