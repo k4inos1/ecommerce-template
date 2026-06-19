@@ -224,7 +224,7 @@ router.put('/:id', adminWriteLimiter, protect, adminOnly, async (req: AuthReques
 });
 
 // PATCH /api/products/:id/publish — toggle published state
-router.patch('/:id/publish', protect, adminOnly, async (req: AuthRequest, res: Response) => {
+router.patch('/:id/publish', adminWriteLimiter, protect, adminOnly, async (req: AuthRequest, res: Response) => {
   try {
     const { published } = req.body;
     const product = await Product.findByIdAndUpdate(
