@@ -13,6 +13,12 @@ const adminWriteLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 });
+const publicReadLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 120,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 // Configure Multer to store products in memory buffer for easy upload to Cloudinary
 const storage = multer.memoryStorage();
@@ -62,7 +68,7 @@ router.get('/', async (req: Request, res: Response) => {
 export const clearProductCache = () => CACHE.delete('products_base');
 
 // GET /api/products/:id — public
-router.get('/:id', async (req: Request, res: Response) => {
+router.get('/:id', publicReadLimiter, async (req: Request, res: Response) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) return res.status(404).json({ message: 'Product not found' });
@@ -73,7 +79,7 @@ router.get('/:id', async (req: Request, res: Response) => {
 });
 
 // GET /api/products/:id/related — products in same category (excluding self)
-router.get('/:id/related', async (req: Request, res: Response) => {
+router.get('/:id/related', publicReadLimiter, async (req: Request, res: Response) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) return res.status(404).json({ message: 'Product not found' });
