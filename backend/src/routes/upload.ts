@@ -15,7 +15,7 @@ const uploadRateLimiter = rateLimit({
 });
 
 // POST /api/upload — Admin only, upload image to Cloudinary
-router.post('/', protect, adminOnly, uploadRateLimiter, upload.single('image'), async (req: AuthRequest, res: Response) => {
+router.post('/', uploadRateLimiter, protect, adminOnly, upload.single('image'), async (req: AuthRequest, res: Response) => {
   try {
     if (!req.file) return res.status(400).json({ message: 'No file provided' });
     const { url, public_id } = await uploadImage(req.file.buffer);
