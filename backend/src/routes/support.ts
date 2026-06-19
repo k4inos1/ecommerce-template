@@ -1,11 +1,19 @@
 import { Router, Response } from 'express';
+import rateLimit from 'express-rate-limit';
 import { Message } from '../models/Message';
 import { protect, adminOnly, AuthRequest } from '../middleware/auth';
 
 const router = Router();
 
+const supportRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per window
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // GET /api/support/history/:room - Get message history
-router.get('/history/:room', protect, async (req: AuthRequest, res: Response) => {
+router.get('/history/:room', supportRateLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     const { room } = req.params;
     
@@ -22,7 +30,7 @@ router.get('/history/:room', protect, async (req: AuthRequest, res: Response) =>
 });
 
 // POST /api/support/send - Send a message
-router.post('/send', protect, async (req: AuthRequest, res: Response) => {
+router.post('/send', supportRateLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     const { content, room } = req.body;
     if (!content || !room) return res.status(400).json({ message: 'Content and room required' });
@@ -46,7 +54,7 @@ router.post('/send', protect, async (req: AuthRequest, res: Response) => {
 });
 
 // GET /api/support/rooms - Admin only: get all active chat rooms (unique corridors)
-router.get('/rooms', protect, adminOnly, async (_req: AuthRequest, res: Response) => {
+router.get('/rooms', supportRateLimiter, protect, adminOnly, async (_req: AuthRequest, res: Response) => {
   try {
     const rooms = await Message.aggregate([
       { $sort: { createdAt: -1 } },
