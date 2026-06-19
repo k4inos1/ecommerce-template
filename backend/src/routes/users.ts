@@ -41,6 +41,13 @@ const wishlistReadLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+const profileWriteLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // GET /api/users/profile
 router.get('/profile', profileReadLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
@@ -55,7 +62,7 @@ router.get('/profile', profileReadLimiter, protect, async (req: AuthRequest, res
 });
 
 // PUT /api/users/profile
-router.put('/profile', protect, async (req: AuthRequest, res: Response) => {
+router.put('/profile', profileWriteLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     const user = await User.findById(req.user?.id);
     if (!user) {
