@@ -17,6 +17,14 @@ const orderStatusUpdateLimiter = rateLimit({
   message: { message: 'Too many status update requests, please try again later.' },
 });
 
+const orderDetailLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 200,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many order detail requests, please try again later.' },
+});
+
 const createOrderLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 30,
@@ -102,7 +110,7 @@ router.get('/my', myOrdersLimiter, protect, async (req: AuthRequest, res: Respon
 });
 
 // GET /api/orders/:id - Order detail
-router.get('/:id', protect, async (req: AuthRequest, res: Response) => {
+router.get('/:id', orderDetailLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     const order = await Order.findById(req.params.id).populate('user', 'name email');
     if (!order) return res.status(404).json({ message: 'Order not found' });
