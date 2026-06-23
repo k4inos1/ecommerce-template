@@ -16,9 +16,17 @@ const webhookRateLimiter = rateLimit({
   message: { message: 'Too many webhook requests, please try again later.' },
 });
 
+const checkoutSessionRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many checkout session requests, please try again later.' },
+});
+
 // POST /api/stripe/checkout-session
 // Creates a Stripe Checkout Session and returns the URL to redirect to
-router.post('/checkout-session', protect, async (req: AuthRequest, res: Response) => {
+router.post('/checkout-session', checkoutSessionRateLimiter, protect, async (req: AuthRequest, res: Response) => {
   try {
     const { items, orderId } = req.body;
     if (!items?.length) return res.status(400).json({ message: 'No items' });
