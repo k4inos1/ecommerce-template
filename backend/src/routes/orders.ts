@@ -163,8 +163,16 @@ router.patch('/:id/status', orderStatusUpdateLimiter, protect, adminOnly, async 
   }
 });
 
+const adminOrdersLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many requests for all-orders endpoint. Please try again later.' },
+});
+
 // GET /api/orders - Admin: all orders
-router.get('/', protect, adminOnly, async (_req: AuthRequest, res: Response) => {
+router.get('/', adminOrdersLimiter, protect, adminOnly, async (_req: AuthRequest, res: Response) => {
   try {
     const orders = await Order.find().populate('user', 'name email').sort({ createdAt: -1 });
     res.json(orders);
