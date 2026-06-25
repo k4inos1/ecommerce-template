@@ -99,7 +99,7 @@ router.get('/:id/related', publicReadLimiter, async (req: Request, res: Response
 // ─── ADMIN ──────────────────────────────────────────────────────────────────
 
 // GET /api/products/admin/all — ALL products (published + drafts) for admin panel
-router.get('/admin/all', protect, adminOnly, async (req: AuthRequest, res: Response) => {
+router.get('/admin/all', adminWriteLimiter, protect, adminOnly, async (req: AuthRequest, res: Response) => {
   try {
     const { search, category, published, page = 1, limit = 20 } = req.query;
     const query: Record<string, unknown> = {};
